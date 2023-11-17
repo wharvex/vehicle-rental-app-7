@@ -12,6 +12,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import ImageHeaderPageHamgurge from "./image-header-page-hamgurge";
+import Link from "next/link";
 
 type Anchor = "top" | "left" | "bottom" | "right";
 
@@ -46,20 +47,22 @@ export default function TemporaryDrawer() {
     >
       <List>
         {["Browse", "Login", "Sign Up"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index === 0 ? (
-                  <TravelExploreIcon />
-                ) : index === 1 ? (
-                  <LoginIcon />
-                ) : (
-                  <PersonAddIcon />
-                )}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
+          <Link key={text} href="/browse">
+            <ListItem key={text} disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  {index === 0 ? (
+                    <TravelExploreIcon />
+                  ) : index === 1 ? (
+                    <LoginIcon />
+                  ) : (
+                    <PersonAddIcon />
+                  )}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          </Link>
         ))}
       </List>
       {/* <Divider /> */}
