@@ -47,7 +47,6 @@ const HeaderPage: NextPage<HeaderPageType> = ({
     >
       <ImageHeaderPageLogo
         image="/image1@2x.png"
-        imageHeaderPageLogoCursor="unset"
       />
       <ImageHeaderPageHamgurge
         image="/image@2x.png"
