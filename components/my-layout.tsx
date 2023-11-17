@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useMemo, type CSSProperties } from "react";
+import { useMemo, type CSSProperties, ReactElement } from "react";
 import HeaderPage from "./header-page";
 import Main from "./main";
 import FooterPage from "./footer-page";
@@ -10,15 +10,19 @@ type LayoutType = {
   layoutBoxSizing1?: CSSProperties["boxSizing"];
   headerPageBoxSizing?: CSSProperties["boxSizing"];
 
-  /** Action props */
-  onImageHeaderPageLogoClick?: () => void;
+  /** Main child props */
+  mainChild1?: ReactElement;
+  mainChild2?: ReactElement;
+  mainChild3?: ReactElement;
 };
 
 const Layout: NextPage<LayoutType> = ({
   layoutBoxSizing,
   layoutBoxSizing1,
   headerPageBoxSizing,
-  onImageHeaderPageLogoClick,
+  mainChild1,
+  mainChild2,
+  mainChild3,
 }) => {
   const headerPageStyle: CSSProperties = useMemo(() => {
     return {
@@ -47,14 +51,15 @@ const Layout: NextPage<LayoutType> = ({
         headerPageBackgroundImage="url('/header--page1@3x.png')"
         headerPageFlexShrink="0"
         imageHeaderPageLogoCursor="pointer"
-        headerPageBoxSizing="border-box"
-        onImageHeaderPageLogoClick={onImageHeaderPageLogoClick}
       />
       <Main
         mainContentHeroBoxSizing="border-box"
         mainContentHeroBoxSizing1="border-box"
         mainContentHeroBoxSizing2="border-box"
         mainContentHeroBoxSizing3="border-box"
+        mainChild1={mainChild1}
+        mainChild2={mainChild2}
+        mainChild3={mainChild3}
       />
       <FooterPage
         footerPageBackgroundImage="url('/footer--page1@3x.png')"

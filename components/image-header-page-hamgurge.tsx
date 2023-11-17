@@ -1,8 +1,9 @@
 import type { NextPage } from "next";
-import { useMemo, type CSSProperties } from "react";
+import { useMemo, type CSSProperties, MouseEventHandler } from "react";
 
 type ImageHeaderPageHamgurgeType = {
   image?: string;
+  onClick: MouseEventHandler;
 
   /** Style props */
   imageHeaderPageHamgurgeBoxSizing?: CSSProperties["boxSizing"];
@@ -10,6 +11,7 @@ type ImageHeaderPageHamgurgeType = {
 
 const ImageHeaderPageHamgurge: NextPage<ImageHeaderPageHamgurgeType> = ({
   image,
+  onClick,
   imageHeaderPageHamgurgeBoxSizing,
 }) => {
   const imageHeaderPageHamgurgeStyle: CSSProperties = useMemo(() => {
@@ -27,6 +29,7 @@ const ImageHeaderPageHamgurge: NextPage<ImageHeaderPageHamgurgeType> = ({
         className="relative w-[60px] h-[42px] object-cover"
         alt=""
         src={image}
+        onClick={onClick}
       />
     </div>
   );

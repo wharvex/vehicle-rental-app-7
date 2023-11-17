@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import { useMemo, type CSSProperties } from "react";
 import ImageHeaderPageLogo from "./image-header-page-logo";
 import ImageHeaderPageHamgurge from "./image-header-page-hamgurge";
+import TemporaryDrawer from "./drawer";
 
 type HeaderPageType = {
   image?: string;
@@ -32,7 +33,7 @@ const HeaderPage: NextPage<HeaderPageType> = ({
       flexShrink: headerPageFlexShrink,
       boxSizing: headerPageBoxSizing,
     };
-  }, [headerPageBackgroundImage, headerPageFlexShrink, headerPageBoxSizing]);
+  }, [headerPageBackgroundImage, headerPageFlexShrink, headerPageBoxSizing]); // dependency array
 
   const imageHeaderPageLogoStyle: CSSProperties = useMemo(() => {
     return {
@@ -42,16 +43,15 @@ const HeaderPage: NextPage<HeaderPageType> = ({
 
   return (
     <header
+      // make className a generated string
       className="overflow-hidden flex flex-row items-center justify-between py-5 px-[100px] box-border bg-[url('/header--page@3x.png')] bg-cover bg-no-repeat bg-[top] self-stretch"
+      // allow implementer to override any styles (bad idea)
       style={headerPageStyle}
     >
       <ImageHeaderPageLogo
         image="/image1@2x.png"
       />
-      <ImageHeaderPageHamgurge
-        image="/image@2x.png"
-        imageHeaderPageHamgurgeBoxSizing="border-box"
-      />
+      <TemporaryDrawer />
     </header>
   );
 };
