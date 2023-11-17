@@ -1,5 +1,19 @@
-import Image from "next/image";
+import type { NextPage } from "next";
+import Layout from "../components/layout";
 
-export default function Home() {
-  return <main></main>;
-}
+const Page: NextPage = () => {
+  const onImageHeaderPageLogoClick = () => {};
+
+  return (
+    <div className="relative bg-white w-full h-[1664px] overflow-hidden flex flex-col items-center justify-start">
+      <Layout
+        layoutBoxSizing="border-box"
+        layoutBoxSizing1="border-box"
+        headerPageBoxSizing="border-box"
+        onImageHeaderPageLogoClick={onImageHeaderPageLogoClick}
+      />
+    </div>
+  );
+};
+
+export default Page;
