@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { useMemo, type CSSProperties } from "react";
 import ImageFooterLogo from "./image-footer-logo";
-import ButtonSmallSmall from "/";
+import ButtonSmallSmall from "./";
 
 type FooterPageType = {
   /** Style props */
