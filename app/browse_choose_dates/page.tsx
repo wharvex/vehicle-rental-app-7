@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Layout from "../../components/my-layout";
-import MainContentGeneric from "@/components/main-content-generic";
+import ChooseDates from "@/components/browse-choose-dates";
 
 const Page: NextPage = () => {
   return (
@@ -10,13 +10,7 @@ const Page: NextPage = () => {
         layoutBoxSizing1="border-box"
         headerPageBoxSizing="border-box"
         mainChild1={
-          <MainContentGeneric mainContentGenericBackground="#ebf5ff" />
-        }
-        mainChild2={
-          <MainContentGeneric mainContentGenericBackground="#ebf5ff" />
-        }
-        mainChild3={
-          <MainContentGeneric mainContentGenericBackground="#ebf5ff" />
+          <ChooseDates chooseDatesBackground="#ebf5ff" />
         }
       />
     </div>

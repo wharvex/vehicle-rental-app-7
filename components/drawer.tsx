@@ -47,7 +47,7 @@ export default function TemporaryDrawer() {
     >
       <List>
         {["Browse", "Login", "Sign Up"].map((text, index) => (
-          <Link key={text} href="/browse">
+          <Link key={text} href="/browse_choose_lots">
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
