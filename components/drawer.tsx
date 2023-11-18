@@ -9,15 +9,16 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import LoginIcon from "@mui/icons-material/Login";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import ImageHeaderPageHamgurge from "./image-header-page-hamgurge";
 import ImageIcon from "@mui/icons-material/Image";
 import Link from "next/link";
+import { UserButton, useUser } from "@clerk/nextjs";
 
 type Anchor = "top" | "left" | "bottom" | "right";
 
 export default function TemporaryDrawer() {
+  const { user, isLoaded } = useUser();
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -39,17 +40,44 @@ export default function TemporaryDrawer() {
       setState({ ...state, [anchor]: open });
     };
 
+  const listFunc = () => {
+    return [
+      ["Browse", "/browse_choose_lots"],
+      [(isLoaded && user && "Dashboard") || "Login", "/dashboard"],
+    ].map((item, index) => (
+      <Link key={item[0]} href={item[1]}>
+        <ListItem key={item[0]} disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              {index === 0 ? (
+                <TravelExploreIcon />
+              ) : index === 1 ? (
+                (isLoaded && user && <UserButton afterSignOutUrl="/" />) || (
+                  <LoginIcon />
+                )
+              ) : (
+                <ImageIcon />
+              )}
+            </ListItemIcon>
+            <ListItemText primary={item[0]} />
+          </ListItemButton>
+        </ListItem>
+      </Link>
+    ));
+  };
+
   const list = (anchor: Anchor) => (
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
+      // onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {[
+        {listFunc()}
+        {/* {[
           ["Browse", "/browse_choose_lots"],
-          ["Login", "/login"],
+          [(isLoaded && user && "Dashboard") || "Login", "/dashboard"],
         ].map((item, index) => (
           <Link key={item[0]} href={item[1]}>
             <ListItem key={item[0]} disablePadding>
@@ -58,7 +86,7 @@ export default function TemporaryDrawer() {
                   {index === 0 ? (
                     <TravelExploreIcon />
                   ) : index === 1 ? (
-                    <LoginIcon />
+                    (isLoaded && user && <UserButton />) || <LoginIcon />
                   ) : (
                     <ImageIcon />
                   )}
@@ -67,7 +95,7 @@ export default function TemporaryDrawer() {
               </ListItemButton>
             </ListItem>
           </Link>
-        ))}
+        ))} */}
       </List>
       {/* <Divider /> */}
       {/* <List>
