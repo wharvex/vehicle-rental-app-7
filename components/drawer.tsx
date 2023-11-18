@@ -47,7 +47,10 @@ export default function TemporaryDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
+
         {[["Browse", "/browse_choose_lots"], ["Login", "/login"]].map((item, index) => (
+
+main
           <Link key={item[0]} href={item[1]}>
             <ListItem key={item[0]} disablePadding>
               <ListItemButton>
