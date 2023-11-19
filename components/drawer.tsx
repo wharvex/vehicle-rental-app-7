@@ -40,32 +40,6 @@ export default function TemporaryDrawer() {
       setState({ ...state, [anchor]: open });
     };
 
-  const listFunc = () => {
-    return [
-      ["Browse", "/browse_choose_lots"],
-      [(isLoaded && user && "Dashboard") || "Login", "/dashboard"],
-    ].map((item, index) => (
-      <Link key={item[0]} href={item[1]}>
-        <ListItem key={item[0]} disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              {index === 0 ? (
-                <TravelExploreIcon />
-              ) : index === 1 ? (
-                (isLoaded && user && <UserButton afterSignOutUrl="/" />) || (
-                  <LoginIcon />
-                )
-              ) : (
-                <ImageIcon />
-              )}
-            </ListItemIcon>
-            <ListItemText primary={item[0]} />
-          </ListItemButton>
-        </ListItem>
-      </Link>
-    ));
-  };
-
   const list = (anchor: Anchor) => (
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
@@ -74,8 +48,7 @@ export default function TemporaryDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {listFunc()}
-        {/* {[
+        {[
           ["Browse", "/browse_choose_lots"],
           [(isLoaded && user && "Dashboard") || "Login", "/dashboard"],
         ].map((item, index) => (
@@ -86,7 +59,9 @@ export default function TemporaryDrawer() {
                   {index === 0 ? (
                     <TravelExploreIcon />
                   ) : index === 1 ? (
-                    (isLoaded && user && <UserButton />) || <LoginIcon />
+                    (isLoaded && user && (
+                      <UserButton afterSignOutUrl="/" />
+                    )) || <LoginIcon />
                   ) : (
                     <ImageIcon />
                   )}
@@ -95,21 +70,8 @@ export default function TemporaryDrawer() {
               </ListItemButton>
             </ListItem>
           </Link>
-        ))} */}
-      </List>
-      {/* <Divider /> */}
-      {/* <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
         ))}
-      </List> */}
+      </List>
     </Box>
   );
 
