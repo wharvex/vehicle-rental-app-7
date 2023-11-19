@@ -57,11 +57,11 @@ model Reservation {
   return_date   DateTime
   date_created  DateTime
   renter        Customer @relation(fields: [renter_id], references: [id])
-  renter_id     Int
+  renter_id     String
 }
 
 model Customer {
-  id           Int           @id @default(autoincrement())
+  id           String        @id @default(uuid())
   email        String        @unique
   name         String
   reservations Reservation[]
