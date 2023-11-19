@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Car {
+  id             Int            @id @default(autoincrement())
+  reservations   Reservation[]
+  make           Make           @relation(fields: [make_id], references: [id])
+  make_id        Int
+  model          Model          @relation(fields: [model_id], references: [id])
+  model_id       Int
+  color          String
+  year           Int
+  num_rentals    Int
+  current_lot    Lot            @relation(fields: [current_lot_id], references: [id])
+  current_lot_id Int
+  car_type       CarType        @relation(fields: [car_type_id], references: [id])
+  car_type_id    Int
+  mileage        Int
+  licensePlate   String
+  user_added     Manager        @relation(fields: [user_added_id], references: [id])
+  user_added_id  Int
+  date_added     DateTime
+  in_use         Boolean
+  features       CarFeature[]
+  image_path     String
+}
+
+model Lot {
+  id                Int            @id @default(autoincrement())
+  address           Address        @relation(fields: [address_id], references: [id])
+  address_id        Int
+  managers          Manager[]
+  current_inventory Car[]
+  pickups           Reservation[]  @relation("Pickups")
+  returns           Reservation[]  @relation("Returns")
+  closures          Closure[] 
+}
+
+model Reservation {
+  id            Int       @id @default(autoincrement())
+  car           Car       @relation(fields: [car_ID], references: [id])
+  car_ID        Int
+  pickup_lot    Lot       @relation("Pickups", fields: [pickup_lot_id], references: [id])
+  pickup_lot_id Int
+  return_lot    Lot       @relation("Returns", fields: [return_lot_id], references: [id])
+  return_lot_id Int
+  pickup_date   DateTime
+  return_date   DateTime
+  date_created  DateTime
+  renter        Customer  @relation(fields: [renter_id], references: [id])
+  renter_id     Int
+}
+
+model Customer {
+  id           Int            @id @default(autoincrement())
+  email        String         @unique
+  name         String
+  reservations Reservation[]
+}
+
+model Manager {
+  id          Int      @id @default(autoincrement())
+  email       String   @unique
+  name        String
+  manages_lot Lot      @relation(fields: [lot_id], references: [id])
+  lot_id      Int
+  added_cars  Car[]
+}
+
+model Model {
+  id        Int      @id @default(autoincrement())
+  name      String
+  make      Make     @relation(fields: [make_id], references: [id])
+  make_id   Int
+  cars      Car[]
+}
+
+model Make {
+  id      Int      @id @default(autoincrement())
+  name    String
+  models  Model[]
+  cars    Car[]
+}
+
+model CarType {
+  id     Int      @id @default(autoincrement())
+  name   String
+  price  Decimal
+  cars   Car[]
+}
+
+model Address {
+  id              Int      @id @default(autoincrement())
+  street_address  String
+  city            String
+  zip_code        Int
+  state           String
+  lot             Lot[]
+}
+
+model Closure {
+  id      Int       @id @default(autoincrement())
+  date    DateTime
+  lot     Lot       @relation(fields: [lot_id], references: [id])
+  lot_id  Int
+}
+
+model CarFeature {
+  id     Int      @id @default(autoincrement())
+  name   String
+  price  Decimal
+  cars   Car[]
+}
