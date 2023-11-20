@@ -9,6 +9,7 @@ export default authMiddleware({
     "/browse_choose_lots",
     "/browse_choose_dates",
     "/browse_select_cars",
+    "/test-db",
   ],
 });
 
