@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Layout from "../../components/my-layout";
-import ChooseDates from "@/components/main-content-test-db";
+import ChooseDates from "@/components/browse-choose-dates";
 
 const Page: NextPage = () => {
   return (
