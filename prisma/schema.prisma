@@ -19,7 +19,7 @@ model Car {
   model_id       Int
   color          String
   year           Int
-  num_rentals    Int
+  num_rentals    Int           @default(0)
   current_lot    Lot           @relation(fields: [current_lot_id], references: [id])
   current_lot_id Int
   car_type       CarType       @relation(fields: [car_type_id], references: [id])
@@ -28,8 +28,8 @@ model Car {
   licensePlate   String
   user_added     Manager       @relation(fields: [user_added_id], references: [id])
   user_added_id  Int
-  date_added     DateTime
-  in_use         Boolean
+  date_added     DateTime      @default(now())
+  in_use         Boolean       @default(false)
   features       CarFeature[]
   image_path     String
 }
@@ -38,7 +38,8 @@ model Lot {
   id                Int           @id @default(autoincrement())
   address           Address       @relation(fields: [address_id], references: [id])
   address_id        Int
-  managers          Manager[]
+  manager           Manager       @relation(fields: [manager_id], references: [id])
+  manager_id        Int
   current_inventory Car[]
   pickups           Reservation[] @relation("Pickups")
   returns           Reservation[] @relation("Returns")
@@ -55,7 +56,7 @@ model Reservation {
   return_lot_id Int
   pickup_date   DateTime
   return_date   DateTime
-  date_created  DateTime
+  date_created  DateTime @default(now())
   renter        Customer @relation(fields: [renter_id], references: [id])
   renter_id     String
 }
@@ -71,8 +72,7 @@ model Manager {
   id          Int    @id @default(autoincrement())
   email       String @unique
   name        String
-  manages_lot Lot    @relation(fields: [lot_id], references: [id])
-  lot_id      Int
+  manages_lot Lot[]
   added_cars  Car[]
 }
 
@@ -110,7 +110,7 @@ model Address {
 model Closure {
   id     Int      @id @default(autoincrement())
   date   DateTime
-  lot    Lot      @relation(fields: [lot_id], references: [id])
+  lots   Lot[]
   lot_id Int
 }
 
