@@ -46,7 +46,7 @@ model Lot {
 }
 
 model Reservation {
-  id            Int      @id @default(autoincrement())
+  id            String   @id @default(uuid())
   car           Car      @relation(fields: [car_ID], references: [id])
   car_ID        Int
   pickup_lot    Lot      @relation("Pickups", fields: [pickup_lot_id], references: [id])

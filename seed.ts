@@ -13,11 +13,18 @@ const customerData: Prisma.CustomerCreateInput[] = [
   },
 ];
 
+const reservationData: Prisma.ReservationCreateInput[] = [
+  {
+    pickup_date: new Date(2023, 13, 1),
+    return_date: new Date(2023, 13, 3),
+  },
+];
+
 async function main() {
   console.log(`Start seeding ...`);
-  for (const u of customerData) {
+  for (const c of customerData) {
     const customer = await prisma.customer.create({
-      data: u,
+      data: c,
     });
     console.log(`Created customer with id: ${customer.id}`);
   }
