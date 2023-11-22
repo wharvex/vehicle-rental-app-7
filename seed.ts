@@ -1,6 +1,23 @@
 import { PrismaClient, Prisma } from "@prisma/client";
+import { faker } from "@faker-js/faker";
 
 const prisma = new PrismaClient();
+
+async function seedCustomers() {
+  const inserts: Prisma.CustomerCreateInput[] = [];
+  const datas = Array.from({ length: 100 }, () => {
+    const name = faker.person.firstName();
+    const customer = {
+      // id: faker.string.uuid(),
+      name: name,
+      email: faker.internet.email({ firstName: name }),
+    } satisfies Prisma.CustomerCreateInput;
+    return { ...customer };
+  });
+  await prisma.$transaction(
+    Array.from(datas, (data) => prisma.customer.create({ data }))
+  );
+}
 
 async function main() {
   console.log(`Start seeding ...`);
@@ -328,6 +345,7 @@ async function main() {
       image_path: "cars/black-coupe",
     },
   });
+  await seedCustomers();
   console.log(`Seeding finished.`);
 }
 

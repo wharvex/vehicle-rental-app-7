@@ -7,7 +7,13 @@ export default async function MainContentTestDB2() {
     <div className="bg-aliceblue w-[1440px] overflow-hidden flex flex-row items-center justify-center p-[50px] box-border gap-[50px]">
       <ul>
         {feed.map((customer) => (
-          <li key={customer.id}>{customer.name}</li>
+          <li key={customer.id}>
+            {customer.name}
+            <ul>
+              <li>{customer.email}</li>
+              <li>{customer.id}</li>
+            </ul>
+          </li>
         ))}
       </ul>
     </div>
