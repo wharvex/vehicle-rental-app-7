@@ -22,7 +22,7 @@ async function main() {
         },
       },
     },
-  })
+  });
   const maristLot = await prisma.lot.create({
     data: {
       address: {
@@ -40,7 +40,7 @@ async function main() {
         },
       },
     },
-  })
+  });
   const oneontaLot = await prisma.lot.create({
     data: {
       address: {
@@ -50,7 +50,7 @@ async function main() {
           state: "NY",
           zip_code: 13820,
         },
-      },   
+      },
       manager: {
         create: {
           name: "Patty Sue",
@@ -58,7 +58,7 @@ async function main() {
         },
       },
     },
-  })
+  });
   const newpaltzLot = await prisma.lot.create({
     data: {
       address: {
@@ -76,258 +76,258 @@ async function main() {
         },
       },
     },
-  })
+  });
   // Creating 2 Makes
   const ford = await prisma.make.create({
     data: {
-        name: 'Ford',
+      name: "Ford",
     },
-  })
+  });
   const honda = await prisma.make.create({
-      data: {
-          name: 'Honda',
-      },
-  })
+    data: {
+      name: "Honda",
+    },
+  });
   // Creating 3 Models for each Make
   const explorer = await prisma.model.create({
-      data: {
-          name: 'Explorer',
-          make_id: ford.id,
-      },
-  })
+    data: {
+      name: "Explorer",
+      make_id: ford.id,
+    },
+  });
   const focus = await prisma.model.create({
-      data: {
-          name: 'Focus',
-          make_id: ford.id,
-      },
-  })
+    data: {
+      name: "Focus",
+      make_id: ford.id,
+    },
+  });
   const mustang = await prisma.model.create({
     data: {
-        name: 'Mustang',
-        make_id: ford.id,
+      name: "Mustang",
+      make_id: ford.id,
     },
-  })
+  });
   const civic = await prisma.model.create({
-      data: {
-          name: 'Civic',
-          make_id: honda.id,
-      },
-  })
+    data: {
+      name: "Civic",
+      make_id: honda.id,
+    },
+  });
   const accord = await prisma.model.create({
     data: {
-        name: 'Accord',
-        make_id: honda.id,
+      name: "Accord",
+      make_id: honda.id,
     },
-  })
+  });
   const coupe = await prisma.model.create({
     data: {
-        name: 'Coupe',
-        make_id: honda.id,
+      name: "Coupe",
+      make_id: honda.id,
     },
-  })
+  });
   // Creating 4 Car Types
   const suv = await prisma.carType.create({
     data: {
       name: "SUV",
       price: 149.99,
     },
-  })
+  });
   const sedan = await prisma.carType.create({
     data: {
       name: "Sedan",
       price: 109.99,
     },
-  })
+  });
   const luxury = await prisma.carType.create({
     data: {
       name: "Luxury",
       price: 199.99,
     },
-  })
+  });
   // Creating cars for the Albany lot
   await prisma.car.create({
     data: {
       make_id: ford.id,
       model_id: explorer.id,
-      color: 'Red',
+      color: "Red",
       year: 2020,
       num_rentals: 0,
       current_lot_id: albanyLot.id,
       car_type_id: suv.id,
       mileage: 1000,
-      licensePlate: 'ABC1111',
+      licensePlate: "ABC1111",
       user_added_id: albanyLot.manager_id,
-      image_path: 'cars/red-explorer'
+      image_path: "cars/red-explorer",
     },
-  })
-  await prisma.car.create({  
+  });
+  await prisma.car.create({
     data: {
       make_id: ford.id,
       model_id: focus.id,
-      color: 'Red',
+      color: "Red",
       year: 2020,
       num_rentals: 0,
       current_lot_id: albanyLot.id,
       car_type_id: sedan.id,
       mileage: 1000,
-      licensePlate: 'DEF1111',
+      licensePlate: "DEF1111",
       user_added_id: albanyLot.manager_id,
-      image_path: 'cars/red-focus'
+      image_path: "cars/red-focus",
     },
-  })
+  });
   await prisma.car.create({
     data: {
       make_id: honda.id,
       model_id: coupe.id,
-      color: 'Red',
+      color: "Red",
       year: 2020,
       num_rentals: 0,
       current_lot_id: albanyLot.id,
       car_type_id: luxury.id,
       mileage: 1000,
-      licensePlate: 'GHI1111',
+      licensePlate: "GHI1111",
       user_added_id: albanyLot.manager_id,
-      image_path: 'cars/red-coupe'
+      image_path: "cars/red-coupe",
     },
-  })
+  });
   // Creating cars for the Marist lot
   await prisma.car.create({
     data: {
       make_id: ford.id,
       model_id: explorer.id,
-      color: 'Blue',
+      color: "Blue",
       year: 2021,
       num_rentals: 0,
       current_lot_id: maristLot.id,
       car_type_id: suv.id,
       mileage: 2000,
-      licensePlate: 'ABC2222',
+      licensePlate: "ABC2222",
       user_added_id: maristLot.manager_id,
-      image_path: 'cars/blue-explorer'
+      image_path: "cars/blue-explorer",
     },
-  })
+  });
   await prisma.car.create({
     data: {
       make_id: ford.id,
       model_id: focus.id,
-      color: 'Blue',
+      color: "Blue",
       year: 2021,
       num_rentals: 0,
       current_lot_id: maristLot.id,
       car_type_id: sedan.id,
       mileage: 2000,
-      licensePlate: 'DEF2222',
+      licensePlate: "DEF2222",
       user_added_id: maristLot.manager_id,
-      image_path: 'cars/blue-focus'
+      image_path: "cars/blue-focus",
     },
-  })
+  });
   await prisma.car.create({
     data: {
       make_id: honda.id,
       model_id: coupe.id,
-      color: 'Blue',
+      color: "Blue",
       year: 2021,
       num_rentals: 0,
       current_lot_id: maristLot.id,
       car_type_id: luxury.id,
       mileage: 2000,
-      licensePlate: 'GHI2222',
+      licensePlate: "GHI2222",
       user_added_id: maristLot.manager_id,
-      image_path: 'cars/blue-coupe'
+      image_path: "cars/blue-coupe",
     },
-  })
+  });
   // Creating cars for the Oneonta lot
   await prisma.car.create({
     data: {
       make_id: ford.id,
       model_id: explorer.id,
-      color: 'Silver',
+      color: "Silver",
       year: 2022,
       num_rentals: 0,
       current_lot_id: oneontaLot.id,
       car_type_id: suv.id,
       mileage: 3000,
-      licensePlate: 'ABC3333',
+      licensePlate: "ABC3333",
       user_added_id: oneontaLot.manager_id,
-      image_path: 'cars/silver-explorer'
+      image_path: "cars/silver-explorer",
     },
-  })
-  await prisma.car.create({    
+  });
+  await prisma.car.create({
     data: {
       make_id: ford.id,
       model_id: focus.id,
-      color: 'Silver',
+      color: "Silver",
       year: 2022,
       num_rentals: 0,
       current_lot_id: oneontaLot.id,
       car_type_id: sedan.id,
       mileage: 3000,
-      licensePlate: 'DEF3333',
+      licensePlate: "DEF3333",
       user_added_id: oneontaLot.manager_id,
-      image_path: 'cars/silver-focus'
+      image_path: "cars/silver-focus",
     },
-  })
+  });
   await prisma.car.create({
     data: {
       make_id: honda.id,
       model_id: coupe.id,
-      color: 'Silver',
+      color: "Silver",
       year: 2022,
       num_rentals: 0,
       current_lot_id: oneontaLot.id,
       car_type_id: luxury.id,
       mileage: 3000,
-      licensePlate: 'GHI3333',
+      licensePlate: "GHI3333",
       user_added_id: oneontaLot.manager_id,
-      image_path: 'cars/silver-coupe'
+      image_path: "cars/silver-coupe",
     },
-  })
+  });
   // Creating cars for the New Paltz lot
   await prisma.car.create({
     data: {
       make_id: ford.id,
       model_id: explorer.id,
-      color: 'Black',
+      color: "Black",
       year: 2023,
       num_rentals: 0,
       current_lot_id: newpaltzLot.id,
       car_type_id: suv.id,
       mileage: 4000,
-      licensePlate: 'ABC4444',
+      licensePlate: "ABC4444",
       user_added_id: newpaltzLot.manager_id,
-      image_path: 'cars/black-explorer'
+      image_path: "cars/black-explorer",
     },
-  })
+  });
   await prisma.car.create({
     data: {
       make_id: ford.id,
       model_id: focus.id,
-      color: 'Black',
+      color: "Black",
       year: 2023,
       num_rentals: 0,
       current_lot_id: newpaltzLot.id,
       car_type_id: sedan.id,
       mileage: 4000,
-      licensePlate: 'DEF4444',
+      licensePlate: "DEF4444",
       user_added_id: newpaltzLot.manager_id,
-      image_path: 'cars/black-focus'
+      image_path: "cars/black-focus",
     },
-  })
+  });
   await prisma.car.create({
     data: {
       make_id: honda.id,
       model_id: coupe.id,
-      color: 'Black',
+      color: "Black",
       year: 2023,
       num_rentals: 0,
       current_lot_id: newpaltzLot.id,
       car_type_id: luxury.id,
       mileage: 4000,
-      licensePlate: 'GHI4444',
+      licensePlate: "GHI4444",
       user_added_id: newpaltzLot.manager_id,
-      image_path: 'cars/black-coupe'
+      image_path: "cars/black-coupe",
     },
-  })
+  });
   console.log(`Seeding finished.`);
 }
 
