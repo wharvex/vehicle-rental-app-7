@@ -16,8 +16,41 @@ async function seedCustomers() {
   );
 }
 
-async function seedMakes() {
-  const datas = Array.from({ length: 15 }, () => {
+async function seedMakesAndModels() {
+  const makeDatas: Prisma.MakeCreateInput[] = Array.from({ length: 7 }, () => {
+    return {
+      name: faker.vehicle.manufacturer(),
+      id: faker.string.uuid(),
+    } satisfies Prisma.MakeCreateInput;
+  });
+  const modelDatas = Array.from({ length: 21 }, (_, i) => {
+    return {
+      name: faker.vehicle.model(),
+      make_id: makeDatas[i % 3].id,
+    } satisfies Prisma.ModelCreateInput;
+  });
+  let k = 0;
+  // for (let j = 0; j < 7; j++) {
+  //   makeDatas[j].models = [
+  //     modelDatas[j + k] as Prisma.ModelCreateInput,
+  //     modelDatas[j + k + 1],
+  //     modelDatas[j + k + 2],
+  //   ];
+  //   k += 2;
+  // }
+  const makeDatasTransactions = Array.from(makeDatas, (data) =>
+    prisma.make.create({ data })
+  );
+  const modelDatasTransactions = Array.from(modelDatas, (data) =>
+    prisma.model.create({ data })
+  );
+  await prisma.$transaction(
+    makeDatasTransactions.concat(modelDatasTransactions)
+  ); // This must be called data
+}
+
+async function seedModels() {
+  const datas = Array.from({ length: 21 }, () => {
     return {
       name: faker.vehicle.manufacturer(),
     } satisfies Prisma.MakeCreateInput;
@@ -354,6 +387,7 @@ async function main() {
     },
   });
   await seedCustomers();
+  await seedMakesAndModels();
   console.log(`Seeding finished.`);
 }
 
