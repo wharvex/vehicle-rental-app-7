@@ -52,6 +52,7 @@ export default function TemporaryDrawer() {
           ["Browse", "/browse_choose_lots"],
           [(isLoaded && user && "Dashboard") || "Login", "/dashboard"],
           ["See Users", "/test-db"],
+          ["See Cars", "/test-db-cars"],
         ].map((item, index) => (
           <Link key={item[0]} href={item[1]}>
             <ListItem key={item[0]} disablePadding>

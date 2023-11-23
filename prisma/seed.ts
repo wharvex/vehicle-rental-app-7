@@ -4,18 +4,26 @@ import { faker } from "@faker-js/faker";
 const prisma = new PrismaClient();
 
 async function seedCustomers() {
-  const inserts: Prisma.CustomerCreateInput[] = [];
   const datas = Array.from({ length: 100 }, () => {
     const name = faker.person.firstName();
-    const customer = {
-      // id: faker.string.uuid(),
+    return {
       name: name,
       email: faker.internet.email({ firstName: name }),
     } satisfies Prisma.CustomerCreateInput;
-    return { ...customer };
   });
   await prisma.$transaction(
-    Array.from(datas, (data) => prisma.customer.create({ data }))
+    Array.from(datas, (data) => prisma.customer.create({ data })) // This must be called data
+  );
+}
+
+async function seedMakes() {
+  const datas = Array.from({ length: 15 }, () => {
+    return {
+      name: faker.vehicle.manufacturer(),
+    } satisfies Prisma.MakeCreateInput;
+  });
+  await prisma.$transaction(
+    Array.from(datas, (data) => prisma.make.create({ data })) // This must be called data
   );
 }
 
