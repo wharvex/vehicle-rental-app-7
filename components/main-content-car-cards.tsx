@@ -23,7 +23,7 @@ export default async function MainContentCarCards(fn: MainContentCarCardsType) {
 
   return (
     <div
-      className="[background:linear-gradient(180deg,_#ebf5ff,_#92c9f9)] flex flex-col items-center justify-center py-[50px] px-[100px]"
+      className="[background:linear-gradient(180deg,_#ebf5ff,_#92c9f9)] flex flex-col items-center justify-center py-[50px] px-[100px] gap-[35px]"
       style={mainContentCarCardsStyle}
     >
       {models.map((model) => (
