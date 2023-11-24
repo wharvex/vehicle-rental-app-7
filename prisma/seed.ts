@@ -26,7 +26,11 @@ async function seedMakesAndModels() {
   const modelDatas = Array.from({ length: 21 }, (_, i) => {
     return {
       name: faker.vehicle.model(),
-      make_id: makeDatas[i % 3].id,
+      make: {
+        connect: {
+          id: makeDatas[i % 3].id,
+        },
+      },
     } satisfies Prisma.ModelCreateInput;
   });
   let k = 0;
@@ -44,9 +48,10 @@ async function seedMakesAndModels() {
   const modelDatasTransactions = Array.from(modelDatas, (data) =>
     prisma.model.create({ data })
   );
-  await prisma.$transaction(
-    makeDatasTransactions.concat(modelDatasTransactions)
-  ); // This must be called data
+  await prisma.$transaction([
+    ...makeDatasTransactions,
+    ...modelDatasTransactions,
+  ]); // This must be called data
 }
 
 async function seedModels() {
