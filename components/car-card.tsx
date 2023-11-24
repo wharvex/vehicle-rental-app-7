@@ -22,7 +22,7 @@ const CarCard: NextPage<CarCardType> = ({
   priceValueText,
 }) => {
   return (
-    <div className="flex flex-col items-start justify-start p-2.5 border-solid border-black border-2 bg-orange-200">
+    <div className="flex flex-col items-center justify-center p-2.5 border-solid border-black border-2 bg-orange-200">
       <DetailRowCarCard
         labelText1="Make:"
         valueText1={makeValueText}

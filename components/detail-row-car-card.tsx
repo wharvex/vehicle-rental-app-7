@@ -38,7 +38,7 @@ const DetailRowCarCard: NextPage<DetailRowCarCardType> = ({
 
   return (
     <div
-      className="flex flex-row items-start justify-center p-1 gap-[10px]"
+      className="flex flex-row items-center justify-center p-1 gap-[10px]"
       style={detailRowCarCardStyle}
     >
       <DetailCarCard labelText={labelText1} valueText={valueText1}/>

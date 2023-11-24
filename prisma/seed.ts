@@ -33,7 +33,7 @@ async function seedMakesAndModels() {
       },
     } satisfies Prisma.ModelCreateInput;
   });
-  let k = 0;
+  // let k = 0;
   // for (let j = 0; j < 7; j++) {
   //   makeDatas[j].models = [
   //     modelDatas[j + k] as Prisma.ModelCreateInput,
@@ -43,15 +43,15 @@ async function seedMakesAndModels() {
   //   k += 2;
   // }
   const makeDatasTransactions = Array.from(makeDatas, (data) =>
-    prisma.make.create({ data })
+    prisma.make.create({ data: data })
   );
   const modelDatasTransactions = Array.from(modelDatas, (data) =>
-    prisma.model.create({ data })
+    prisma.model.create({ data: data })
   );
   await prisma.$transaction([
     ...makeDatasTransactions,
     ...modelDatasTransactions,
-  ]); // This must be called data
+  ]);
 }
 
 async function seedModels() {

@@ -20,14 +20,29 @@ export default async function MainContentCarCards(fn: MainContentCarCardsType) {
     };
   }, [fn.mainContentCarCardsAlignSelf, fn.mainContentCarCardsFlex]);
 
+  /**
+   * Need to "include" entries from other tables.
+   * Need to wrap this find call in a function to get its return type, based on method found here:
+   * https://www.prisma.io/docs/concepts/components/prisma-client/advanced-type-safety/operating-against-partial-structures-of-model-types#solution-1
+   * */
   async function getModels() {
-    const models = await prisma.model.findMany({});
+    const models = await prisma.model.findMany({
+      include: {
+        make: true,
+      },
+    });
     return models;
   }
 
   type modelsType = Prisma.PromiseReturnType<typeof getModels>;
 
   const models = await getModels();
+
+  /** Adapted this reduce from: https://stackoverflow.com/a/44996257
+   * It splits models into an array of two-item arrays so they can be mapped over 2-by-2.
+   * If models has an odd number of elements, the last array in pairwiseModels will only
+   * have one element.
+   * */
   const pairwiseModels = models.reduce<modelsType[]>(
     (result, _, index, array) => {
       if (index % 2 === 0) result.push(array.slice(index, index + 2));
@@ -35,7 +50,6 @@ export default async function MainContentCarCards(fn: MainContentCarCardsType) {
     },
     []
   );
-  console.log(pairwiseModels);
 
   return (
     <div
@@ -47,7 +61,7 @@ export default async function MainContentCarCards(fn: MainContentCarCardsType) {
           key={model[0].id}
           image1="/image-11@2x.png"
           image11="/image-11@2x.png"
-          makeValueText1="ford"
+          makeValueText1={model[0].make.name}
           modelValueText1={model[0].name}
           colorValueText1="ford"
           yearValueText1="ford"
