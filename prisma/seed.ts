@@ -1,12 +1,10 @@
 import { PrismaClient, Prisma } from "@prisma/client";
 import { faker, fakerEN_US } from "@faker-js/faker";
 import __ from "lodash";
-import dotenv from "dotenv";
-import path from "path";
+import { ImagesResults } from "@/models/images";
+import fetchImages from "@/lib/fetchImages";
 
 const prisma = new PrismaClient();
-dotenv.config({ path: path.resolve(__dirname, "../.env.local") });
-console.log(process.env)
 
 async function seedWithFaker() {
   const customerDatas = Array.from({ length: 100 }, () => {
@@ -74,7 +72,13 @@ async function seedWithFaker() {
     } satisfies Prisma.CarTypeCreateInput;
   });
 
-  const carDatas = Array.from({ length: 30 }, () => {
+  const url = "https://api.pexels.com/v1/search?query=car&per_page=30";
+  const images: ImagesResults | undefined = await fetchImages(url);
+  if (!images) {
+    console.log("no images found");
+    return;
+  }
+  const carDatas = Array.from({ length: 30 }, (_, idx) => {
     return {
       id: faker.string.uuid(),
       make: {
@@ -108,7 +112,7 @@ async function seedWithFaker() {
           id: (__.sample(managerDatas) as Prisma.ManagerCreateInput).id,
         },
       },
-      image_path: "https://random.imagecdn.app/v1/image",
+      image_path: images.photos[idx].src.large,
     } satisfies Prisma.CarCreateInput;
   });
 
@@ -129,8 +133,7 @@ async function seedWithFaker() {
   ]);
 }
 
-async function main() {
-  console.log(`Start seeding ...`);
+async function seedWithoutFaker() {
   // Creating 4 lot locations with one Manager each
   const albanyLot = await prisma.lot.create({
     data: {
@@ -455,6 +458,11 @@ async function main() {
       image_path: "cars/black-coupe",
     },
   });
+}
+
+async function main() {
+  console.log(`Start seeding ...`);
+  // await seedWithoutFaker();
   await seedWithFaker();
   console.log(`Seeding finished.`);
 }
