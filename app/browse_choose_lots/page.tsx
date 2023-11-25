@@ -1,3 +1,4 @@
+'use client'
 import type { NextPage } from "next";
 import Layout from "../../components/my-layout";
 import ChooseLots from "@/components/browse-choose-lots";

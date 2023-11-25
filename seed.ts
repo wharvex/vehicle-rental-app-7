@@ -125,6 +125,7 @@ async function main() {
       },
     },
   });
+  console.log('Creates christmas closure: ', christmasClosure);
   // Creating 2 Makes
   const ford = await prisma.make.create({
     data: {
