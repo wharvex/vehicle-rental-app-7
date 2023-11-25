@@ -4,6 +4,7 @@ import CarCard from "./car-card";
 type CarCardRowType = {
   image1?: string;
   image11?: string;
+  hasTwoCards: boolean;
   makeValueText1: string;
   modelValueText1: string;
   colorValueText1: string;
@@ -21,6 +22,7 @@ type CarCardRowType = {
 const CarCardRow: NextPage<CarCardRowType> = ({
   image1,
   image11,
+  hasTwoCards,
   makeValueText1,
   modelValueText1,
   colorValueText1,
@@ -45,15 +47,17 @@ const CarCardRow: NextPage<CarCardRowType> = ({
         typeValueText={typeValueText1}
         priceValueText={priceValueText1}
       />
-      <CarCard
-        image1={image11}
-        makeValueText={makeValueText2}
-        modelValueText={modelValueText2}
-        colorValueText={colorValueText2}
-        yearValueText={yearValueText2}
-        typeValueText={typeValueText2}
-        priceValueText={priceValueText2}
-      />
+      {hasTwoCards && (
+        <CarCard
+          image1={image11}
+          makeValueText={makeValueText2}
+          modelValueText={modelValueText2}
+          colorValueText={colorValueText2}
+          yearValueText={yearValueText2}
+          typeValueText={typeValueText2}
+          priceValueText={priceValueText2}
+        />
+      )}
     </div>
   );
 };

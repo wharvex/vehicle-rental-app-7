@@ -1,68 +1,132 @@
 import { PrismaClient, Prisma } from "@prisma/client";
-import { faker } from "@faker-js/faker";
+import { faker, fakerEN_US } from "@faker-js/faker";
+import __ from "lodash";
+import dotenv from "dotenv";
+import path from "path";
 
 const prisma = new PrismaClient();
+dotenv.config({ path: path.resolve(__dirname, "../.env.local") });
+console.log(process.env)
 
-async function seedCustomers() {
-  const datas = Array.from({ length: 100 }, () => {
+async function seedWithFaker() {
+  const customerDatas = Array.from({ length: 100 }, () => {
     const name = faker.person.firstName();
     return {
       name: name,
       email: faker.internet.email({ firstName: name }),
+      id: faker.string.uuid(),
     } satisfies Prisma.CustomerCreateInput;
   });
-  await prisma.$transaction(
-    Array.from(datas, (data) => prisma.customer.create({ data })) // This must be called data
-  );
-}
 
-async function seedMakesAndModels() {
-  const makeDatas: Prisma.MakeCreateInput[] = Array.from({ length: 7 }, () => {
+  const makeDatas = Array.from({ length: 7 }, () => {
     return {
       name: faker.vehicle.manufacturer(),
       id: faker.string.uuid(),
     } satisfies Prisma.MakeCreateInput;
   });
-  const modelDatas = Array.from({ length: 21 }, (_, i) => {
+
+  const modelDatas = Array.from({ length: 21 }, () => {
     return {
       name: faker.vehicle.model(),
       make: {
         connect: {
-          id: makeDatas[i % 3].id,
+          id: (__.sample(makeDatas) as Prisma.MakeCreateInput).id,
         },
       },
+      id: faker.string.uuid(),
     } satisfies Prisma.ModelCreateInput;
   });
-  // let k = 0;
-  // for (let j = 0; j < 7; j++) {
-  //   makeDatas[j].models = [
-  //     modelDatas[j + k] as Prisma.ModelCreateInput,
-  //     modelDatas[j + k + 1],
-  //     modelDatas[j + k + 2],
-  //   ];
-  //   k += 2;
-  // }
-  const makeDatasTransactions = Array.from(makeDatas, (data) =>
-    prisma.make.create({ data: data })
-  );
-  const modelDatasTransactions = Array.from(modelDatas, (data) =>
-    prisma.model.create({ data: data })
-  );
-  await prisma.$transaction([
-    ...makeDatasTransactions,
-    ...modelDatasTransactions,
-  ]);
-}
 
-async function seedModels() {
-  const datas = Array.from({ length: 21 }, () => {
+  const managerDatas = Array.from({ length: 30 }, () => {
+    const name = faker.person.firstName();
     return {
-      name: faker.vehicle.manufacturer(),
-    } satisfies Prisma.MakeCreateInput;
+      name: name,
+      email: faker.internet.email({ firstName: name }),
+      id: faker.string.uuid(),
+    } satisfies Prisma.ManagerCreateInput;
   });
-  await prisma.$transaction(
-    Array.from(datas, (data) => prisma.make.create({ data })) // This must be called data
-  );
+
+  const lotDatas = Array.from({ length: 25 }, () => {
+    const state = fakerEN_US.location.state({ abbreviated: true });
+    return {
+      address: {
+        create: {
+          street_address: faker.location.streetAddress(),
+          city: faker.location.city(),
+          zip_code: Number(fakerEN_US.location.zipCode({ state: state })),
+          state: state,
+        },
+      },
+      manager: {
+        connect: {
+          id: (__.sample(managerDatas) as Prisma.ManagerCreateInput).id, // Choose a random manager to connect to the lot
+        },
+      },
+      id: faker.string.uuid(),
+    } satisfies Prisma.LotCreateInput;
+  });
+
+  const carTypeDatas = Array.from({ length: 5 }, () => {
+    return {
+      name: faker.vehicle.type(),
+      price: faker.commerce.price({ min: 100 }),
+      id: faker.string.uuid(),
+    } satisfies Prisma.CarTypeCreateInput;
+  });
+
+  const carDatas = Array.from({ length: 30 }, () => {
+    return {
+      id: faker.string.uuid(),
+      make: {
+        connect: {
+          id: (__.sample(makeDatas) as Prisma.MakeCreateInput).id,
+        },
+      },
+      model: {
+        connect: {
+          id: (__.sample(modelDatas) as Prisma.ModelCreateInput).id,
+        },
+      },
+      color: faker.vehicle.color(),
+      year: faker.number.int({ min: 2010, max: 2023 }),
+      current_lot: {
+        connect: {
+          id: (__.sample(lotDatas) as Prisma.LotCreateInput).id,
+        },
+      },
+      car_type: {
+        connect: {
+          id: (__.sample(carTypeDatas) as Prisma.CarTypeCreateInput).id,
+        },
+      },
+      mileage: faker.number.int({ max: 100000 }),
+      licensePlate:
+        faker.string.alpha({ casing: "upper", length: 3 }) +
+        faker.string.numeric({ length: 4 }),
+      user_added: {
+        connect: {
+          id: (__.sample(managerDatas) as Prisma.ManagerCreateInput).id,
+        },
+      },
+      image_path: "https://random.imagecdn.app/v1/image",
+    } satisfies Prisma.CarCreateInput;
+  });
+
+  await prisma.$transaction([
+    ...Array.from(customerDatas, (data) =>
+      prisma.customer.create({ data: data })
+    ),
+    ...Array.from(makeDatas, (data) => prisma.make.create({ data: data })),
+    ...Array.from(modelDatas, (data) => prisma.model.create({ data: data })),
+    ...Array.from(managerDatas, (data) =>
+      prisma.manager.create({ data: data })
+    ),
+    ...Array.from(lotDatas, (data) => prisma.lot.create({ data: data })),
+    ...Array.from(carTypeDatas, (data) =>
+      prisma.carType.create({ data: data })
+    ),
+    ...Array.from(carDatas, (data) => prisma.car.create({ data: data })),
+  ]);
 }
 
 async function main() {
@@ -391,8 +455,7 @@ async function main() {
       image_path: "cars/black-coupe",
     },
   });
-  await seedCustomers();
-  await seedMakesAndModels();
+  await seedWithFaker();
   console.log(`Seeding finished.`);
 }
 
