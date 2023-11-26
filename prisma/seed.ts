@@ -67,13 +67,22 @@ async function seedWithFaker() {
   const carTypeDatas = Array.from({ length: 5 }, () => {
     return {
       name: faker.vehicle.type(),
-      price: faker.commerce.price({ min: 100 }),
+      price: faker.commerce.price({ min: 100, max: 1000 }),
       id: faker.string.uuid(),
     } satisfies Prisma.CarTypeCreateInput;
   });
 
-  const url = "https://api.pexels.com/v1/search?query=car&per_page=30";
-  const images: ImagesResults | undefined = await fetchImages(url);
+  // const carFeatureDatas = Array.from({ length: 90 }, () => {
+  //   return {
+  //     id: faker.string.uuid(),
+  //     name: faker.word.adjective() + " " + faker.word.noun(),
+  //     price: faker.commerce.price({ min: 50, max: 500 }),
+  //   } satisfies Prisma.CarFeatureCreateInput;
+  // });
+
+  const imagesQueryUrl =
+    "https://api.pexels.com/v1/search?query=car&per_page=30";
+  const images: ImagesResults | undefined = await fetchImages(imagesQueryUrl);
   if (!images) {
     console.log("no images found");
     return;
@@ -91,7 +100,7 @@ async function seedWithFaker() {
           id: (__.sample(modelDatas) as Prisma.ModelCreateInput).id,
         },
       },
-      color: faker.vehicle.color(),
+      color: __.capitalize(faker.vehicle.color()),
       year: faker.number.int({ min: 2010, max: 2023 }),
       current_lot: {
         connect: {
@@ -113,6 +122,18 @@ async function seedWithFaker() {
         },
       },
       image_path: images.photos[idx].src.large,
+      car_features: {
+        create: Array.from({ length: 3 }, () => {
+          return {
+            car_feature: {
+              create: {
+                name: faker.company.catchPhrase(),
+                price: faker.commerce.price({ min: 50, max: 500 }),
+              },
+            },
+          };
+        }),
+      },
     } satisfies Prisma.CarCreateInput;
   });
 
@@ -129,6 +150,10 @@ async function seedWithFaker() {
     ...Array.from(carTypeDatas, (data) =>
       prisma.carType.create({ data: data })
     ),
+
+    // ...Array.from(carFeatureDatas, (data) =>
+    //   prisma.carFeature.create({ data: data })
+    // ),
     ...Array.from(carDatas, (data) => prisma.car.create({ data: data })),
   ]);
 }

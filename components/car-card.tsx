@@ -44,8 +44,17 @@ const CarCard: NextPage<CarCardType> = ({
       <DetailRowCarCard
         labelText1="Type:"
         valueText1={typeValueText}
-        labelText2="Price:"
-        valueText2={priceValueText}
+        labelText2="Type Price:"
+        valueText2={"$" + priceValueText}
+        detailRowCarCardAlignItems="center"
+        detailRowCarCardJustifyContent="center"
+        detailRowCarCardAlignSelf="stretch"
+      />
+      <DetailRowCarCard
+        labelText1="Feature:"
+        valueText1={typeValueText}
+        labelText2="Feat. Price:"
+        valueText2={"$" + priceValueText}
         detailRowCarCardAlignItems="center"
         detailRowCarCardJustifyContent="center"
         detailRowCarCardAlignSelf="stretch"
