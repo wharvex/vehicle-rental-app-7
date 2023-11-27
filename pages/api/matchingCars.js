@@ -4,18 +4,18 @@ export default async function handler(req, res) {
     const {pickupLot, returnLot, pickupDate, returnDate} = req.query;
     const pickupDateObj = new Date(pickupDate);
     const returnDateObj = new Date(returnDate);
-    const parsedPickupLotId = parseInt(pickupLot);
-    const parsedReturnLotId = parseInt(returnLot);
+    const pickupLotId = pickupLot;
+    const returnLotId = returnLot;
 
-    if (isNaN(parsedPickupLotId) || isNaN(parsedReturnLotId)) {
-        throw new Error('Invalid lot IDs');
-      }
+    // if (isNaN(parsedPickupLotId) || isNaN(parsedReturnLotId)) {
+    //     throw new Error('Invalid lot IDs');
+    //   }
 
     try{
         const availableCars = await prisma.car.findMany({
             where: {
                 AND: [
-                    { current_lot_id: parsedPickupLotId },
+                    { current_lot_id: pickupLotId },
                     { reservations: {
                         none: {
                         OR: [
@@ -27,8 +27,8 @@ export default async function handler(req, res) {
                             },
                             {
                             AND: [
-                                { pickup_lot_id: parsedPickupLotId },
-                                { return_lot_id: parsedReturnLotId },
+                                { pickup_lot_id: pickupLotId },
+                                { return_lot_id: returnLotId },
                             ],
                             },
                         ],

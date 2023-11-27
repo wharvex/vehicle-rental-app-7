@@ -24,7 +24,7 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
   const params = useSearchParams();
 
   interface Car {
-    id: number;
+    id: string;
     year: number;
     make: prisma.Make;
     model: prisma.Model;

@@ -11,23 +11,23 @@ datasource db {
 }
 
 model Car {
-  id             Int           @id @default(autoincrement())
+  id             String        @id @default(uuid())
   reservations   Reservation[]
   make           Make          @relation(fields: [make_id], references: [id])
-  make_id        Int
+  make_id        String
   model          Model         @relation(fields: [model_id], references: [id])
-  model_id       Int
+  model_id       String
   color          String
   year           Int
   num_rentals    Int           @default(0)
   current_lot    Lot           @relation(fields: [current_lot_id], references: [id])
-  current_lot_id Int
+  current_lot_id String
   car_type       CarType       @relation(fields: [car_type_id], references: [id])
-  car_type_id    Int
+  car_type_id    String
   mileage        Int
   licensePlate   String
   user_added     Manager       @relation(fields: [user_added_id], references: [id])
-  user_added_id  Int
+  user_added_id  String
   date_added     DateTime      @default(now())
   in_use         Boolean       @default(false)
   features       CarFeature[]
@@ -35,26 +35,26 @@ model Car {
 }
 
 model Lot {
-  id                Int           @id @default(autoincrement())
+  id                String        @id @default(uuid())
   name              String        @unique
   address           Address       @relation(fields: [address_id], references: [id])
-  address_id        Int
+  address_id        String
   manager           Manager       @relation(fields: [manager_id], references: [id])
-  manager_id        Int
+  manager_id        String
   current_inventory Car[]
   pickups           Reservation[] @relation("Pickups")
   returns           Reservation[] @relation("Returns")
-  closures          Closure[]
+  closures          Closure[]     @relation("LotClosure")
 }
 
 model Reservation {
-  id            Int      @id @default(autoincrement())
+  id            String   @id @default(uuid())
   car           Car      @relation(fields: [car_ID], references: [id])
-  car_ID        Int
+  car_ID        String
   pickup_lot    Lot      @relation("Pickups", fields: [pickup_lot_id], references: [id])
-  pickup_lot_id Int
+  pickup_lot_id String
   return_lot    Lot      @relation("Returns", fields: [return_lot_id], references: [id])
-  return_lot_id Int
+  return_lot_id String
   pickup_date   DateTime
   return_date   DateTime
   date_created  DateTime @default(now())
@@ -70,7 +70,7 @@ model Customer {
 }
 
 model Manager {
-  id          Int    @id @default(autoincrement())
+  id          String @id @default(uuid())
   email       String @unique
   name        String
   manages_lot Lot[]
@@ -78,29 +78,29 @@ model Manager {
 }
 
 model Model {
-  id      Int    @id @default(autoincrement())
+  id      String @id @default(uuid())
   name    String
   make    Make   @relation(fields: [make_id], references: [id])
-  make_id Int
+  make_id String
   cars    Car[]
 }
 
 model Make {
-  id     Int     @id @default(autoincrement())
+  id     String  @id @default(uuid())
   name   String
   models Model[]
   cars   Car[]
 }
 
 model CarType {
-  id    Int     @id @default(autoincrement())
+  id    String  @id @default(uuid())
   name  String
   price Decimal
   cars  Car[]
 }
 
 model Address {
-  id             Int    @id @default(autoincrement())
+  id             String @id @default(uuid())
   street_address String
   city           String
   zip_code       Int
@@ -109,14 +109,13 @@ model Address {
 }
 
 model Closure {
-  id     Int      @id @default(autoincrement())
+  id     String   @id @default(uuid())
   date   DateTime
-  lots   Lot[]
-  lot_id Int
+  lots   Lot[]    @relation("LotClosure")
 }
 
 model CarFeature {
-  id    Int     @id @default(autoincrement())
+  id    String  @id @default(uuid())
   name  String
   price Decimal
   cars  Car[]

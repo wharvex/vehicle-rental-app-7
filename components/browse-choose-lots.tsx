@@ -21,7 +21,7 @@ const ChooseLots: NextPage<ChooseLotsTitle> = ({
   }, [chooseLotsBackground]);
 
   interface Lot {
-    id: number;
+    id: string;
     name: string;
   }
   
@@ -46,7 +46,6 @@ const ChooseLots: NextPage<ChooseLotsTitle> = ({
 
   const handlePickupLotChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setPickupLot(event.target.value);
-    console.log('pickupLot: ', pickupLot);
   };
   
   const handleReturnLotChange = (event: React.ChangeEvent<HTMLSelectElement>) => {

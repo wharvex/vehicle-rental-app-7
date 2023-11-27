@@ -91,10 +91,10 @@ async function main() {
       date: christmas,
       lots: {
         connect: [
-          {id: albanyLot.id },
+          { id: albanyLot.id },
           { id: maristLot.id },
           { id: oneontaLot.id },
-         { id: newpaltzLot.id }
+          { id: newpaltzLot.id }
         ],
       },
     },
@@ -104,10 +104,10 @@ async function main() {
       date: thanksgiving,
       lots: {
         connect: [
-          {id: albanyLot.id },
+          { id: albanyLot.id },
           { id: maristLot.id },
           { id: oneontaLot.id },
-         { id: newpaltzLot.id }
+          { id: newpaltzLot.id }
         ],
       },
     },
@@ -117,10 +117,10 @@ async function main() {
       date: newyears,
       lots: {
         connect: [
-          {id: albanyLot.id },
+          { id: albanyLot.id },
           { id: maristLot.id },
           { id: oneontaLot.id },
-         { id: newpaltzLot.id }
+          { id: newpaltzLot.id }
         ],
       },
     },

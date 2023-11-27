@@ -26,7 +26,7 @@ const ChooseDates: NextPage<ChooseDatesTitle> = ({
   const params = useSearchParams();
 
   interface Closure {
-    id: number;
+    id: string;
     date: Date;
   }
 
