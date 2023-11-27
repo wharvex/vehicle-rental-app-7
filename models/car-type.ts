@@ -1,6 +1,5 @@
 import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
-import { My_Soul } from "next/font/google";
 
 /**
  * Need to "include" entries from other tables.
@@ -30,6 +29,7 @@ export async function getCars() {
   });
   return cars;
 }
+
 export async function getCarFeatureWithID(featureID: string) {
   const carFeature = await prisma.carFeature.findUniqueOrThrow({
     where: {

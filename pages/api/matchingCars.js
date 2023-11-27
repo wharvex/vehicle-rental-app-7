@@ -42,7 +42,7 @@ export default async function handler(req, res) {
         make: true,
         model: true,
         car_type: true,
-        features: true,
+        car_features: true,
       },
     });
     console.log("found cars: ", availableCars);
