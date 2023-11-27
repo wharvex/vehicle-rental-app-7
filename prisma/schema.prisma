@@ -36,7 +36,7 @@ model Car {
 
 model Lot {
   id                Int           @id @default(autoincrement())
-  name              String
+  name              String        @unique
   address           Address       @relation(fields: [address_id], references: [id])
   address_id        Int
   manager           Manager       @relation(fields: [manager_id], references: [id])
