@@ -13,6 +13,7 @@ export default authMiddleware({
     "/api/closures",
     "/api/matchingCars",
     "/test-db",
+    "/test-db-cars",
   ],
 });
 

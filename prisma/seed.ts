@@ -1,4 +1,8 @@
 import { PrismaClient, Prisma } from "@prisma/client";
+import { faker, fakerEN_US } from "@faker-js/faker";
+import __ from "lodash";
+import { ImagesResults } from "@/models/images";
+import fetchImages from "@/lib/fetchImages";
 
 const prisma = new PrismaClient();
 
@@ -6,8 +10,161 @@ const christmas = new Date('2023-12-25');
 const thanksgiving = new Date('2023-11-23');
 const newyears = new Date('2024-01-01');
 
-async function main() {
-  console.log(`Start seeding ...`);
+
+
+async function seedWithFaker() {
+  const customerDatas = Array.from({ length: 100 }, () => {
+    const name = faker.person.firstName();
+    return {
+      name: name,
+      email: faker.internet.email({ firstName: name }),
+      id: faker.string.uuid(),
+    } satisfies Prisma.CustomerCreateInput;
+  });
+
+  const makeDatas = Array.from({ length: 7 }, () => {
+    return {
+      name: faker.vehicle.manufacturer(),
+      id: faker.string.uuid(),
+    } satisfies Prisma.MakeCreateInput;
+  });
+
+  const modelDatas = Array.from({ length: 21 }, () => {
+    return {
+      name: faker.vehicle.model(),
+      make: {
+        connect: {
+          id: (__.sample(makeDatas) as Prisma.MakeCreateInput).id,
+        },
+      },
+      id: faker.string.uuid(),
+    } satisfies Prisma.ModelCreateInput;
+  });
+
+  const managerDatas = Array.from({ length: 30 }, () => {
+    const name = faker.person.firstName();
+    return {
+      name: name,
+      email: faker.internet.email({ firstName: name }),
+      id: faker.string.uuid(),
+    } satisfies Prisma.ManagerCreateInput;
+  });
+
+  const lotDatas = Array.from({ length: 25 }, () => {
+    const state = fakerEN_US.location.state({ abbreviated: true });
+    return {
+      address: {
+        create: {
+          street_address: faker.location.streetAddress(),
+          city: faker.location.city(),
+          zip_code: Number(fakerEN_US.location.zipCode({ state: state })),
+          state: state,
+        },
+      },
+      manager: {
+        connect: {
+          id: (__.sample(managerDatas) as Prisma.ManagerCreateInput).id, // Choose a random manager to connect to the lot
+        },
+      },
+      id: faker.string.uuid(),
+    } satisfies Prisma.LotCreateInput;
+  });
+
+  const carTypeDatas = Array.from({ length: 5 }, () => {
+    return {
+      name: faker.vehicle.type(),
+      price: faker.commerce.price({ min: 100, max: 1000 }),
+      id: faker.string.uuid(),
+    } satisfies Prisma.CarTypeCreateInput;
+  });
+
+  // const carFeatureDatas = Array.from({ length: 90 }, () => {
+  //   return {
+  //     id: faker.string.uuid(),
+  //     name: faker.word.adjective() + " " + faker.word.noun(),
+  //     price: faker.commerce.price({ min: 50, max: 500 }),
+  //   } satisfies Prisma.CarFeatureCreateInput;
+  // });
+
+  const imagesQueryUrl =
+    "https://api.pexels.com/v1/search?query=car&per_page=30";
+  const images: ImagesResults | undefined = await fetchImages(imagesQueryUrl);
+  if (!images) {
+    console.log("no images found");
+    return;
+  }
+  const carDatas = Array.from({ length: 30 }, (_, idx) => {
+    return {
+      id: faker.string.uuid(),
+      make: {
+        connect: {
+          id: (__.sample(makeDatas) as Prisma.MakeCreateInput).id,
+        },
+      },
+      model: {
+        connect: {
+          id: (__.sample(modelDatas) as Prisma.ModelCreateInput).id,
+        },
+      },
+      color: __.capitalize(faker.vehicle.color()),
+      year: faker.number.int({ min: 2010, max: 2023 }),
+      current_lot: {
+        connect: {
+          id: (__.sample(lotDatas) as Prisma.LotCreateInput).id,
+        },
+      },
+      car_type: {
+        connect: {
+          id: (__.sample(carTypeDatas) as Prisma.CarTypeCreateInput).id,
+        },
+      },
+      mileage: faker.number.int({ max: 100000 }),
+      licensePlate:
+        faker.string.alpha({ casing: "upper", length: 3 }) +
+        faker.string.numeric({ length: 4 }),
+      user_added: {
+        connect: {
+          id: (__.sample(managerDatas) as Prisma.ManagerCreateInput).id,
+        },
+      },
+      image_path: images.photos[idx].src.large,
+      car_features: {
+        create: Array.from({ length: 3 }, () => {
+          return {
+            car_feature: {
+              create: {
+                name: faker.company.catchPhrase(),
+                price: faker.commerce.price({ min: 50, max: 500 }),
+              },
+            },
+          };
+        }),
+      },
+    } satisfies Prisma.CarCreateInput;
+  });
+
+  await prisma.$transaction([
+    ...Array.from(customerDatas, (data) =>
+      prisma.customer.create({ data: data })
+    ),
+    ...Array.from(makeDatas, (data) => prisma.make.create({ data: data })),
+    ...Array.from(modelDatas, (data) => prisma.model.create({ data: data })),
+    ...Array.from(managerDatas, (data) =>
+      prisma.manager.create({ data: data })
+    ),
+    ...Array.from(lotDatas, (data) => prisma.lot.create({ data: data })),
+    ...Array.from(carTypeDatas, (data) =>
+      prisma.carType.create({ data: data })
+    ),
+
+    // ...Array.from(carFeatureDatas, (data) =>
+    //   prisma.carFeature.create({ data: data })
+    // ),
+    ...Array.from(carDatas, (data) => prisma.car.create({ data: data })),
+  ]);
+}
+
+async function seedWithoutFaker() {
   // Creating 4 lot locations with one Manager each
   const albanyLot = await prisma.lot.create({
     data: {
@@ -375,7 +532,13 @@ async function main() {
       user_added_id: newpaltzLot.manager_id,
       image_path: 'cars/black-coupe'
     },
-  })
+  });
+}
+
+async function main() {
+  console.log(`Start seeding ...`);
+  // await seedWithoutFaker();
+  await seedWithFaker();
   console.log(`Seeding finished.`);
 }
 

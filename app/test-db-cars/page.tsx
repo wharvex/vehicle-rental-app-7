@@ -14,8 +14,6 @@ const Page: NextPage = () => {
         headerPageBoxSizing="border-box"
         mainChild1={
           <MainContentCarCards
-            image1="/image-1@2x.png"
-            image11="/image-1@2x.png"
             mainContentCarCardsAlignSelf="stretch"
             mainContentCarCardsFlex="1"
           />
