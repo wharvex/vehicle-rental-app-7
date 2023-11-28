@@ -348,6 +348,7 @@ async function seedWithoutFaker() {
     },
   });
   // Creating cars for the Albany lot
+  const images = await obtainImages();
   await prisma.car.create({
     data: {
       make_id: ford.id,
@@ -361,7 +362,7 @@ async function seedWithoutFaker() {
       mileage: 1000,
       licensePlate: "ABC1111",
       user_added_id: albanyLot.manager_id,
-      image_path: "cars/red-explorer",
+      image_path: (__.sample(images.photos) as Photo).src.large,
     },
   });
   await prisma.car.create({
@@ -377,7 +378,7 @@ async function seedWithoutFaker() {
       mileage: 1000,
       licensePlate: "DEF1111",
       user_added_id: albanyLot.manager_id,
-      image_path: "cars/red-focus",
+      image_path: (__.sample(images.photos) as Photo).src.large,
     },
   });
   await prisma.car.create({
@@ -393,7 +394,7 @@ async function seedWithoutFaker() {
       mileage: 1000,
       licensePlate: "GHI1111",
       user_added_id: albanyLot.manager_id,
-      image_path: "cars/red-coupe",
+      image_path: (__.sample(images.photos) as Photo).src.large,
     },
   });
   // Creating cars for the Marist lot
@@ -410,7 +411,7 @@ async function seedWithoutFaker() {
       mileage: 2000,
       licensePlate: "ABC2222",
       user_added_id: maristLot.manager_id,
-      image_path: "cars/blue-explorer",
+      image_path: (__.sample(images.photos) as Photo).src.large,
     },
   });
   await prisma.car.create({
@@ -426,7 +427,7 @@ async function seedWithoutFaker() {
       mileage: 2000,
       licensePlate: "DEF2222",
       user_added_id: maristLot.manager_id,
-      image_path: "cars/blue-focus",
+      image_path: (__.sample(images.photos) as Photo).src.large,
     },
   });
   await prisma.car.create({
@@ -442,7 +443,7 @@ async function seedWithoutFaker() {
       mileage: 2000,
       licensePlate: "GHI2222",
       user_added_id: maristLot.manager_id,
-      image_path: "cars/blue-coupe",
+      image_path: (__.sample(images.photos) as Photo).src.large,
     },
   });
   // Creating cars for the Oneonta lot
@@ -459,7 +460,7 @@ async function seedWithoutFaker() {
       mileage: 3000,
       licensePlate: "ABC3333",
       user_added_id: oneontaLot.manager_id,
-      image_path: "cars/silver-explorer",
+      image_path: (__.sample(images.photos) as Photo).src.large,
     },
   });
   await prisma.car.create({
@@ -475,7 +476,7 @@ async function seedWithoutFaker() {
       mileage: 3000,
       licensePlate: "DEF3333",
       user_added_id: oneontaLot.manager_id,
-      image_path: "cars/silver-focus",
+      image_path: (__.sample(images.photos) as Photo).src.large,
     },
   });
   await prisma.car.create({
@@ -491,7 +492,7 @@ async function seedWithoutFaker() {
       mileage: 3000,
       licensePlate: "GHI3333",
       user_added_id: oneontaLot.manager_id,
-      image_path: "cars/silver-coupe",
+      image_path: (__.sample(images.photos) as Photo).src.large,
     },
   });
   // Creating cars for the New Paltz lot
@@ -508,7 +509,7 @@ async function seedWithoutFaker() {
       mileage: 4000,
       licensePlate: "ABC4444",
       user_added_id: newpaltzLot.manager_id,
-      image_path: "cars/black-explorer",
+      image_path: (__.sample(images.photos) as Photo).src.large,
     },
   });
   await prisma.car.create({
@@ -524,7 +525,7 @@ async function seedWithoutFaker() {
       mileage: 4000,
       licensePlate: "DEF4444",
       user_added_id: newpaltzLot.manager_id,
-      image_path: "cars/black-focus",
+      image_path: (__.sample(images.photos) as Photo).src.large,
     },
   });
   await prisma.car.create({
@@ -540,14 +541,14 @@ async function seedWithoutFaker() {
       mileage: 4000,
       licensePlate: "GHI4444",
       user_added_id: newpaltzLot.manager_id,
-      image_path: "cars/black-coupe",
+      image_path: (__.sample(images.photos) as Photo).src.large,
     },
   });
 }
 
 async function main() {
   console.log(`Start seeding ...`);
-  // await seedWithoutFaker();
+  await seedWithoutFaker();
   await seedWithFaker();
   console.log(await prisma.lot.findMany())
   console.log(`Seeding finished.`);

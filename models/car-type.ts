@@ -38,6 +38,16 @@ export async function getCarFeatureWithID(featureID: string) {
   });
   return carFeature;
 }
+export async function getCarFeaturesWithIDs(featureIDs: string[] | undefined) {
+  const carFeatures = await prisma.carFeature.findMany({
+    where: {
+      id: {
+        in: featureIDs,
+      },
+    },
+  });
+  return carFeatures;
+}
 
 export type carType = Prisma.PromiseReturnType<typeof getCar>;
 export type carsType = Prisma.PromiseReturnType<typeof getCars>;
