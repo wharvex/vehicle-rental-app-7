@@ -102,6 +102,7 @@ async function seedWithFaker() {
         },
       },
       color: __.capitalize(faker.vehicle.color()),
+      details: "Bluetooth, Cruise Control, Backup camera, Brake assist",
       year: faker.number.int({ min: 2010, max: 2023 }),
       current_lot: {
         connect: {
@@ -347,6 +348,7 @@ async function seedWithoutFaker() {
       make_id: ford.id,
       model_id: explorer.id,
       color: "Red",
+      details: "Bluetooth, Cruise Control, Backup camera, Brake assist",
       year: 2020,
       num_rentals: 0,
       current_lot_id: albanyLot.id,
@@ -362,6 +364,7 @@ async function seedWithoutFaker() {
       make_id: ford.id,
       model_id: focus.id,
       color: "Red",
+      details: "Bluetooth, Cruise Control, Backup camera, Brake assist",
       year: 2020,
       num_rentals: 0,
       current_lot_id: albanyLot.id,
@@ -377,6 +380,7 @@ async function seedWithoutFaker() {
       make_id: honda.id,
       model_id: coupe.id,
       color: "Red",
+      details: "Bluetooth, Cruise Control, Backup camera, Brake assist",
       year: 2020,
       num_rentals: 0,
       current_lot_id: albanyLot.id,
@@ -393,6 +397,7 @@ async function seedWithoutFaker() {
       make_id: ford.id,
       model_id: explorer.id,
       color: "Blue",
+      details: "Bluetooth, Cruise Control, Backup camera, Brake assist",
       year: 2021,
       num_rentals: 0,
       current_lot_id: maristLot.id,
@@ -408,6 +413,7 @@ async function seedWithoutFaker() {
       make_id: ford.id,
       model_id: focus.id,
       color: "Blue",
+      details: "Bluetooth, Cruise Control, Backup camera, Brake assist",
       year: 2021,
       num_rentals: 0,
       current_lot_id: maristLot.id,
@@ -423,6 +429,7 @@ async function seedWithoutFaker() {
       make_id: honda.id,
       model_id: coupe.id,
       color: "Blue",
+      details: "Bluetooth, Cruise Control, Backup camera, Brake assist",
       year: 2021,
       num_rentals: 0,
       current_lot_id: maristLot.id,
@@ -439,6 +446,7 @@ async function seedWithoutFaker() {
       make_id: ford.id,
       model_id: explorer.id,
       color: "Silver",
+      details: "Bluetooth, Cruise Control, Backup camera, Brake assist",
       year: 2022,
       num_rentals: 0,
       current_lot_id: oneontaLot.id,
@@ -454,6 +462,7 @@ async function seedWithoutFaker() {
       make_id: ford.id,
       model_id: focus.id,
       color: "Silver",
+      details: "Bluetooth, Cruise Control, Backup camera, Brake assist",
       year: 2022,
       num_rentals: 0,
       current_lot_id: oneontaLot.id,
@@ -469,6 +478,7 @@ async function seedWithoutFaker() {
       make_id: honda.id,
       model_id: coupe.id,
       color: "Silver",
+      details: "Bluetooth, Cruise Control, Backup camera, Brake assist",
       year: 2022,
       num_rentals: 0,
       current_lot_id: oneontaLot.id,
@@ -485,6 +495,7 @@ async function seedWithoutFaker() {
       make_id: ford.id,
       model_id: explorer.id,
       color: "Black",
+      details: "Bluetooth, Cruise Control, Backup camera, Brake assist",
       year: 2023,
       num_rentals: 0,
       current_lot_id: newpaltzLot.id,
@@ -500,6 +511,7 @@ async function seedWithoutFaker() {
       make_id: ford.id,
       model_id: focus.id,
       color: "Black",
+      details: "Bluetooth, Cruise Control, Backup camera, Brake assist",
       year: 2023,
       num_rentals: 0,
       current_lot_id: newpaltzLot.id,
@@ -515,6 +527,7 @@ async function seedWithoutFaker() {
       make_id: honda.id,
       model_id: coupe.id,
       color: "Black",
+      details: "Bluetooth, Cruise Control, Backup camera, Brake assist",
       year: 2023,
       num_rentals: 0,
       current_lot_id: newpaltzLot.id,
@@ -531,6 +544,7 @@ async function main() {
   console.log(`Start seeding ...`);
   await seedWithoutFaker();
   await seedWithFaker();
+  console.log(await prisma.lot.findMany())
   console.log(`Seeding finished.`);
 }
 

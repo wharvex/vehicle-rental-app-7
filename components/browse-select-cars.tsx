@@ -3,7 +3,6 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import { useState, useEffect, useMemo, type CSSProperties } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-
 import prisma from "@prisma/client";
 
 type SelectCarsTitle = {
@@ -63,7 +62,7 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
 
     return (
       <div
-        className="flex flex-row items-center justify-center pt-0 px-[100px] pb-[70px] box-border text-center text-36xl text-black font-body-large self-stretch flex-1"
+        // className="flex flex-row items-center justify-center pt-0 px-[100px] pb-[70px] box-border text-center text-36xl text-black font-body-large self-stretch flex-1"
         style={selectCarsStyle}
       >
         {/* <div className="self-stretch flex flex-col items-center justify-start gap-[10px] text-center text-9xl text-black font-reg-heading">
@@ -89,13 +88,16 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
               <div className="flex-column">
                 {availableCars.map((car) => (
                   <div key={car.id}>
+                    <img></img>
                     {car.year} {car.make.name} {car.model.name}
                   </div>
                 ))}
               </div>
             </div>
-            <Link
-              href="../browse_select_cars"
+            <Link href={{pathname: "../create_reservation", 
+                  query: {pickupLot: pickupLot, returnLot: returnLot,
+                          pickupDate: pickupDate, returnDate: returnDate,
+                          carSelection: carSelection }}}
               className="cursor-pointer [border:none] p-0 bg-[transparent] flex flex-col items-center justify-center"
             >
               <div className="box-border w-[214px] h-[82px] flex flex-row items-start justify-start border-[2px] border-solid border-black">
