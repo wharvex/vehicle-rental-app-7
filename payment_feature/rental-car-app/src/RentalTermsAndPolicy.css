@@ -1,0 +1,28 @@
+/* desgin RentalTerms And Policy part "I agree" button */
+
+
+.agree-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px; /* Adjust the margin top as needed */
+  }
+  
+  .agree-button {
+    padding: 10px 20px;
+    border: 1px solid lightgray;
+    background-color: lightgray;
+    color: black;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .agree-button:hover {
+    background-color: #f0f0f0;
+    color: #333;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  

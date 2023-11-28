@@ -1,0 +1,86 @@
+/* PaymentFeature.css */
+/* Apply background image to cover the full screen */
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('/public/rentalcarBackground.jpg');
+    background-size: cover;
+    background-position: center;
+    font-size: 18px; /* Set a default font size for the entire document */
+    font-family: Arial, sans-serif; /* Set a preferred font family */
+  }
+  
+  /* Style for the payment feature container */
+  .payment-feature {
+    padding: 20px;
+  }
+  
+  /* Increase font size for specific elements within the payment feature */
+  .payment-feature h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .payment-feature label {
+    font-size: 20px;
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .payment-feature input,
+  .payment-feature select {
+    font-size: 18px;
+    padding: 8px;
+    margin-bottom: 15px;
+    width: 100%;
+  }
+ /* Buttons */
+.payment-button {
+  padding: 10px 20px;
+  /*border: 1px solid lightgray; */ 
+  background-color: lightgray;
+  color: black;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+
+  border: 2px solid #808080; /* Light gray outline */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 16px; /* Increase font size */
+  padding: 10px 20px; /* Padding for button */
+
+}
+
+.payment-button:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+  
+.payment-feature {
+    max-width: 800px; /* Set a maximum width for better desktop scalability */
+    margin: 0 auto; /* Center the content horizontally */
+    padding: 20px;
+    background-color: #f7f7f7; /* Set a background color */
+  
+    /* Add background images or any other styles */
+    /* Example background image */
+    background-image: url('/public/rentalcarBackground.jpg');
+    background-size: cover; /* Ensure the background image covers the entire container */
+  }
+
+
+  
+  /* Adjustments for form elements */
+  .input-container {
+    margin-bottom: 20px;
+  }
+  
+  /* Styles for different screen sizes (media queries) */
+  @media (min-width: 768px) {
+    .payment-feature {
+      padding: 40px; /* Increase padding for larger screens */
+    }
+  
+    /* Additional styles for larger screens */
+  }
+  
