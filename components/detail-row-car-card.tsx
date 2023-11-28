@@ -9,6 +9,7 @@ type DetailRowCarCardType = {
   detailRowCarCardAlignSelf?: CSSProperties["alignSelf"];
 
   /** Content props */
+  hasTwoDetails: boolean;
   labelText1: string;
   labelText2: string;
   valueText1: string;
@@ -19,6 +20,7 @@ const DetailRowCarCard: NextPage<DetailRowCarCardType> = ({
   detailRowCarCardAlignItems,
   detailRowCarCardJustifyContent,
   detailRowCarCardAlignSelf,
+  hasTwoDetails,
   labelText1,
   labelText2,
   valueText1,
@@ -41,8 +43,10 @@ const DetailRowCarCard: NextPage<DetailRowCarCardType> = ({
       className="flex flex-row items-center justify-center p-1 gap-[10px]"
       style={detailRowCarCardStyle}
     >
-      <DetailCarCard labelText={labelText1} valueText={valueText1}/>
-      <DetailCarCard labelText={labelText2} valueText={valueText2}/>
+      <DetailCarCard labelText={labelText1} valueText={valueText1} />
+      {hasTwoDetails && (
+        <DetailCarCard labelText={labelText2} valueText={valueText2} />
+      )}
     </div>
   );
 };

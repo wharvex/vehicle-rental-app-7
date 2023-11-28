@@ -149,7 +149,7 @@ async function seedWithFaker() {
           return {
             car_feature: {
               create: {
-                name: faker.word.noun(),
+                name: __.capitalize(faker.word.noun()),
                 price: faker.commerce.price({ min: 50, max: 500 }),
               },
             },
