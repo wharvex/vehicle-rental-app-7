@@ -1,7 +1,7 @@
 import { PrismaClient, Prisma } from "@prisma/client";
 import { faker, fakerEN_US } from "@faker-js/faker";
 import __ from "lodash";
-import { ImagesResults } from "@/models/images";
+import { ImagesResults, Photo } from "@/models/images";
 import fetchImages from "@/lib/fetchImages";
 import { UniqueEnforcer } from "enforce-unique";
 
@@ -11,6 +11,17 @@ const christmas = new Date("2023-12-25");
 const thanksgiving = new Date("2023-11-23");
 const newyears = new Date("2024-01-01");
 const uniqueEnforcer = new UniqueEnforcer();
+
+async function obtainImages() {
+  const imagesQueryUrl =
+    "https://api.pexels.com/v1/search?query=car&per_page=50";
+  const images: ImagesResults | undefined = await fetchImages(imagesQueryUrl);
+  if (!images) {
+    console.log("no images found");
+    throw new Error("no images found");
+  }
+  return images;
+}
 
 async function seedWithFaker() {
   const customerDatas = Array.from({ length: 100 }, () => {
@@ -81,13 +92,7 @@ async function seedWithFaker() {
     } satisfies Prisma.CarTypeCreateInput;
   });
 
-  const imagesQueryUrl =
-    "https://api.pexels.com/v1/search?query=car&per_page=30";
-  const images: ImagesResults | undefined = await fetchImages(imagesQueryUrl);
-  if (!images) {
-    console.log("no images found");
-    return;
-  }
+  const images = await obtainImages();
   const carDatas = Array.from({ length: 30 }, (_, idx) => {
     return {
       id: faker.string.uuid(),
@@ -123,7 +128,7 @@ async function seedWithFaker() {
           id: (__.sample(managerDatas) as Prisma.ManagerCreateInput).id,
         },
       },
-      image_path: images.photos[idx].src.large,
+      image_path: (__.sample(images.photos) as Photo).src.large,
       car_features: {
         create: Array.from({ length: 3 }, () => {
           return {
@@ -542,7 +547,7 @@ async function seedWithoutFaker() {
 
 async function main() {
   console.log(`Start seeding ...`);
-  await seedWithoutFaker();
+  // await seedWithoutFaker();
   await seedWithFaker();
   console.log(await prisma.lot.findMany())
   console.log(`Seeding finished.`);
