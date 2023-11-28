@@ -10,6 +10,8 @@ const prisma = new PrismaClient();
 const christmas = new Date("2023-12-25");
 const thanksgiving = new Date("2023-11-23");
 const newyears = new Date("2024-01-01");
+const holidays = [christmas, thanksgiving, newyears];
+
 const uniqueEnforcer = new UniqueEnforcer();
 
 async function obtainImages() {
@@ -83,6 +85,20 @@ async function seedWithFaker() {
       id: faker.string.uuid(),
     } satisfies Prisma.LotCreateInput;
   });
+  const closureDatas = Array.from(holidays, (holiday) => {
+    return {
+      date: holiday,
+      lots: {
+        connect: [
+          ...Array.from(lotDatas, (lot) => {
+            return {
+              id: lot.id,
+            };
+          }),
+        ],
+      },
+    } satisfies Prisma.ClosureCreateInput;
+  });
 
   const carTypeDatas = Array.from({ length: 5 }, () => {
     return {
@@ -110,7 +126,7 @@ async function seedWithFaker() {
       year: faker.number.int({ min: 2010, max: 2023 }),
       current_lot: {
         connect: {
-          id: (__.sample(lotDatas) as Prisma.LotCreateInput).id,
+          id: lotDatas[idx < lotDatas.length ? idx : 0].id, // (__.sample(lotDatas) as Prisma.LotCreateInput).id,
         },
       },
       car_type: {
@@ -153,6 +169,9 @@ async function seedWithFaker() {
       prisma.manager.create({ data: data })
     ),
     ...Array.from(lotDatas, (data) => prisma.lot.create({ data: data })),
+    ...Array.from(closureDatas, (data) =>
+      prisma.closure.create({ data: data })
+    ),
     ...Array.from(carTypeDatas, (data) =>
       prisma.carType.create({ data: data })
     ),
