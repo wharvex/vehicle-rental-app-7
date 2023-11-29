@@ -1,3 +1,9 @@
+/**
+ * To avoid exhausting the database connections by creating multiple Prisma Client instances,
+ * use this Prisma Singleton pattern, as described here:
+ * 
+ * https://www.prisma.io/docs/guides/other/troubleshooting-orm/help-articles/nextjs-prisma-client-dev-practices
+ */
 import { PrismaClient } from "@prisma/client";
 
 const prismaClientSingleton = () => {
