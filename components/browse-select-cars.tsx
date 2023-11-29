@@ -89,10 +89,6 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
                     <img src={car.image_path} className="h-[200px] w-[200px]"></img>
                     <div className="">{car.year} {car.make.name} {car.model.name}</div>
                     <div>{car.car_type.price.toString()}</div>
-                    {/* <div>
-                      {car.carType && car.carType.price ? car.carType.price.toString() : 'Price not available'}
-                    </div> */}
-                    {/* <div>{car.model.name}</div> */}
                     <Link href={{pathname: "../test-db-cars", 
                       query: {pickupLot: pickupLot, returnLot: returnLot, 
                               pickupDate: pickupDate, returnDate: returnDate, carSelection: car.id} }}
