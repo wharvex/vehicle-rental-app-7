@@ -3,11 +3,6 @@ import prisma from '@/lib/prisma';
 export default async function handler(req, res) {
   const { lotId } = req.query;
 
-  // if (isNaN(parseInt(lotId))) {
-  //   res.status(400).json({ error: 'Invalid lotId provided' });
-  //   return;
-  // }
-
   try {
     const closures = await prisma.closure.findMany({
       where: {

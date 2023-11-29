@@ -30,6 +30,46 @@ export async function getCars() {
   return cars;
 }
 
+export async function getSelectCars(pickupLotId: string, returnLotId: string, pickupDate:string, returnDate: string) {
+  const pickupDateObj = new Date(pickupDate);
+  const returnDateObj = new Date(returnDate);
+  
+  const cars = await prisma.car.findMany({
+    where: {
+      AND: [
+        { current_lot_id: pickupLotId },
+        {
+          reservations: {
+            none: {
+              OR: [
+                {
+                  AND: [
+                    { pickup_date: { lte: returnDateObj } },
+                    { return_date: { gte: pickupDateObj } },
+                  ],
+                },
+                {
+                  AND: [
+                    { pickup_lot_id: pickupLotId },
+                    { return_lot_id: returnLotId },
+                  ],
+                },
+              ],
+            },
+          },
+        },
+      ],
+    },
+    include: {
+      make: true,
+      model: true,
+      car_type: true,
+      car_features: true,
+    },
+  });
+  return cars;
+}
+
 export async function getCarFeatureWithID(featureID: string) {
   const carFeature = await prisma.carFeature.findUniqueOrThrow({
     where: {

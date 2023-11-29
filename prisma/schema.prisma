@@ -18,6 +18,7 @@ model Car {
   model          Model             @relation(fields: [model_id], references: [id])
   model_id       String
   color          String
+  details        String?
   year           Int
   num_rentals    Int               @default(0)
   current_lot    Lot               @relation(fields: [current_lot_id], references: [id])

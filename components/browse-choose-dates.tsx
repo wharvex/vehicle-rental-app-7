@@ -3,9 +3,6 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import { useState, useEffect, useMemo, type CSSProperties } from "react";
 import { useSearchParams } from 'next/navigation';
-// NEED TO USE COMMAND:  npm install react-datepicker 
-//              and/or:  npm install --save-dev @types/react-datepicker
-
 import CalendarPicker from './calendar-picker';
 
 type ChooseDatesTitle = {
