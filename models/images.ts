@@ -1,3 +1,10 @@
+/**
+ * Define Zod schema for the data we expect to be returned from Pexels API
+ * 
+ * Based on tutorial found here:
+ * 
+ * https://www.youtube.com/watch?v=lh-7yt92_as
+ */
 import { z } from "zod";
 const BasicImageSchema = z.object({
   page: z.number(),
