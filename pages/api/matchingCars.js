@@ -7,10 +7,6 @@ export default async function handler(req, res) {
   const pickupLotId = pickupLot;
   const returnLotId = returnLot;
 
-  // if (isNaN(parsedPickupLotId) || isNaN(parsedReturnLotId)) {
-  //     throw new Error('Invalid lot IDs');
-  //   }
-
   try {
     const availableCars = await prisma.car.findMany({
       where: {
@@ -22,8 +18,8 @@ export default async function handler(req, res) {
                 OR: [
                   {
                     AND: [
-                      { pickup_date: { lte: new Date(returnDate) } },
-                      { return_date: { gte: new Date(pickupDate) } },
+                      { pickup_date: { lte: returnDateObj } },
+                      { return_date: { gte: pickupDateObj } },
                     ],
                   },
                   {
@@ -42,10 +38,8 @@ export default async function handler(req, res) {
         make: true,
         model: true,
         car_type: true,
-        car_features: true,
       },
     });
-    console.log("found cars: ", availableCars);
     res.status(200).json(availableCars);
   } catch (error) {
     console.error("Error fetching cars:", error);

@@ -27,7 +27,7 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
     year: number;
     make: prisma.Make;
     model: prisma.Model;
-    carType: string;
+    car_type: prisma.CarType;
     image_path: string;
   }
 
@@ -58,8 +58,6 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
         });
     }, [pickupLot, returnLot, pickupDate, returnDate]);
 
-    console.log("cars: ", availableCars);
-
     return (
       <div
         // className="flex flex-row items-center justify-center pt-0 px-[100px] pb-[70px] box-border text-center text-36xl text-black font-body-large self-stretch flex-1"
@@ -80,29 +78,42 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
               <li>Step 3: View vehicles</li>
             </ul>
           </div>
-          <div className="self-stretch flex flex-col items-center justify-start gap-[75px] text-24xl">
+          <div className="self-stretch p-7 flex flex-col items-center justify-start gap-[35px] text-24xl">
             <div className="self-stretch flex flex-col items-center justify-center pt-[100px] px-0 pb-[25px] text-45xl">
               <h1 className="m-0 relative text-inherit tracking-[0.5px] leading-[100%] italic font-medium font-inherit">
                 Results
               </h1>
-              <div className="flex-column">
+              <div className="flex gap-[75px]">
                 {availableCars.map((car) => (
-                  <div key={car.id}>
-                    <img></img>
-                    {car.year} {car.make.name} {car.model.name}
+                  <div key={car.id} className="flex flex-col">
+                    <img src={car.image_path} className="h-[200px] w-[200px]"></img>
+                    <div className="">{car.year} {car.make.name} {car.model.name}</div>
+                    <div>{car.car_type.price.toString()}</div>
+                    {/* <div>
+                      {car.carType && car.carType.price ? car.carType.price.toString() : 'Price not available'}
+                    </div> */}
+                    {/* <div>{car.model.name}</div> */}
+                    <Link href={{pathname: "../test-db-cars", 
+                      query: {pickupLot: pickupLot, returnLot: returnLot, 
+                              pickupDate: pickupDate, returnDate: returnDate, carSelection: car.id} }}
+                      className="cursor-pointer [border:none] p-0 bg-[transparent] flex flex-col items-center justify-center"
+                    >
+                      <div className="box-border w-[94px] h-[42px] flex flex-row items-start justify-start border-[2px] border-solid border-black">
+                        <div className="self-stretch flex-1 relative tracking-[0.5px] leading-[100%] font-medium font-hfb-extra-small text-black text-center flex items-center justify-center">
+                          Select
+                        </div>
+                      </div>
+                    </Link>
                   </div>
                 ))}
               </div>
             </div>
-            <Link href={{pathname: "../create_reservation", 
-                  query: {pickupLot: pickupLot, returnLot: returnLot,
-                          pickupDate: pickupDate, returnDate: returnDate,
-                          carSelection: carSelection }}}
+            <Link href={{pathname: "../browse_choose_lots"}}
               className="cursor-pointer [border:none] p-0 bg-[transparent] flex flex-col items-center justify-center"
             >
-              <div className="box-border w-[214px] h-[82px] flex flex-row items-start justify-start border-[2px] border-solid border-black">
+              <div className="box-border p-4 flex flex-row items-start justify-start border-[2px] border-solid border-black">
                 <div className="self-stretch flex-1 relative text-21xl tracking-[0.5px] leading-[100%] font-medium font-hfb-extra-small text-black text-center flex items-center justify-center">
-                  Continue
+                  New browse
                 </div>
               </div>
             </Link>
