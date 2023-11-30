@@ -1,3 +1,4 @@
+import MainContentBreadcrumbsGroup from "@/components/confirm-res-main-content-breadcrumbs-gro";
 import Layout from "../../components/my-layout";
 
 export default async function Page() {
@@ -10,7 +11,7 @@ export default async function Page() {
         layoutBoxSizing="border-box"
         layoutBoxSizing1="border-box"
         headerPageBoxSizing="border-box"
-        mainChild1={}
+        mainChild1={<MainContentBreadcrumbsGroup />}
       />
     </div>
   );
