@@ -32,7 +32,20 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
   }
 
   const [availableCars, setAvailableCars] = useState<Car[]>([]);
-  const [carSelection, setCarSelection] = useState<string>("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCar, setSelectedCar] = useState<Car>();
+  // const [carSelection, setCarSelection] = useState<string>("");
+
+  const openModal = (car: Car) => {
+    if (car) {
+      setSelectedCar(car);
+      setIsModalOpen(true);
+    }
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   if (params) {
     const pickupLot = params.get("pickupLot");
@@ -69,37 +82,35 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
         <div>
           <div>
             <ul>
-              <li className="text-sm">Step 1: Choose lots</li>
-              {/* </div> */}
-              {/* <div className="flex flex-col items-center justify-start gap-[10px] text-24xl"> */}
+              <li>Step 1: Choose lots</li>
               <li>Step 2: Enter dates</li>
-              {/* </div> */}
-              {/* <div className="flex flex-col items-center justify-start gap-[10px] text-24xl"> */}
-              <li>Step 3: View vehicles</li>
+              <li className="font-semibold">Step 3: View vehicles</li>
             </ul>
           </div>
-          <div className="self-stretch p-7 flex flex-col items-center justify-start gap-[35px] text-24xl">
+          <div className="self-stretch p-7 flex flex-col items-center justify-start gap-[35px]">
             <div className="self-stretch flex flex-col items-center justify-center pt-[100px] px-0 pb-[25px] text-45xl">
               <h1 className="m-0 relative text-inherit tracking-[0.5px] leading-[100%] italic font-medium font-inherit">
                 Results
               </h1>
               <div className="flex gap-[75px]">
                 {availableCars.map((car) => (
-                  <div key={car.id} className="flex flex-col">
+                  <div key={car.id} className="flex flex-col gap-[8px]">
                     <img src={car.image_path} className="h-[200px] w-[200px]"></img>
-                    <div className="">{car.year} {car.make.name} {car.model.name}</div>
-                    <div>{car.car_type.price.toString()}</div>
-                    <Link href={{pathname: "../test-db-cars", 
+                    <div className="text-center">{car.year} {car.make.name} {car.model.name}</div>
+                    <div className="text-center font-semibold">${car.car_type.price.toString()} per day</div>
+                    {/* <Link href={{pathname: "../test-db-cars", 
                       query: {pickupLot: pickupLot, returnLot: returnLot, 
                               pickupDate: pickupDate, returnDate: returnDate, carSelection: car.id} }}
                       className="cursor-pointer [border:none] p-0 bg-[transparent] flex flex-col items-center justify-center"
-                    >
+                    > */}
+                    <button onClick={() => openModal(car)}>
                       <div className="box-border w-[94px] h-[42px] flex flex-row items-start justify-start border-[2px] border-solid border-black">
                         <div className="self-stretch flex-1 relative tracking-[0.5px] leading-[100%] font-medium font-hfb-extra-small text-black text-center flex items-center justify-center">
                           Select
                         </div>
                       </div>
-                    </Link>
+                    {/* </Link> */}
+                    </button>
                   </div>
                 ))}
               </div>
@@ -125,6 +136,22 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
             </Link>
           </div>
         </div>
+        {isModalOpen && (
+          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" onClick={closeModal}>
+            <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+              <div className="mt-3 text-center">
+                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+                  {/* Car details go here */}
+                  <h3 className="text-lg leading-6 font-medium text-gray-900">{selectedCar!.year} {selectedCar!.make.name} {selectedCar!.model.name}</h3>
+                  {/* ... other details */}
+                </div>
+                <button onClick={closeModal} className="absolute top-0 right-0 p-2">
+                  <span className="text-gray-400 hover:text-gray-500">&times;</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   } else {

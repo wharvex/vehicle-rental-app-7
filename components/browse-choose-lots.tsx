@@ -63,7 +63,7 @@ const ChooseLots: NextPage<ChooseLotsTitle> = ({
           <div>
             {/* <ul className="flex flex-col items-center justify-start gap-[10px] list-none"> */}
             <ul>
-              <li>Step 1: Choose lots</li>
+              <li className="font-semibold">Step 1: Choose lots</li>
               <li>Step 2: Enter dates</li>
               <li>Step 3: View vehicles</li>
             </ul>

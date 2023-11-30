@@ -7,9 +7,9 @@ import { UniqueEnforcer } from "enforce-unique";
 
 const prisma = new PrismaClient();
 
-const christmas = new Date("2023-12-25");
-const thanksgiving = new Date("2023-11-23");
-const newyears = new Date("2024-01-01");
+const christmas = new Date("2023-12-26");
+const thanksgiving = new Date("2023-11-24");
+const newyears = new Date("2024-01-02");
 const holidays = [christmas, thanksgiving, newyears];
 
 const uniqueEnforcer = new UniqueEnforcer();
@@ -368,7 +368,7 @@ async function seedWithoutFaker() {
   });
   // Creating cars for the Albany lot
   const images = await obtainImages();
-  await prisma.car.create({
+  const albanySampleReserved = await prisma.car.create({
     data: {
       make_id: ford.id,
       model_id: explorer.id,
@@ -417,7 +417,7 @@ async function seedWithoutFaker() {
     },
   });
   // Creating cars for the Marist lot
-  await prisma.car.create({
+  const maristSampleReserved = await prisma.car.create({
     data: {
       make_id: ford.id,
       model_id: explorer.id,
@@ -466,7 +466,7 @@ async function seedWithoutFaker() {
     },
   });
   // Creating cars for the Oneonta lot
-  await prisma.car.create({
+  const oneontaSampleReserved = await prisma.car.create({
     data: {
       make_id: ford.id,
       model_id: explorer.id,
@@ -515,7 +515,7 @@ async function seedWithoutFaker() {
     },
   });
   // Creating cars for the New Paltz lot
-  await prisma.car.create({
+  const newpaltzSampleReserved = await prisma.car.create({
     data: {
       make_id: ford.id,
       model_id: explorer.id,
@@ -561,6 +561,73 @@ async function seedWithoutFaker() {
       licensePlate: "GHI4444",
       user_added_id: newpaltzLot.manager_id,
       image_path: (__.sample(images.photos) as Photo).src.large,
+    },
+  });
+  // Creating sample customers to put on reservations
+  const customer1 = await prisma.customer.create({
+    data: {
+      email: "customer1@fake.com",
+      name: "Customer One",
+    }
+  });
+  const customer2 = await prisma.customer.create({
+    data: {
+      email: "customer2@fake.com",
+      name: "Customer Two",
+    }
+  });
+  const customer3 = await prisma.customer.create({
+    data: {
+      email: uniqueEnforcer.enforce("customer3@fake.com"),
+      name: "Customer Three",
+    }
+  });
+  const customer4 = await prisma.customer.create({
+    data: {
+      email: uniqueEnforcer.enforce("customer4@fake.com"),
+      name: "Customer Four",
+    }
+  });
+
+  // Creating one Reservation per manually-seeded lots
+  await prisma.reservation.create({
+    data: {
+      car_ID: albanySampleReserved.id,
+      pickup_lot_id: albanyLot.id,
+      return_lot_id: albanyLot.id,
+      pickup_date: new Date("2023-12-27"),
+      return_date: new Date("2024-01-05"),
+      renter_id: customer1.id,
+    },
+  });
+  await prisma.reservation.create({
+    data: {
+      car_ID: maristSampleReserved.id,
+      pickup_lot_id: maristLot.id,
+      return_lot_id: maristLot.id,
+      pickup_date: new Date("2023-12-08"),
+      return_date: new Date("2023-12-14"),
+      renter_id: customer2.id,
+    },
+  });
+  await prisma.reservation.create({
+    data: {
+      car_ID: oneontaSampleReserved.id,
+      pickup_lot_id: oneontaLot.id,
+      return_lot_id: oneontaLot.id,
+      pickup_date: new Date("2023-12-22"),
+      return_date: new Date("2023-12-23"),
+      renter_id: customer3.id,
+    },
+  });
+  await prisma.reservation.create({
+    data: {
+      car_ID: newpaltzSampleReserved.id,
+      pickup_lot_id: newpaltzLot.id,
+      return_lot_id: newpaltzLot.id,
+      pickup_date: new Date("2023-12-22"),
+      return_date: new Date("2023-12-23"),
+      renter_id: customer4.id,
     },
   });
 }

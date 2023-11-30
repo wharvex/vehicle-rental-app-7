@@ -71,54 +71,98 @@ const ChooseDates: NextPage<ChooseDatesTitle> = ({
     }, [returnLot]);
 
     return (
-      <div
+      <div 
         // className="flex flex-row items-center justify-center pt-0 px-[100px] pb-[70px] box-border text-center text-36xl text-black font-body-large self-stretch flex-1"
         style={chooseDatesStyle}
       >
         {/* <div className="self-stretch flex flex-col items-center justify-start gap-[10px] text-center text-9xl text-black font-reg-heading">
           <div className="self-stretch flex flex-col items-center justify-center gap-[10px]">
             <ul className="flex flex-col items-center justify-start gap-[10px] list-none"> */}
-              <div><div><ul>
+        <div>
+            <ul>
               <li>Step 1: Choose lots</li>
-              <li>Step 2: Enter dates</li>
+              <li className="font-semibold">Step 2: Enter dates</li>
               <li>Step 3: View vehicles</li>
             </ul>
           </div>
-          {/* <div className="self-stretch flex flex-row items-center justify-center pt-[100px] px-0 pb-[25px] text-45xl"> */}
-            <div><h2>Pick-up Lot Closures</h2>
-            {pickupLotClosures.length > 0 ? (
-              <ul>
-                {pickupLotClosures.map((closure) => (
-                  <li>
-                    Closed on: {closure.toLocaleDateString()}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>No closures for the selected pickup lot.</p>
-            )}
+        <div className="flex flex-col">
+          <div>
+            <div className="self-stretch flex flex-row items-center justify-center pt-[100px] px-0 pb-[25px] text-45xl">
+              <h1 className="m-0 relative text-inherit tracking-[0.5px] leading-[100%] italic font-medium font-inherit">
+                Choose Pick-up and Return dates
+              </h1>
+            </div>
+            <div>
+              <label>Pickup Date:</label>
+              <CalendarPicker
+                selectedDate={pickupDate}
+                onChange={setPickupDate}
+                closureDates={pickupLotClosures}
+              />
+            </div>
+            <div>
+              <label>Return Date:</label>
+              <CalendarPicker
+                selectedDate={returnDate}
+                onChange={setReturnDate}
+                closureDates={returnLotClosures}
+              />
+            </div>
+            <Link href={{pathname: "../browse_select_cars", 
+                  query: {pickupLot: pickupLot, returnLot: returnLot,
+                          pickupDate: pickupDate.toLocaleDateString(), returnDate: returnDate.toLocaleDateString()} }}
+              className="cursor-pointer [border:none] p-0 bg-[transparent] flex flex-col items-center justify-center"
+            >
+              <div className="box-border flex flex-row items-start justify-start border-[2px] border-solid border-black">
+                <div className="self-stretch p-4 flex-1 relative  tracking-[0.5px] leading-[100%] font-medium font-hfb-extra-small text-black text-center flex items-center justify-center">
+                  Continue
+                </div>
+              </div>
+            </Link>
+            <Link href="/"
+              className="cursor-pointer [border:none] p-0 bg-[transparent] flex flex-col items-center justify-center"
+            >
+              <div className="box-border flex flex-row items-start justify-start border-[2px] border-solid border-black">
+                <div className="self-stretch p-4 flex-1 relative tracking-[0.5px] leading-[100%] font-medium font-hfb-extra-small text-black text-center flex items-center justify-center">
+                  Back to Home
+                </div>
+              </div>
+            </Link>
+          <div>
           </div>
-          {/* <div className="self-stretch flex flex-row items-center justify-center pt-[100px] px-0 pb-[25px] text-45xl"> */}
-            <div><h2>Return Lot Closures</h2>
-            {returnLotClosures.length > 0 ? (
-              <ul>
-                {returnLotClosures.map((closure) => (
-                  <li>
-                    Closed on: {closure.toLocaleDateString()}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>No closures for the selected return lot.</p>
-            )}
+            <div className="self-stretch flex flex-row items-center justify-center pt-[100px] px-0 pb-[25px] text-45xl">
+              <div><p className="font-semibold">Pick-up Lot Closures</p>
+              {pickupLotClosures.length > 0 ? (
+                <ul>
+                  {pickupLotClosures.map((closure) => (
+                    <li>
+                      Closed on: {closure.toLocaleDateString()}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No closures for the selected pickup lot.</p>
+              )}
+            </div>
+            {/* <div className="self-stretch flex flex-row items-center justify-center pt-[100px] px-0 pb-[25px] text-45xl"> */}
+            <div>
+              <p className="font-semibold">Return Lot Closures</p>
+              {returnLotClosures.length > 0 ? (
+                <ul>
+                  {returnLotClosures.map((closure) => (
+                    <li>
+                      Closed on: {closure.toLocaleDateString()}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No closures for the selected return lot.</p>
+              )}
+            </div>
           </div>
         </div>
-        <div className="self-stretch flex flex-col items-center justify-start gap-[75px] text-24xl">
-          <div className="self-stretch flex flex-row items-center justify-center pt-[100px] px-0 pb-[25px] text-45xl">
-            <h1 className="m-0 relative text-inherit tracking-[0.5px] leading-[100%] italic font-medium font-inherit">
-              Choose Pick-up and Return dates
-            </h1>
-          </div>
+          {/* <div className="self-stretch flex flex-col items-center justify-start gap-[75px] text-24xl"> */}
+            
           {/* <div className="self-stretch flex flex-col items-start justify-start gap-[10px]"> */}
             {/* <div className="self-stretch flex flex-row items-start justify-start">
               <div className="relative tracking-[0.5px] leading-[100%] font-medium">
@@ -150,45 +194,9 @@ const ChooseDates: NextPage<ChooseDatesTitle> = ({
                 </div>
               </div>
             </div> */}
-            <div>
-              <label>Pickup Date:</label>
-              <CalendarPicker
-                selectedDate={pickupDate}
-                onChange={setPickupDate}
-                closureDates={pickupLotClosures}
-              />
-            </div>
-            <div>
-              <label>Return Date:</label>
-              <CalendarPicker
-                selectedDate={returnDate}
-                onChange={setReturnDate}
-                closureDates={returnLotClosures}
-              />
-            </div>
-            <Link href={{pathname: "../browse_select_cars", 
-                  query: {pickupLot: pickupLot, returnLot: returnLot,
-                          pickupDate: pickupDate.toLocaleDateString(), returnDate: returnDate.toLocaleDateString()} }}
-              className="cursor-pointer [border:none] p-0 bg-[transparent] flex flex-col items-center justify-center"
-            >
-              <div className="box-border w-[214px] h-[82px] flex flex-row items-start justify-start border-[2px] border-solid border-black">
-                <div className="self-stretch flex-1 relative text-21xl tracking-[0.5px] leading-[100%] font-medium font-hfb-extra-small text-black text-center flex items-center justify-center">
-                  Continue
-                </div>
-              </div>
-            </Link>
-            <Link href="/"
-              className="cursor-pointer [border:none] p-0 bg-[transparent] flex flex-col items-center justify-center"
-            >
-              <div className="box-border w-[314px] h-[82px] flex flex-row items-start justify-start border-[2px] border-solid border-black">
-                <div className="self-stretch flex-1 relative text-21xl tracking-[0.5px] leading-[100%] font-medium font-hfb-extra-small text-black text-center flex items-center justify-center">
-                  Back to Home
-                </div>
-              </div>
-            </Link>
-          </div>
+          {/* </div> */}
         </div>
-      // </div>
+      </div>
     );
   }
   else {
