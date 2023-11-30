@@ -10,27 +10,33 @@ export default async function handler(req, res) {
   try {
     const availableCars = await prisma.car.findMany({
       where: {
-        AND: [
-          { current_lot_id: pickupLotId },
-          {
-            reservations: {
+        OR: [
+          { AND: [
+            { current_lot_id: pickupLotId },
+            { reservations: {
               none: {
-                OR: [
-                  {
-                    AND: [
-                      { pickup_date: { lte: returnDateObj } },
-                      { return_date: { gte: pickupDateObj } },
-                    ],
-                  },
-                  {
-                    AND: [
-                      { pickup_lot_id: pickupLotId },
-                      { return_lot_id: returnLotId },
-                    ],
-                  },
+                AND: [
+                  { pickup_date: { lt: returnDateObj } },
+                  { return_date: { gt: pickupDateObj } },
                 ],
-              },
+              }
             },
+            },
+          ],
+          },
+          { current_lot_id: { not: pickupLotId },
+          reservations: {
+            some: {
+              return_lot_id: pickupLotId,
+              return_date: { lte: pickupDateObj }
+            },
+            none: {
+              AND: [
+                { pickup_date: { lt: returnDateObj } },
+                { return_date: { gt: pickupDateObj } },
+              ],
+            },
+          },
           },
         ],
       },
