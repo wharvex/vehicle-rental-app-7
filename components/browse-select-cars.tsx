@@ -95,9 +95,16 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
               <div className="flex gap-[75px]">
                 {availableCars.map((car) => (
                   <div key={car.id} className="flex flex-col gap-[8px]">
-                    <img src={car.image_path} className="h-[200px] w-[200px]"></img>
-                    <div className="text-center">{car.year} {car.make.name} {car.model.name}</div>
-                    <div className="text-center font-semibold">${car.car_type.price.toString()} per day</div>
+                    <img
+                      src={car.image_path}
+                      className="h-[200px] w-[200px]"
+                    ></img>
+                    <div className="text-center">
+                      {car.year} {car.make.name} {car.model.name}
+                    </div>
+                    <div className="text-center font-semibold">
+                      ${car.car_type.price.toString()} per day
+                    </div>
                     {/* <Link href={{pathname: "../test-db-cars", 
                       query: {pickupLot: pickupLot, returnLot: returnLot, 
                               pickupDate: pickupDate, returnDate: returnDate, carSelection: car.id} }}
@@ -109,13 +116,14 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
                           Select
                         </div>
                       </div>
-                    {/* </Link> */}
+                      {/* </Link> */}
                     </button>
                   </div>
                 ))}
               </div>
             </div>
-            <Link href={{pathname: "../browse_choose_lots"}}
+            <Link
+              href={{ pathname: "../browse_choose_lots" }}
               className="cursor-pointer [border:none] p-0 bg-[transparent] flex flex-col items-center justify-center"
             >
               <div className="box-border p-4 flex flex-row items-start justify-start border-[2px] border-solid border-black">
@@ -137,16 +145,42 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
           </div>
         </div>
         {isModalOpen && (
-          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" onClick={closeModal}>
+          <div
+            className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+            onClick={closeModal}
+          >
             <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
               <div className="mt-3 text-center">
-                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 gap-20">
                   {/* Car details go here */}
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">{selectedCar!.year} {selectedCar!.make.name} {selectedCar!.model.name}</h3>
+                  <h3 className="text-lg leading-6 font-medium text-gray-900">
+                    {selectedCar!.year} {selectedCar!.make.name}{" "}
+                    {selectedCar!.model.name}
+                  </h3>
+                  <Link
+                    href={{
+                      pathname: "../test-db-cars",
+                      query: {
+                        pickupLot: pickupLot,
+                        returnLot: returnLot,
+                        pickupDate: pickupDate,
+                        returnDate: returnDate,
+                        carSelection: selectedCar!.id,
+                      },
+                    }}
+                    className="cursor-pointer [border:none] p-0 bg-[transparent] flex flex-col items-center justify-center"
+                  >
+                    <h3>Proceed</h3>
+                  </Link>
                   {/* ... other details */}
                 </div>
-                <button onClick={closeModal} className="absolute top-0 right-0 p-2">
-                  <span className="text-gray-400 hover:text-gray-500">&times;</span>
+                <button
+                  onClick={closeModal}
+                  className="absolute top-0 right-0 p-2"
+                >
+                  <span className="text-gray-400 hover:text-gray-500">
+                    &times;
+                  </span>
                 </button>
               </div>
             </div>
