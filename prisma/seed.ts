@@ -382,6 +382,18 @@ async function seedWithoutFaker() {
       licensePlate: "ABC1111",
       user_added_id: albanyLot.manager_id,
       image_path: (__.sample(images.photos) as Photo).src.large,
+      car_features: {
+        create: Array.from({ length: 3 }, () => {
+          return {
+            car_feature: {
+              create: {
+                name: __.capitalize(faker.word.noun()),
+                price: faker.commerce.price({ min: 50, max: 500 }),
+              },
+            },
+          };
+        }),
+      },
     },
   });
   await prisma.car.create({
@@ -398,6 +410,18 @@ async function seedWithoutFaker() {
       licensePlate: "DEF1111",
       user_added_id: albanyLot.manager_id,
       image_path: (__.sample(images.photos) as Photo).src.large,
+      car_features: {
+        create: Array.from({ length: 3 }, () => {
+          return {
+            car_feature: {
+              create: {
+                name: __.capitalize(faker.word.noun()),
+                price: faker.commerce.price({ min: 50, max: 500 }),
+              },
+            },
+          };
+        }),
+      },
     },
   });
   await prisma.car.create({
@@ -414,6 +438,18 @@ async function seedWithoutFaker() {
       licensePlate: "GHI1111",
       user_added_id: albanyLot.manager_id,
       image_path: (__.sample(images.photos) as Photo).src.large,
+      car_features: {
+        create: Array.from({ length: 3 }, () => {
+          return {
+            car_feature: {
+              create: {
+                name: __.capitalize(faker.word.noun()),
+                price: faker.commerce.price({ min: 50, max: 500 }),
+              },
+            },
+          };
+        }),
+      },
     },
   });
   // Creating cars for the Marist lot
@@ -431,6 +467,18 @@ async function seedWithoutFaker() {
       licensePlate: "ABC2222",
       user_added_id: maristLot.manager_id,
       image_path: (__.sample(images.photos) as Photo).src.large,
+      car_features: {
+        create: Array.from({ length: 3 }, () => {
+          return {
+            car_feature: {
+              create: {
+                name: __.capitalize(faker.word.noun()),
+                price: faker.commerce.price({ min: 50, max: 500 }),
+              },
+            },
+          };
+        }),
+      },
     },
   });
   await prisma.car.create({
@@ -447,6 +495,18 @@ async function seedWithoutFaker() {
       licensePlate: "DEF2222",
       user_added_id: maristLot.manager_id,
       image_path: (__.sample(images.photos) as Photo).src.large,
+      car_features: {
+        create: Array.from({ length: 3 }, () => {
+          return {
+            car_feature: {
+              create: {
+                name: __.capitalize(faker.word.noun()),
+                price: faker.commerce.price({ min: 50, max: 500 }),
+              },
+            },
+          };
+        }),
+      },
     },
   });
   await prisma.car.create({
@@ -463,6 +523,18 @@ async function seedWithoutFaker() {
       licensePlate: "GHI2222",
       user_added_id: maristLot.manager_id,
       image_path: (__.sample(images.photos) as Photo).src.large,
+      car_features: {
+        create: Array.from({ length: 3 }, () => {
+          return {
+            car_feature: {
+              create: {
+                name: __.capitalize(faker.word.noun()),
+                price: faker.commerce.price({ min: 50, max: 500 }),
+              },
+            },
+          };
+        }),
+      },
     },
   });
   // Creating cars for the Oneonta lot
@@ -480,6 +552,18 @@ async function seedWithoutFaker() {
       licensePlate: "ABC3333",
       user_added_id: oneontaLot.manager_id,
       image_path: (__.sample(images.photos) as Photo).src.large,
+      car_features: {
+        create: Array.from({ length: 3 }, () => {
+          return {
+            car_feature: {
+              create: {
+                name: __.capitalize(faker.word.noun()),
+                price: faker.commerce.price({ min: 50, max: 500 }),
+              },
+            },
+          };
+        }),
+      },
     },
   });
   await prisma.car.create({
@@ -496,6 +580,18 @@ async function seedWithoutFaker() {
       licensePlate: "DEF3333",
       user_added_id: oneontaLot.manager_id,
       image_path: (__.sample(images.photos) as Photo).src.large,
+      car_features: {
+        create: Array.from({ length: 3 }, () => {
+          return {
+            car_feature: {
+              create: {
+                name: __.capitalize(faker.word.noun()),
+                price: faker.commerce.price({ min: 50, max: 500 }),
+              },
+            },
+          };
+        }),
+      },
     },
   });
   await prisma.car.create({
@@ -512,6 +608,18 @@ async function seedWithoutFaker() {
       licensePlate: "GHI3333",
       user_added_id: oneontaLot.manager_id,
       image_path: (__.sample(images.photos) as Photo).src.large,
+      car_features: {
+        create: Array.from({ length: 3 }, () => {
+          return {
+            car_feature: {
+              create: {
+                name: __.capitalize(faker.word.noun()),
+                price: faker.commerce.price({ min: 50, max: 500 }),
+              },
+            },
+          };
+        }),
+      },
     },
   });
   // Creating cars for the New Paltz lot
@@ -529,6 +637,18 @@ async function seedWithoutFaker() {
       licensePlate: "ABC4444",
       user_added_id: newpaltzLot.manager_id,
       image_path: (__.sample(images.photos) as Photo).src.large,
+      car_features: {
+        create: Array.from({ length: 3 }, () => {
+          return {
+            car_feature: {
+              create: {
+                name: __.capitalize(faker.word.noun()),
+                price: faker.commerce.price({ min: 50, max: 500 }),
+              },
+            },
+          };
+        }),
+      },
     },
   });
   await prisma.car.create({
@@ -545,6 +665,18 @@ async function seedWithoutFaker() {
       licensePlate: "DEF4444",
       user_added_id: newpaltzLot.manager_id,
       image_path: (__.sample(images.photos) as Photo).src.large,
+      car_features: {
+        create: Array.from({ length: 3 }, () => {
+          return {
+            car_feature: {
+              create: {
+                name: __.capitalize(faker.word.noun()),
+                price: faker.commerce.price({ min: 50, max: 500 }),
+              },
+            },
+          };
+        }),
+      },
     },
   });
   await prisma.car.create({
@@ -561,6 +693,18 @@ async function seedWithoutFaker() {
       licensePlate: "GHI4444",
       user_added_id: newpaltzLot.manager_id,
       image_path: (__.sample(images.photos) as Photo).src.large,
+      car_features: {
+        create: Array.from({ length: 3 }, () => {
+          return {
+            car_feature: {
+              create: {
+                name: __.capitalize(faker.word.noun()),
+                price: faker.commerce.price({ min: 50, max: 500 }),
+              },
+            },
+          };
+        }),
+      },
     },
   });
   // Creating sample customers to put on reservations

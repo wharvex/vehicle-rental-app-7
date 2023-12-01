@@ -71,29 +71,20 @@ const ChooseDates: NextPage<ChooseDatesTitle> = ({
     }, [returnLot]);
 
     return (
-      <div 
-        // className="flex flex-row items-center justify-center pt-0 px-[100px] pb-[70px] box-border text-center text-36xl text-black font-body-large self-stretch flex-1"
-        style={chooseDatesStyle}
-      >
-        {/* <div className="self-stretch flex flex-col items-center justify-start gap-[10px] text-center text-9xl text-black font-reg-heading">
-          <div className="self-stretch flex flex-col items-center justify-center gap-[10px]">
-            <ul className="flex flex-col items-center justify-start gap-[10px] list-none"> */}
-        <div>
-            <ul>
-              <li>Step 1: Choose lots</li>
-              <li className="font-semibold">Step 2: Enter dates</li>
-              <li>Step 3: View vehicles</li>
-            </ul>
-          </div>
-        <div className="flex flex-col">
-          <div>
-            <div className="self-stretch flex flex-row items-center justify-center pt-[100px] px-0 pb-[25px] text-45xl">
-              <h1 className="m-0 relative text-inherit tracking-[0.5px] leading-[100%] italic font-medium font-inherit">
-                Choose Pick-up and Return dates
-              </h1>
-            </div>
+      <div style={chooseDatesStyle} className="bg-white p-8">
+        <div className="max-w-4xl mx-auto">
+          <ul className="flex space-x-7 mb-8">
+            <li className="text-gray-500">Step 1: Choose lots</li>
+            <li className="font-bold text-blue-700">Step 2: Enter dates</li>
+            <li className="text-gray-500">Step 3: View vehicles</li>
+          </ul>
+          <h1 className="text-2xl font-semibold mb-6 italic">  
+            Choose Pick-up and Return dates
+          </h1>
+            {/* </div> */}
+          <div className="space-y-6">
             <div>
-              <label>Pickup Date:</label>
+              <label htmlFor="pickupDate" className="block text-sm font-medium text-gray-700 mb-2">Pickup Date:</label>
               <CalendarPicker
                 selectedDate={pickupDate}
                 onChange={setPickupDate}
@@ -101,7 +92,7 @@ const ChooseDates: NextPage<ChooseDatesTitle> = ({
               />
             </div>
             <div>
-              <label>Return Date:</label>
+              <label htmlFor="returnDate" className="block text-sm font-medium text-gray-700 mb-2">Return Date:</label>
               <CalendarPicker
                 selectedDate={returnDate}
                 onChange={setReturnDate}
@@ -111,29 +102,21 @@ const ChooseDates: NextPage<ChooseDatesTitle> = ({
             <Link href={{pathname: "../browse_select_cars", 
                   query: {pickupLot: pickupLot, returnLot: returnLot,
                           pickupDate: pickupDate.toLocaleDateString(), returnDate: returnDate.toLocaleDateString()} }}
-              className="cursor-pointer [border:none] p-0 bg-[transparent] flex flex-col items-center justify-center"
+              className="bg-blue-700 hover:bg-green-700 text-white font-medium py-2 px-4 rounded transition duration-300 ease-in-out flex items-center justify-center no-underline"
             >
-              <div className="box-border flex flex-row items-start justify-start border-[2px] border-solid border-black">
-                <div className="self-stretch p-4 flex-1 relative  tracking-[0.5px] leading-[100%] font-medium font-hfb-extra-small text-black text-center flex items-center justify-center">
-                  Continue
-                </div>
-              </div>
+              <span className="text-lg">Continue</span>
             </Link>
             <Link href="/"
-              className="cursor-pointer [border:none] p-0 bg-[transparent] flex flex-col items-center justify-center"
-            >
-              <div className="box-border flex flex-row items-start justify-start border-[2px] border-solid border-black">
-                <div className="self-stretch p-4 flex-1 relative tracking-[0.5px] leading-[100%] font-medium font-hfb-extra-small text-black text-center flex items-center justify-center">
-                  Back to Home
-                </div>
-              </div>
+              className="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded transition duration-300 ease-in-out flex items-center justify-center no-underline mt-4"
+              >
+                <span className="text-lg">Back to Home</span>
             </Link>
-          <div>
           </div>
-            <div className="self-stretch flex flex-row items-center justify-center pt-[100px] px-0 pb-[25px] text-45xl">
-              <div><p className="font-semibold">Pick-up Lot Closures</p>
+          <div className="mt-10">
+            <div className="mb-4">
+              <p className="font-semibold text-lg mb-2">Pick-up Lot Closures</p>
               {pickupLotClosures.length > 0 ? (
-                <ul>
+                <ul className="list-disc list-inside">
                   {pickupLotClosures.map((closure) => (
                     <li>
                       Closed on: {closure.toLocaleDateString()}
@@ -144,11 +127,10 @@ const ChooseDates: NextPage<ChooseDatesTitle> = ({
                 <p>No closures for the selected pickup lot.</p>
               )}
             </div>
-            {/* <div className="self-stretch flex flex-row items-center justify-center pt-[100px] px-0 pb-[25px] text-45xl"> */}
             <div>
-              <p className="font-semibold">Return Lot Closures</p>
+              <p className="font-semibold text-lg mb-2">Return Lot Closures</p>
               {returnLotClosures.length > 0 ? (
-                <ul>
+                <ul className="list-disc list-inside">
                   {returnLotClosures.map((closure) => (
                     <li>
                       Closed on: {closure.toLocaleDateString()}
@@ -160,41 +142,6 @@ const ChooseDates: NextPage<ChooseDatesTitle> = ({
               )}
             </div>
           </div>
-        </div>
-          {/* <div className="self-stretch flex flex-col items-center justify-start gap-[75px] text-24xl"> */}
-            
-          {/* <div className="self-stretch flex flex-col items-start justify-start gap-[10px]"> */}
-            {/* <div className="self-stretch flex flex-row items-start justify-start">
-              <div className="relative tracking-[0.5px] leading-[100%] font-medium">
-                Pickup date*:
-              </div>
-            </div>
-            <div className="self-stretch flex flex-row items-start justify-start gap-[10px] text-17xl">
-              <div className="w-[280px] h-[153px] flex flex-col items-start justify-start">
-                <div className=" box-border w-[350px] h-[58px] flex flex-row items-center justify-start py-[5px] px-[25px] border-[1px] border-solid border-black ">
-                  <input
-                    className="[border:none] font-medium font-hfb-extra-small text-11xl bg-[transparent] relative tracking-[0.5px] leading-[100%] text-grey text-left flex items-center w-[300px] shrink-0"
-                    type="date" min="2023-11-03" max="2025-12-30" required
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="self-stretch flex flex-row items-start justify-start">
-              <div className="relative tracking-[0.5px] leading-[100%] font-medium">
-                Return date*:
-              </div>
-            </div>
-            <div className="self-stretch flex flex-row items-start justify-start gap-[10px] text-17xl">
-              <div className="w-[280px] h-[153px] flex flex-col items-start justify-start">
-                <div className=" box-border w-[350px] h-[58px] flex flex-row items-center justify-start py-[5px] px-[25px] border-[1px] border-solid border-black ">
-                  <input
-                    className="[border:none] font-medium font-hfb-extra-small text-11xl bg-[transparent] relative tracking-[0.5px] leading-[100%] text-grey text-left flex items-center w-[300px] shrink-0"
-                    type="date" min="2023-11-03" max="2025-12-30" required
-                  />
-                </div>
-              </div>
-            </div> */}
-          {/* </div> */}
         </div>
       </div>
     );

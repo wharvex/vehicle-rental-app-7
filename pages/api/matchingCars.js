@@ -44,6 +44,7 @@ export default async function handler(req, res) {
         make: true,
         model: true,
         car_type: true,
+        car_features: true,
       },
     });
     res.status(200).json(availableCars);
