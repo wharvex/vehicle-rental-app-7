@@ -127,7 +127,7 @@ async function seedWithFaker() {
       year: faker.number.int({ min: 2010, max: 2023 }),
       current_lot: {
         connect: {
-          id: lotDatas[idx < lotDatas.length ? idx : 0].id, // (__.sample(lotDatas) as Prisma.LotCreateInput).id,
+          id: lotDatas[idx < lotDatas.length ? idx : 0].id,
         },
       },
       car_type: {

@@ -50,7 +50,7 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
     if (car) {
       setSelectedCar(car);
       console.log(selectedCar);
-      let features = car.car_features.map(feature => feature.car_feature_id);
+      let features = car.car_features.map((feature) => feature.car_feature_id);
       fetch(`/api/features?features=${features}`)
         .then((response) => {
           if (!response.ok) {
@@ -127,9 +127,10 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
               <li className="font-bold text-blue-700">Step 3: View vehicles</li>
             </ul>
             <div className="flex flex-col space-y-2 mt-2">
-              <Link href={{pathname: "../browse_choose_lots"}}
+              <Link
+                href={{ pathname: "../browse_choose_lots" }}
                 className="bg-blue-500 hover:bg-blue-400 text-white py-2 px-4 rounded transition duration-300 ease-in-out flex items-center no-underline"
-                >
+              >
                 New browse
               </Link>
               <Link
@@ -140,38 +141,59 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
               </Link>
             </div>
           </div>
-            
+
           <h1 className="text-2xl font-semibold mb-6 italic text-center mt-0">
             Results
           </h1>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {availableCars.map((car) => (
-              <div key={car.id} className="flex flex-col items-center p-4 border border-gray-300 rounded-lg">
-                <img src={car.image_path} className="h-48 w-full object-cover mb-3"></img>
-                <div className="text-lg font-gray-700">{car.year} {car.make.name} {car.model.name}</div>
-                <div className="text-md font-semibold text-black">${car.car_type.price.toString()} per day</div>
-                <button onClick={() => openModal(car)} className="cursor-pointer mt-3 bg-blue-700 hover:bg-green-700 text-white font-bold py-3 px-6 rounded transition duration-300 ease-in-out">
-                <span className="text-lg">Select</span>
+              <div
+                key={car.id}
+                className="flex flex-col items-center p-4 border border-gray-300 rounded-lg"
+              >
+                <img
+                  src={car.image_path}
+                  className="h-48 w-full object-cover mb-3"
+                ></img>
+                <div className="text-lg font-gray-700">
+                  {car.year} {car.make.name} {car.model.name}
+                </div>
+                <div className="text-md font-semibold text-black">
+                  ${car.car_type.price.toString()} per day
+                </div>
+                <button
+                  onClick={() => openModal(car)}
+                  className="cursor-pointer mt-3 bg-blue-700 hover:bg-green-700 text-white font-bold py-3 px-6 rounded transition duration-300 ease-in-out"
+                >
+                  <span className="text-lg">Select</span>
                 </button>
               </div>
             ))}
           </div>
         </div>
         {isModalOpen && (
-          <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full" onClick={closeModal}>
+          <div
+            className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+            onClick={closeModal}
+          >
             <div className="relative top-20 mx-auto p-5 border w-97 shadow-lg rounded-md bg-white">
               <div className="mt-3 text-center">
                 <div className="mx-auto gap-[20px] flex items-center justify-center rounded-full bg-orange-100">
-                  <img src={selectedCar!.image_path} className="h-[400px]"></img>
+                  <img
+                    src={selectedCar!.image_path}
+                    className="h-[400px]"
+                  ></img>
                   <div className="flex flex-col items-start">
                     <h3 className="text-lg leading-6 font-medium text-gray-900">
-                      {selectedCar!.year} {selectedCar!.make.name} {selectedCar!.model.name}, {selectedCar!.color}
+                      {selectedCar!.year} {selectedCar!.make.name}{" "}
+                      {selectedCar!.model.name}, {selectedCar!.color}
                     </h3>
                     <p>{selectedCar!.details}</p>
-                  <p>{selectedCar!.mileage} miles</p>
+                    <p>{selectedCar!.mileage} miles</p>
                     <h3 className="text-lg leading-6 font-medium text-gray-900">
-                      Base price per day: ${selectedCar!.car_type.price.toString()}
+                      Base price per day: $
+                      {selectedCar!.car_type.price.toString()}
                     </h3>
                     {/* <h3 className="text-lg leading-6 font-medium text-gray-900">
                       Optional add-ons:</h3>
@@ -182,15 +204,21 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
                       </label>  
                       </input>
                     ))} */}
-                    <Link href={{pathname: "../test-db-cars", 
-                      query: {pickupLot: pickupLot, returnLot: returnLot} }}
+                    <Link
+                      href={{
+                        pathname: "../test-db-cars",
+                        query: { pickupLot: pickupLot, returnLot: returnLot },
+                      }}
                       className="bg-blue-700 hover:bg-green-700 text-white font-medium py-2 px-4 rounded transition duration-300 ease-in-out flex items-center justify-center no-underline"
                     >
                       <span className="text-lg">Proceed to Reservation</span>
                     </Link>
                   </div>
                 </div>
-                <button onClick={closeModal} className="absolute top-3 right-3 p-2  hover:text-black hover:font-bold cursor-pointer">
+                <button
+                  onClick={closeModal}
+                  className="absolute top-3 right-3 p-2  hover:text-black hover:font-bold cursor-pointer"
+                >
                   <span className="text-gray-600">X</span>
                 </button>
               </div>
