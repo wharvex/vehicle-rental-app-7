@@ -27,18 +27,44 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
     year: number;
     make: prisma.Make;
     model: prisma.Model;
+    color: string;
+    details: string;
+    mileage: number;
     car_type: prisma.CarType;
+    car_features: prisma.CarFeaturesOnCars[];
     image_path: string;
+  }
+
+  interface CarFeature {
+    id: string;
+    name: string;
+    price: number;
   }
 
   const [availableCars, setAvailableCars] = useState<Car[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCar, setSelectedCar] = useState<Car>();
-  // const [carSelection, setCarSelection] = useState<string>("");
+  const [currentFeatures, setCurrentFeatures] = useState<CarFeature[]>();
 
   const openModal = (car: Car) => {
     if (car) {
       setSelectedCar(car);
+      console.log(selectedCar);
+      let features = car.car_features.map((feature) => feature.car_feature_id);
+      fetch(`/api/features?features=${features}`)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log("Features data:", data);
+          setCurrentFeatures(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching features:", error);
+        });
       setIsModalOpen(true);
     }
   };
@@ -71,77 +97,79 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
         });
     }, [pickupLot, returnLot, pickupDate, returnDate]);
 
+    // useEffect(() => {
+    //   let features = availableCars.map(car => car.car_features.car_feature_id);
+    //   fetch(
+    //     `/api/features?features=${features}`
+    //   )
+    //     .then((response) => {
+    //       if (!response.ok) {
+    //         throw new Error(`HTTP error! Status: ${response.status}`);
+    //       }
+    //       return response.json();
+    //     })
+    //     .then((data) => {
+    //       setAvailableCars(data);
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error fetching features:", error);
+    //     });
+    // }, [selectedCar]);
+
+    // console.log('features:',currentFeatures);
     return (
-      <div
-        // className="flex flex-row items-center justify-center pt-0 px-[100px] pb-[70px] box-border text-center text-36xl text-black font-body-large self-stretch flex-1"
-        style={selectCarsStyle}
-      >
-        {/* <div className="self-stretch flex flex-col items-center justify-start gap-[10px] text-center text-9xl text-black font-reg-heading">
-          <div className="self-stretch flex flex-col items-center justify-center gap-[10px]">
-            <ul className="flex flex-col items-center justify-start gap-[10px] list-none"> */}
-        <div>
-          <div>
-            <ul>
-              <li>Step 1: Choose lots</li>
-              <li>Step 2: Enter dates</li>
-              <li className="font-semibold">Step 3: View vehicles</li>
+      <div style={selectCarsStyle} className="bg-white p-8">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex justify-between items-start">
+            <ul className="flex space-x-7 mb-4 mr-2">
+              <li className="text-gray-500">Step 1: Choose lots</li>
+              <li className="text-gray-500">Step 2: Enter dates</li>
+              <li className="font-bold text-blue-700">Step 3: View vehicles</li>
             </ul>
-          </div>
-          <div className="self-stretch p-7 flex flex-col items-center justify-start gap-[35px]">
-            <div className="self-stretch flex flex-col items-center justify-center pt-[100px] px-0 pb-[25px] text-45xl">
-              <h1 className="m-0 relative text-inherit tracking-[0.5px] leading-[100%] italic font-medium font-inherit">
-                Results
-              </h1>
-              <div className="flex gap-[75px]">
-                {availableCars.map((car) => (
-                  <div key={car.id} className="flex flex-col gap-[8px]">
-                    <img
-                      src={car.image_path}
-                      className="h-[200px] w-[200px]"
-                    ></img>
-                    <div className="text-center">
-                      {car.year} {car.make.name} {car.model.name}
-                    </div>
-                    <div className="text-center font-semibold">
-                      ${car.car_type.price.toString()} per day
-                    </div>
-                    {/* <Link href={{pathname: "../test-db-cars", 
-                      query: {pickupLot: pickupLot, returnLot: returnLot, 
-                              pickupDate: pickupDate, returnDate: returnDate, carSelection: car.id} }}
-                      className="cursor-pointer [border:none] p-0 bg-[transparent] flex flex-col items-center justify-center"
-                    > */}
-                    <button onClick={() => openModal(car)}>
-                      <div className="box-border w-[94px] h-[42px] flex flex-row items-start justify-start border-[2px] border-solid border-black">
-                        <div className="self-stretch flex-1 relative tracking-[0.5px] leading-[100%] font-medium font-hfb-extra-small text-black text-center flex items-center justify-center">
-                          Select
-                        </div>
-                      </div>
-                      {/* </Link> */}
-                    </button>
-                  </div>
-                ))}
-              </div>
+            <div className="flex flex-col space-y-2 mt-2">
+              <Link
+                href={{ pathname: "../browse_choose_lots" }}
+                className="bg-blue-500 hover:bg-blue-400 text-white py-2 px-4 rounded transition duration-300 ease-in-out flex items-center no-underline"
+              >
+                New browse
+              </Link>
+              <Link
+                href="/"
+                className="bg-gray-300 hover:bg-gray-400 text-black font-medium py-2 px-4 rounded transition duration-300 ease-in-out flex items-center no-underline mt-4"
+              >
+                Back to Home
+              </Link>
             </div>
-            <Link
-              href={{ pathname: "../browse_choose_lots" }}
-              className="cursor-pointer [border:none] p-0 bg-[transparent] flex flex-col items-center justify-center"
-            >
-              <div className="box-border p-4 flex flex-row items-start justify-start border-[2px] border-solid border-black">
-                <div className="self-stretch flex-1 relative text-21xl tracking-[0.5px] leading-[100%] font-medium font-hfb-extra-small text-black text-center flex items-center justify-center">
-                  New browse
+          </div>
+
+          <h1 className="text-2xl font-semibold mb-6 italic text-center mt-0">
+            Results
+          </h1>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {availableCars.map((car) => (
+              <div
+                key={car.id}
+                className="flex flex-col items-center p-4 border border-gray-300 rounded-lg"
+              >
+                <img
+                  src={car.image_path}
+                  className="h-48 w-full object-cover mb-3"
+                ></img>
+                <div className="text-lg font-gray-700">
+                  {car.year} {car.make.name} {car.model.name}
                 </div>
-              </div>
-            </Link>
-            <Link
-              href="/"
-              className="cursor-pointer [border:none] p-0 bg-[transparent] flex flex-col items-center justify-center"
-            >
-              <div className="box-border w-[314px] h-[82px] flex flex-row items-start justify-start border-[2px] border-solid border-black">
-                <div className="self-stretch flex-1 relative text-21xl tracking-[0.5px] leading-[100%] font-medium font-hfb-extra-small text-black text-center flex items-center justify-center">
-                  Back to Home
+                <div className="text-md font-semibold text-black">
+                  ${car.car_type.price.toString()} per day
                 </div>
+                <button
+                  onClick={() => openModal(car)}
+                  className="cursor-pointer mt-3 bg-blue-700 hover:bg-green-700 text-white font-bold py-3 px-6 rounded transition duration-300 ease-in-out"
+                >
+                  <span className="text-lg">Select</span>
+                </button>
               </div>
-            </Link>
+            ))}
           </div>
         </div>
         {isModalOpen && (
@@ -149,38 +177,49 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
             className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
             onClick={closeModal}
           >
-            <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div className="relative top-20 mx-auto p-5 border w-97 shadow-lg rounded-md bg-white">
               <div className="mt-3 text-center">
-                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 gap-20">
-                  {/* Car details go here */}
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">
-                    {selectedCar!.year} {selectedCar!.make.name}{" "}
-                    {selectedCar!.model.name}
-                  </h3>
-                  <Link
-                    href={{
-                      pathname: "../test-db-cars",
-                      query: {
-                        pickupLot: pickupLot,
-                        returnLot: returnLot,
-                        pickupDate: pickupDate,
-                        returnDate: returnDate,
-                        carSelection: selectedCar!.id,
-                      },
-                    }}
-                    className="cursor-pointer [border:none] p-0 bg-[transparent] flex flex-col items-center justify-center"
-                  >
-                    <h3>Proceed</h3>
-                  </Link>
-                  {/* ... other details */}
+                <div className="mx-auto gap-[20px] flex items-center justify-center rounded-full bg-orange-100">
+                  <img
+                    src={selectedCar!.image_path}
+                    className="h-[400px]"
+                  ></img>
+                  <div className="flex flex-col items-start">
+                    <h3 className="text-lg leading-6 font-medium text-gray-900">
+                      {selectedCar!.year} {selectedCar!.make.name}{" "}
+                      {selectedCar!.model.name}, {selectedCar!.color}
+                    </h3>
+                    <p>{selectedCar!.details}</p>
+                    <p>{selectedCar!.mileage} miles</p>
+                    <h3 className="text-lg leading-6 font-medium text-gray-900">
+                      Base price per day: $
+                      {selectedCar!.car_type.price.toString()}
+                    </h3>
+                    {/* <h3 className="text-lg leading-6 font-medium text-gray-900">
+                      Optional add-ons:</h3>
+                    {currentFeatures!.map((feature) => (
+                      <input type="checkbox" id={feature.id}>
+                      <label htmlFor={feature.id} className="text-lg leading-6 font-medium text-gray-900">
+                        {feature.name}:  ${feature.price.toString()}
+                      </label>  
+                      </input>
+                    ))} */}
+                    <Link
+                      href={{
+                        pathname: "../test-db-cars",
+                        query: { pickupLot: pickupLot, returnLot: returnLot },
+                      }}
+                      className="bg-blue-700 hover:bg-green-700 text-white font-medium py-2 px-4 rounded transition duration-300 ease-in-out flex items-center justify-center no-underline"
+                    >
+                      <span className="text-lg">Proceed to Reservation</span>
+                    </Link>
+                  </div>
                 </div>
                 <button
                   onClick={closeModal}
-                  className="absolute top-0 right-0 p-2"
+                  className="absolute top-3 right-3 p-2  hover:text-black hover:font-bold cursor-pointer"
                 >
-                  <span className="text-gray-400 hover:text-gray-500">
-                    &times;
-                  </span>
+                  <span className="text-gray-600">X</span>
                 </button>
               </div>
             </div>
