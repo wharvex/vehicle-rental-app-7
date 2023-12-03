@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Vehicle Rental App
 
-## Getting Started
+## Run Instructions
 
-First, run the development server:
+### Clone Repository and Create .env.local File
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/wharvex/vehicle-rental-app-7
+cd vehicle-rental-app-7
+touch .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Add Environment Variables to .env.local
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#### Acquire Clerk and Pexels API keys from Their Websites
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+* [Clerk](https://clerk.com/)
+* [Pexels](https://www.pexels.com/)
 
-## Learn More
+#### Add the Following to .env.local
 
-To learn more about Next.js, take a look at the following resources:
+```fundamental
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your-key-goes-here
+CLERK_SECRET_KEY=your-key-goes-here
+PEXELS_KEY=your-key-goes-here
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Install Packages, Seed Database, Start Dev Server
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+npm i
+npx prisma migrate dev --name init
+npm run dev
+```
 
-## Deploy on Vercel
+### Final Steps
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+* Visit localhost:3000 (or whatever port the output of `npm run dev` tells you) to see the site.
+* Click the hamburger icon in the upper right of the page to browse or view the dummy database contents or login.
+* If the hamburger icon doesn't work or a page seems to be taking too long to load, try refreshing the browser window.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### TODO
+
+* Allow users to save a reservation after logging in and view their reservations
+* Integrate Stripe

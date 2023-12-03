@@ -1,18 +1,21 @@
 import type { NextPage } from "next";
-import HeaderDetailsGroup from "./confirm-res-header-details-group";
+import DetailsGroupHeader from "./confirm-res-header-details-group";
 import BodyDetailsGroup from "./confirm-res-body-details-group";
 
-type DetailsGroupType = {
-  image?: string;
+type DetailsGroupProps = {
+  imageSrc: string;
+  headerText: string;
+  showThirdDetail: boolean;
 };
 
-const DetailsGroup: NextPage<DetailsGroupType> = ({ image }) => {
+export default function DetailsGroup(fn: DetailsGroupProps) {
   return (
     <div className="flex flex-col items-start justify-start gap-[10px] self-stretch">
-      <HeaderDetailsGroup headerText="Something Choice" />
-      <BodyDetailsGroup image="/image6@2x.png" />
+      <DetailsGroupHeader headerText={fn.headerText} />
+      <BodyDetailsGroup
+        imageSrc={fn.imageSrc}
+        showThirdDetail={fn.showThirdDetail}
+      />
     </div>
   );
-};
-
-export default DetailsGroup;
+}

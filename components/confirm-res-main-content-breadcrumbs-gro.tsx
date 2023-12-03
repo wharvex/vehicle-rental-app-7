@@ -1,17 +1,23 @@
 import type { NextPage } from "next";
-import Breadcrumb from "./confirm-res-breadcrumb";
+import { Breadcrumb, BreadcrumbProps } from "./confirm-res-breadcrumb";
 import ConnectorBreadcrumbsGroup from "./confirm-res-connector-breadcrumbs-group";
 
-const MainContentBreadcrumbsGroup: NextPage = () => {
+type MainContentBreadcrumbsGroupProps = [
+  BreadcrumbProps,
+  BreadcrumbProps,
+  BreadcrumbProps
+];
+
+export default function MainContentBreadcrumbsGroup(
+  fn: MainContentBreadcrumbsGroupProps
+) {
   return (
-    <div className="w-[1440px] h-[137px] flex flex-row items-center justify-center py-0 px-[100px] box-border gap-[10px]">
-      <Breadcrumb />
+    <div className="w-full h-[137px] flex flex-row items-center justify-center py-[85px] px-[100px] box-border gap-[10px]">
+      <Breadcrumb {...fn[0]} />
       <ConnectorBreadcrumbsGroup connectorBreadcrumbsGroupHeight="88px" />
-      <Breadcrumb />
+      <Breadcrumb {...fn[1]} />
       <ConnectorBreadcrumbsGroup connectorBreadcrumbsGroupHeight="88px" />
-      <Breadcrumb />
+      <Breadcrumb {...fn[2]} />
     </div>
   );
-};
-
-export default MainContentBreadcrumbsGroup;
+}

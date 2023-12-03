@@ -31,6 +31,8 @@ module.exports = {
       "36xl": "55px",
       "11xl": "30px",
       "41xl": "60px",
+      "5xl": "20px",
+      "6xl": "25px",
       inherit: "inherit",
     },
   },

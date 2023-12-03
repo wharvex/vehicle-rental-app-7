@@ -1,22 +1,19 @@
-import type { NextPage } from "next";
-import Detail from "./confirm-res-detail";
+import ConfirmResDetail from "./confirm-res-detail";
 import ButtonSmallSmall from "./confirm-res-button-small-small";
 
 type BodyContentDetailsGroupType = {
-  showThirdDetail?: boolean;
+  showThirdDetail: boolean;
 };
 
-const BodyContentDetailsGroup: NextPage<BodyContentDetailsGroupType> = ({
-  showThirdDetail = true,
-}) => {
+export default function BodyContentDetailsGroup(
+  fn: BodyContentDetailsGroupType
+) {
   return (
     <div className="flex flex-row items-center justify-between flex-1">
-      <Detail />
-      <Detail />
-      <Detail />
+      <ConfirmResDetail />
+      <ConfirmResDetail />
+      {fn.showThirdDetail && <ConfirmResDetail />}
       <ButtonSmallSmall buttonText="Text" />
     </div>
   );
-};
-
-export default BodyContentDetailsGroup;
+}

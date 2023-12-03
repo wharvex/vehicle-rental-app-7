@@ -3,16 +3,15 @@ import ContainerDetailsGroupImag from "./confirm-res-container-details-group-ima
 import BodyContentDetailsGroup from "./confirm-res-body-content-details-group";
 
 type BodyDetailsGroupType = {
-  image?: string;
+  imageSrc: string;
+  showThirdDetail: boolean;
 };
 
-const BodyDetailsGroup: NextPage<BodyDetailsGroupType> = ({ image }) => {
+export default function BodyDetailsGroup(fn: BodyDetailsGroupType) {
   return (
     <div className="flex flex-row items-center justify-start gap-[10px] self-stretch">
-      <ContainerDetailsGroupImag image="/image2@2x.png" />
-      <BodyContentDetailsGroup showThirdDetail />
+      <ContainerDetailsGroupImag image={fn.imageSrc} />
+      <BodyContentDetailsGroup showThirdDetail={fn.showThirdDetail} />
     </div>
   );
-};
-
-export default BodyDetailsGroup;
+}

@@ -17,7 +17,7 @@ const ConnectorBreadcrumbsGroup: NextPage<ConnectorBreadcrumbsGroupType> = ({
 
   return (
     <div
-      className="box-border h-[100px] flex-1 border-b-[2px] border-solid border-black"
+      className="box-border w-full h-[100px] flex-1 border-b-[2px] border-solid border-black"
       style={connectorBreadcrumbsGroupStyle}
     />
   );

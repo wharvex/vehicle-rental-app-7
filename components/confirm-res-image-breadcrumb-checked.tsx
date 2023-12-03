@@ -6,7 +6,7 @@ const ImageBreadcrumbChecked: NextPage = () => {
       <img
         className="relative w-[52px] h-[51px] object-cover"
         alt=""
-        src="confirm-res-/image5@2x.png"
+        src="/confirm-res-image5@2x.png"
       />
     </div>
   );
