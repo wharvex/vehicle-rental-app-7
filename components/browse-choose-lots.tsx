@@ -1,4 +1,4 @@
-// 'use client'
+'use client';
 import type { NextPage } from "next";
 import Link from "next/link";
 import React, { useState, useMemo, type CSSProperties, useEffect } from "react";
@@ -28,6 +28,7 @@ const ChooseLots: NextPage<ChooseLotsTitle> = ({
   const [lots, setLots] = useState<Lot[]>([]);
   const [pickupLot, setPickupLot] = useState<string>('');
   const [returnLot, setReturnLot] = useState<string>('');
+  const areLotsSelected = (pickupLot !== '') && (returnLot !== '');
 
   useEffect(() => {
     fetch('/api/lots')
@@ -73,7 +74,7 @@ const ChooseLots: NextPage<ChooseLotsTitle> = ({
                 value={pickupLot}
                 onChange={handlePickupLotChange}
                 required
-                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                className="cursor-pointer mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
               >
                 <option value="">Select a lot</option>
                 {lots.map((lot) => (
@@ -89,7 +90,7 @@ const ChooseLots: NextPage<ChooseLotsTitle> = ({
                 value={returnLot}
                 onChange={handleReturnLotChange}
                 required
-                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                className="cursor-pointer mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
               >
                 <option value="">Select a lot</option>
                 {lots.map((lot) => (
@@ -97,12 +98,23 @@ const ChooseLots: NextPage<ChooseLotsTitle> = ({
                 ))}
               </select>
             </div>
-            <Link href={{pathname: "../browse_choose_dates", 
-              query: {pickupLot: pickupLot, returnLot: returnLot} }}
-              className="bg-blue-700 hover:bg-green-700 text-white font-medium py-2 px-4 rounded transition duration-300 ease-in-out flex items-center justify-center no-underline"
-            >
-              <span className="text-lg">Continue</span>
-            </Link>
+            {areLotsSelected ? (
+              <Link href={{pathname: "../browse_choose_dates", 
+                query: {pickupLot: pickupLot, returnLot: returnLot} }}
+                className="bg-blue-700 hover:bg-green-700 text-white font-medium py-2 px-4 rounded transition duration-300 ease-in-out flex items-center justify-center no-underline"
+              >
+                <span className="text-lg">Continue</span>
+              </Link>
+            ) : (
+              <div>
+                <p className="text-red-500 text-xs">*Please choose both a pick-up lot and a return lot.</p>
+                <div 
+                  className="bg-blue-300 text-white font-medium py-2 px-4 rounded flex items-center justify-center no-underline cursor-not-allowed"
+                >
+                  <span className="text-lg">Continue</span>
+                </div>
+              </div>
+            )}
             <Link href="/"
               className="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded transition duration-300 ease-in-out flex items-center justify-center no-underline mt-4"
             >

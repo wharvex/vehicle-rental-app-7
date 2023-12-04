@@ -27,11 +27,33 @@ const ChooseDates: NextPage<ChooseDatesTitle> = ({
     date: Date;
   }
 
-  const [pickupDate, setPickupDate] = useState(new Date());
-  const [returnDate, setReturnDate] = useState(new Date());
-  const [pickupLotClosures, setPickupLotClosures] = useState<Date[]>([]);
-  const [returnLotClosures, setReturnLotClosures] = useState<Date[]>([]);
+  const [ pickupDate, setPickupDate ] = useState(new Date());
+  const [ returnDate, setReturnDate ] = useState(new Date());
+  const [ pickupLotClosures, setPickupLotClosures ] = useState<Date[]>([]);
+  const [ returnLotClosures, setReturnLotClosures ] = useState<Date[]>([]);
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  tomorrow.setHours(0, 0, 0, 0);
+  
+  const tomorrowString = tomorrow.toLocaleDateString();
 
+  useEffect(() => {
+    setReturnDate(tomorrow);
+  }, []);
+
+  const validateDates = () => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);  // ignore user's current time
+    if (!pickupDate || !returnDate || pickupDate == today || returnDate <= pickupDate) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  };
+
+  const areDatesValid = validateDates();
+  
   if (params) {
     const pickupLot = params.get("pickupLot");
     const returnLot = params.get("returnLot");
@@ -78,53 +100,49 @@ const ChooseDates: NextPage<ChooseDatesTitle> = ({
             <li className="font-bold text-blue-700">Step 2: Enter dates</li>
             <li className="text-gray-500">Step 3: View vehicles</li>
           </ul>
-          <h1 className="text-2xl font-semibold mb-6 italic">
+
+          <h1 className="text-2xl font-semibold mb-6 italic">  
             Choose Pick-up and Return dates
           </h1>
-          {/* </div> */}
+          
           <div className="space-y-6">
             <div>
-              <label
-                htmlFor="pickupDate"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Pickup Date:
-              </label>
+              <label htmlFor="pickupDate" className="block text-sm font-medium text-gray-700 mb-2">Pickup Date:*</label>
               <CalendarPicker
                 selectedDate={pickupDate}
                 onChange={setPickupDate}
                 closureDates={pickupLotClosures}
+                minimumDate={new Date()}
               />
             </div>
             <div>
-              <label
-                htmlFor="returnDate"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Return Date:
-              </label>
+              <label htmlFor="returnDate" className="block text-sm font-medium text-gray-700 mb-2">Return Date:*</label>
               <CalendarPicker
                 selectedDate={returnDate}
                 onChange={setReturnDate}
                 closureDates={returnLotClosures}
+                minimumDate={tomorrow}
               />
             </div>
-            <Link
-              href={{
-                pathname: "../browse_select_cars",
-                query: {
-                  pickupLot: pickupLot,
-                  returnLot: returnLot,
-                  pickupDate: pickupDate.toLocaleDateString(),
-                  returnDate: returnDate.toLocaleDateString(),
-                },
-              }}
-              className="bg-blue-700 hover:bg-green-700 text-white font-medium py-2 px-4 rounded transition duration-300 ease-in-out flex items-center justify-center no-underline"
-            >
-              <span className="text-lg">Continue</span>
-            </Link>
-            <Link
-              href="/"
+            {areDatesValid ? (
+              <Link href={{pathname: "../browse_select_cars", 
+                    query: {pickupLot: pickupLot, returnLot: returnLot,
+                            pickupDate: pickupDate.toLocaleDateString(), returnDate: returnDate.toLocaleDateString()} }}
+                className="bg-blue-700 hover:bg-green-700 text-white font-medium py-2 px-4 rounded transition duration-300 ease-in-out flex items-center justify-center no-underline"
+              >
+                <span className="text-lg">Continue</span>
+              </Link>
+            ) : (
+              <div>
+                <p className="text-red-500 text-xs">*Please enter valid dates, with the return date after the pick-up date.</p>
+                <div 
+                  className="bg-blue-300 text-white font-medium py-2 px-4 rounded flex items-center justify-center no-underline cursor-not-allowed"
+                >
+                  <span className="text-lg">Continue</span>
+                </div>
+              </div>
+            )}
+            <Link href="/"
               className="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded transition duration-300 ease-in-out flex items-center justify-center no-underline mt-4"
             >
               <span className="text-lg">Back to Home</span>
