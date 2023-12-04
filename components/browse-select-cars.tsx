@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useState, useEffect, useMemo, type CSSProperties } from "react";
@@ -49,7 +49,6 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
   const openModal = (car: Car) => {
     if (car) {
       setSelectedCar(car);
-      console.log(selectedCar);
       let features = car.car_features.map((feature) => feature.car_feature_id);
       fetch(`/api/features?features=${features}`)
         .then((response) => {
@@ -59,7 +58,6 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
           return response.json();
         })
         .then((data) => {
-          console.log("Features data:", data);
           setCurrentFeatures(data);
         })
         .catch((error) => {
@@ -97,26 +95,6 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
         });
     }, [pickupLot, returnLot, pickupDate, returnDate]);
 
-    // useEffect(() => {
-    //   let features = availableCars.map(car => car.car_features.car_feature_id);
-    //   fetch(
-    //     `/api/features?features=${features}`
-    //   )
-    //     .then((response) => {
-    //       if (!response.ok) {
-    //         throw new Error(`HTTP error! Status: ${response.status}`);
-    //       }
-    //       return response.json();
-    //     })
-    //     .then((data) => {
-    //       setAvailableCars(data);
-    //     })
-    //     .catch((error) => {
-    //       console.error("Error fetching features:", error);
-    //     });
-    // }, [selectedCar]);
-
-    // console.log('features:',currentFeatures);
     return (
       <div style={selectCarsStyle} className="bg-white p-8">
         <div className="max-w-4xl mx-auto">
@@ -195,15 +173,6 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
                       Base price per day: $
                       {selectedCar!.car_type.price.toString()}
                     </h3>
-                    {/* <h3 className="text-lg leading-6 font-medium text-gray-900">
-                      Optional add-ons:</h3>
-                    {currentFeatures!.map((feature) => (
-                      <input type="checkbox" id={feature.id}>
-                      <label htmlFor={feature.id} className="text-lg leading-6 font-medium text-gray-900">
-                        {feature.name}:  ${feature.price.toString()}
-                      </label>  
-                      </input>
-                    ))} */}
                     <Link
                       href={{
                         pathname: "/confirm-reservation",
