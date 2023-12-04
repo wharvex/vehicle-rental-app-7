@@ -57,4 +57,3 @@ npm run dev
 * Finish building the payment page
 * Finish building the dashboard
 * Allow users to edit/delete their reservations
-* Add input validation to browse pages
