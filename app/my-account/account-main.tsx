@@ -1,26 +1,25 @@
-import Link from 'next/link';
-import { useNavigation } from 'next/navigation';
+"use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Account = () => {
-  const navigation = useNavigation();
-
-  const renderContent = () => {
-    const { pathname } = navigation;
+  const RenderContent = () => {
+    const pathname = usePathname();
 
     switch (pathname) {
-      case '/account/userInfo':
+      case "/account/userInfo":
         return (
           <div>
             <h1>User Information</h1>
           </div>
         );
-      case '/account/driverLicense':
+      case "/account/driverLicense":
         return (
           <div>
             <h1>Driver License</h1>
           </div>
         );
-      case '/account/carInsurance':
+      case "/account/carInsurance":
         return (
           <div>
             <h1>Car Insurance</h1>
@@ -41,23 +40,17 @@ const Account = () => {
       <div className="bg-gray-200 h-screen w-1/4 p-4">
         <ul>
           <li>
-            <Link href="/account/userInfo">
-              <a>User Information</a>
-            </Link>
+            <Link href="/account/userInfo">User Information</Link>
           </li>
           <li>
-            <Link href="/account/driverLicense">
-              <a>Driver License</a>
-            </Link>
+            <Link href="/account/driverLicense">Driver License</Link>
           </li>
           <li>
-            <Link href="/account/carInsurance">
-              <a>Car Insurance</a>
-            </Link>
+            <Link href="/account/carInsurance">Car Insurance</Link>
           </li>
         </ul>
       </div>
-      <div className="w-3/4 p-4">{renderContent()}</div>
+      <div className="w-3/4 p-4">{RenderContent()}</div>
     </div>
   );
 };
