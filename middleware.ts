@@ -15,6 +15,7 @@ export default authMiddleware({
     "/api/features",
     "/test-db",
     "/test-db-cars",
+    "/confirm-reservation",
   ],
 });
 

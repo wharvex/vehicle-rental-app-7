@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { useMemo, type CSSProperties } from "react";
 import MenuRadioChoices from "./menu-radio-choices";
-import ButtonSmallSmallGreen from "./button-small-small-green";
+import ButtonSmallSmall from "./button-small-small";
 
 type ContainerRadioChoiceMenuType = {
   /** Style props */
@@ -60,7 +60,7 @@ const ContainerRadioChoiceMenu: NextPage<ContainerRadioChoiceMenuType> = ({
         radioChoiceBoxSizing2="border-box"
         radioChoiceBoxSizing3="border-box"
       />
-      <ButtonSmallSmallGreen text="Go!" />
+      <ButtonSmallSmall text="Go!" makeGreen={true} />
     </div>
   );
 };

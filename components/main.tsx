@@ -46,7 +46,7 @@ const Main: NextPage<MainType> = ({
   }, [mainContentHeroBoxSizing3]);
 
   return (
-    <main className="bg-aliceblue flex flex-col items-center justify-start gap-[20px] self-stretch flex-1">
+    <main className="[background:linear-gradient(180deg,_#ebf5ff,_#92c9f9)] flex flex-col items-center justify-start gap-[20px] self-stretch flex-1">
       {mainChild1}
       {mainChild2}
       {mainChild3}

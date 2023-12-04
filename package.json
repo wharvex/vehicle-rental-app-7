@@ -16,6 +16,7 @@
     "@mui/icons-material": "^5.14.18",
     "@mui/material": "^5.14.18",
     "@prisma/client": "^5.6.0",
+    "clsx": "^2.0.0",
     "dotenv": "^16.3.1",
     "dotenv-cli": "^7.3.0",
     "enforce-unique": "^1.2.0",
