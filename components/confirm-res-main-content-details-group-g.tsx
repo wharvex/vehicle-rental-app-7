@@ -1,8 +1,17 @@
-import type { NextPage } from "next";
 import DetailsGroupContainerHeader from "./confirm-res-header-details-group-group";
 import DetailsGroup from "./confirm-res-details-group";
 
-export default function MainContentDetailsGroupContainer() {
+type MainContentDetailsGroupContainerProps = {
+  pickupLot: string;
+  returnLot: string;
+  pickupDate: string;
+  returnDate: string;
+  selectedCar: string;
+};
+
+export default function MainContentDetailsGroupContainer(
+  fn: MainContentDetailsGroupContainerProps
+) {
   return (
     <div className="w-[1440px] flex flex-col items-center justify-start py-0 px-[100px] box-border gap-[75px]">
       <DetailsGroupContainerHeader text="Reservation Details" />

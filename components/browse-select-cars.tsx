@@ -207,7 +207,13 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
                     <Link
                       href={{
                         pathname: "/confirm-reservation",
-                        query: { pickupLot: pickupLot, returnLot: returnLot },
+                        query: {
+                          pickupLot: pickupLot,
+                          returnLot: returnLot,
+                          pickupDate: pickupDate,
+                          returnDate: returnDate,
+                          selectedCar: selectedCar?.id,
+                        },
                       }}
                       className="bg-blue-700 hover:bg-green-700 text-white font-medium py-2 px-4 rounded transition duration-300 ease-in-out flex items-center justify-center no-underline"
                     >

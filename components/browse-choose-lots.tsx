@@ -2,7 +2,6 @@
 import type { NextPage } from "next";
 import Link from "next/link";
 import React, { useState, useMemo, type CSSProperties, useEffect } from "react";
-import prisma from "@/lib/prisma";
 import { useRouter } from "next/navigation";
 
 type ChooseLotsTitle = {

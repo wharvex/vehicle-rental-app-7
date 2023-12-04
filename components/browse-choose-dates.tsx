@@ -1,9 +1,9 @@
-'use client'
+"use client";
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useState, useEffect, useMemo, type CSSProperties } from "react";
-import { useSearchParams } from 'next/navigation';
-import CalendarPicker from './calendar-picker';
+import { useSearchParams } from "next/navigation";
+import CalendarPicker from "./calendar-picker";
 
 type ChooseDatesTitle = {
   text?: string;
@@ -27,46 +27,46 @@ const ChooseDates: NextPage<ChooseDatesTitle> = ({
     date: Date;
   }
 
-  const [ pickupDate, setPickupDate ] = useState(new Date());
-  const [ returnDate, setReturnDate ] = useState(new Date());
-  const [ pickupLotClosures, setPickupLotClosures ] = useState<Date[]>([]);
-  const [ returnLotClosures, setReturnLotClosures ] = useState<Date[]>([]);
-  
+  const [pickupDate, setPickupDate] = useState(new Date());
+  const [returnDate, setReturnDate] = useState(new Date());
+  const [pickupLotClosures, setPickupLotClosures] = useState<Date[]>([]);
+  const [returnLotClosures, setReturnLotClosures] = useState<Date[]>([]);
+
   if (params) {
-    const pickupLot = params.get('pickupLot');
-    const returnLot = params.get('returnLot');
-    
+    const pickupLot = params.get("pickupLot");
+    const returnLot = params.get("returnLot");
+
     useEffect(() => {
       fetch(`/api/closures?lotId=${pickupLot}`)
-        .then(response => {
+        .then((response) => {
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
           return response.json();
         })
         .then((data: Closure[]) => {
-          const closureDates = data.map(closure => new Date(closure.date));
-          setPickupLotClosures(closureDates); 
+          const closureDates = data.map((closure) => new Date(closure.date));
+          setPickupLotClosures(closureDates);
         })
-        .catch(error => {
-          console.error('Error fetching pickup lot closures:', error);
+        .catch((error) => {
+          console.error("Error fetching pickup lot closures:", error);
         });
     }, [pickupLot]);
-  
+
     useEffect(() => {
       fetch(`/api/closures?lotId=${returnLot}`)
-        .then(response => {
+        .then((response) => {
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
           return response.json();
         })
         .then((data: Closure[]) => {
-          const closureDates = data.map(closure => new Date(closure.date));
-          setReturnLotClosures(closureDates); 
+          const closureDates = data.map((closure) => new Date(closure.date));
+          setReturnLotClosures(closureDates);
         })
-        .catch(error => {
-          console.error('Error fetching return lot closures:', error);
+        .catch((error) => {
+          console.error("Error fetching return lot closures:", error);
         });
     }, [returnLot]);
 
@@ -78,13 +78,18 @@ const ChooseDates: NextPage<ChooseDatesTitle> = ({
             <li className="font-bold text-blue-700">Step 2: Enter dates</li>
             <li className="text-gray-500">Step 3: View vehicles</li>
           </ul>
-          <h1 className="text-2xl font-semibold mb-6 italic">  
+          <h1 className="text-2xl font-semibold mb-6 italic">
             Choose Pick-up and Return dates
           </h1>
-            {/* </div> */}
+          {/* </div> */}
           <div className="space-y-6">
             <div>
-              <label htmlFor="pickupDate" className="block text-sm font-medium text-gray-700 mb-2">Pickup Date:</label>
+              <label
+                htmlFor="pickupDate"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
+                Pickup Date:
+              </label>
               <CalendarPicker
                 selectedDate={pickupDate}
                 onChange={setPickupDate}
@@ -92,24 +97,37 @@ const ChooseDates: NextPage<ChooseDatesTitle> = ({
               />
             </div>
             <div>
-              <label htmlFor="returnDate" className="block text-sm font-medium text-gray-700 mb-2">Return Date:</label>
+              <label
+                htmlFor="returnDate"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
+                Return Date:
+              </label>
               <CalendarPicker
                 selectedDate={returnDate}
                 onChange={setReturnDate}
                 closureDates={returnLotClosures}
               />
             </div>
-            <Link href={{pathname: "../browse_select_cars", 
-                  query: {pickupLot: pickupLot, returnLot: returnLot,
-                          pickupDate: pickupDate.toLocaleDateString(), returnDate: returnDate.toLocaleDateString()} }}
+            <Link
+              href={{
+                pathname: "../browse_select_cars",
+                query: {
+                  pickupLot: pickupLot,
+                  returnLot: returnLot,
+                  pickupDate: pickupDate.toLocaleDateString(),
+                  returnDate: returnDate.toLocaleDateString(),
+                },
+              }}
               className="bg-blue-700 hover:bg-green-700 text-white font-medium py-2 px-4 rounded transition duration-300 ease-in-out flex items-center justify-center no-underline"
             >
               <span className="text-lg">Continue</span>
             </Link>
-            <Link href="/"
+            <Link
+              href="/"
               className="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded transition duration-300 ease-in-out flex items-center justify-center no-underline mt-4"
-              >
-                <span className="text-lg">Back to Home</span>
+            >
+              <span className="text-lg">Back to Home</span>
             </Link>
           </div>
           <div className="mt-10">
@@ -117,10 +135,8 @@ const ChooseDates: NextPage<ChooseDatesTitle> = ({
               <p className="font-semibold text-lg mb-2">Pick-up Lot Closures</p>
               {pickupLotClosures.length > 0 ? (
                 <ul className="list-disc list-inside">
-                  {pickupLotClosures.map((closure) => (
-                    <li>
-                      Closed on: {closure.toLocaleDateString()}
-                    </li>
+                  {pickupLotClosures.map((closure, idx) => (
+                    <li key={idx}>Closed on: {closure.toLocaleDateString()}</li>
                   ))}
                 </ul>
               ) : (
@@ -131,10 +147,8 @@ const ChooseDates: NextPage<ChooseDatesTitle> = ({
               <p className="font-semibold text-lg mb-2">Return Lot Closures</p>
               {returnLotClosures.length > 0 ? (
                 <ul className="list-disc list-inside">
-                  {returnLotClosures.map((closure) => (
-                    <li>
-                      Closed on: {closure.toLocaleDateString()}
-                    </li>
+                  {returnLotClosures.map((closure, idx) => (
+                    <li key={idx}>Closed on: {closure.toLocaleDateString()}</li>
                   ))}
                 </ul>
               ) : (
@@ -145,9 +159,8 @@ const ChooseDates: NextPage<ChooseDatesTitle> = ({
         </div>
       </div>
     );
-  }
-  else {
-    throw new Error('Error! No lots selected.');
+  } else {
+    throw new Error("Error! No lots selected.");
   }
 };
 
