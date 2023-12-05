@@ -19,21 +19,37 @@ export default function MainContentDetailsGroupContainer(
         imageSrc="/image2@2x.png"
         headerText="From Lot"
         showThirdDetail={true}
+        data={fn.pickupLot}
       />
       <DetailsGroup
         imageSrc="/image2@2x.png"
         headerText="To Lot"
         showThirdDetail={true}
+        data={fn.returnLot}
       />
       <DetailsGroup
         imageSrc="/image2@2x.png"
         headerText="Dates"
         showThirdDetail={false}
+        data={[fn.pickupDate, fn.returnDate]}
       />
       <DetailsGroup
         imageSrc="/image2@2x.png"
         headerText="Vehicle"
-        showThirdDetail={false}
+        showThirdDetail={true}
+        data={fn.selectedCar}
+      />
+      <DetailsGroup
+        imageSrc="/image2@2x.png"
+        headerText="Vehicle Features"
+        showThirdDetail={true}
+        data={fn.selectedCar}
+      />
+      <DetailsGroup
+        imageSrc="/image2@2x.png"
+        headerText="Total Price"
+        showThirdDetail={true}
+        data={fn.selectedCar}
       />
     </div>
   );

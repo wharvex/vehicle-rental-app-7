@@ -3,6 +3,7 @@ import ButtonSmallSmall from "./confirm-res-button-small-small";
 
 type BodyContentDetailsGroupType = {
   showThirdDetail: boolean;
+  data: string | [string, string];
 };
 
 export default function BodyContentDetailsGroup(
@@ -13,7 +14,7 @@ export default function BodyContentDetailsGroup(
       <ConfirmResDetail />
       <ConfirmResDetail />
       {fn.showThirdDetail && <ConfirmResDetail />}
-      <ButtonSmallSmall buttonText="Text" />
+      <ButtonSmallSmall buttonText="Edit" />
     </div>
   );
 }

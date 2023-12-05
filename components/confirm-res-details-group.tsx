@@ -6,6 +6,7 @@ type DetailsGroupProps = {
   imageSrc: string;
   headerText: string;
   showThirdDetail: boolean;
+  data: string | [string, string];
 };
 
 export default function DetailsGroup(fn: DetailsGroupProps) {
@@ -15,6 +16,7 @@ export default function DetailsGroup(fn: DetailsGroupProps) {
       <BodyDetailsGroup
         imageSrc={fn.imageSrc}
         showThirdDetail={fn.showThirdDetail}
+        data={fn.data}
       />
     </div>
   );
