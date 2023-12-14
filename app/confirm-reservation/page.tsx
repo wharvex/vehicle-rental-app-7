@@ -36,15 +36,7 @@ export default function Page() {
             ]}
           />
         }
-        mainChild2={
-          <MainContentDetailsGroupContainer
-            pickupLotID={params.pickupLot}
-            returnLotID={params.returnLot}
-            pickupDate={params.pickupDate}
-            returnDate={params.returnDate}
-            selectedCarID={params.selectedCar}
-          />
-        }
+        mainChild2={<MainContentDetailsGroupContainer {...params} />}
         mainChild3={<MainContentProceedButton />}
       />
     </div>
