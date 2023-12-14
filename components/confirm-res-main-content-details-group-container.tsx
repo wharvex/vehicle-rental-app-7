@@ -2,11 +2,11 @@ import DetailsGroupContainerHeader from "./confirm-res-header-details-group-grou
 import DetailsGroup from "./confirm-res-details-group";
 
 type MainContentDetailsGroupContainerProps = {
-  pickupLot: string;
-  returnLot: string;
+  pickupLotID: string;
+  returnLotID: string;
   pickupDate: string;
   returnDate: string;
-  selectedCar: string;
+  selectedCarID: string;
 };
 
 export default function MainContentDetailsGroupContainer(
@@ -19,13 +19,13 @@ export default function MainContentDetailsGroupContainer(
         imageSrc="/image2@2x.png"
         headerText="From Lot"
         showThirdDetail={true}
-        data={fn.pickupLot}
+        data={fn.pickupLotID}
       />
       <DetailsGroup
         imageSrc="/image2@2x.png"
         headerText="To Lot"
         showThirdDetail={true}
-        data={fn.returnLot}
+        data={fn.returnLotID}
       />
       <DetailsGroup
         imageSrc="/image2@2x.png"
@@ -37,19 +37,19 @@ export default function MainContentDetailsGroupContainer(
         imageSrc="/image2@2x.png"
         headerText="Vehicle"
         showThirdDetail={true}
-        data={fn.selectedCar}
+        data={fn.selectedCarID}
       />
       <DetailsGroup
         imageSrc="/image2@2x.png"
         headerText="Vehicle Features"
         showThirdDetail={true}
-        data={fn.selectedCar}
+        data={fn.selectedCarID}
       />
       <DetailsGroup
         imageSrc="/image2@2x.png"
         headerText="Total Price"
         showThirdDetail={true}
-        data={fn.selectedCar}
+        data={fn.selectedCarID}
       />
     </div>
   );

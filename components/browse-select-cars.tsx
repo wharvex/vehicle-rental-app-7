@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useState, useEffect, useMemo, type CSSProperties } from "react";
@@ -152,7 +152,7 @@ const SelectCars: NextPage<SelectCarsTitle> = ({
         </div>
         {isModalOpen && (
           <div
-            className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"
+            className="fixed inset-0 bg-gray-600 overflow-y-auto h-full w-full"
             onClick={closeModal}
           >
             <div className="relative top-20 mx-auto p-5 border w-97 shadow-lg rounded-md bg-white">

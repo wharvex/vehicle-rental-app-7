@@ -1,13 +1,23 @@
 "use client";
 import MainContentBreadcrumbsGroup from "@/components/confirm-res-main-content-breadcrumbs-gro";
 import Layout from "../../components/my-layout";
-import MainContentDetailsGroupContainer from "@/components/confirm-res-main-content-details-group-g";
+import MainContentDetailsGroupContainer from "@/components/confirm-res-main-content-details-group-container";
 import MainContentProceedButton from "@/components/confirm-res-main-content-proceed-button";
 import { useSearchParams } from "next/navigation";
+import {
+  ConfirmResSearchParams,
+  ConfirmResSearchParamsType,
+} from "@/models/confirm-res-search-params";
 
 export default function Page() {
-  const params = useSearchParams();
-  if (!params) throw new Error("No reservation info found");
+  const searchParams = useSearchParams();
+  const params = ConfirmResSearchParams.parse({
+    pickupLot: searchParams?.get("pickupLot"),
+    returnLot: searchParams?.get("returnLot"),
+    pickupDate: searchParams?.get("pickupDate"),
+    returnDate: searchParams?.get("returnDate"),
+    selectedCar: searchParams?.get("selectedCar"),
+  });
   return (
     <div
       className="[background:linear-gradient(180deg,_#ebf5ff,_#92c9f9)] w-full h-full flex flex-col items-center justify-start"
@@ -28,11 +38,11 @@ export default function Page() {
         }
         mainChild2={
           <MainContentDetailsGroupContainer
-            pickupLot={params.get("pickupLot")!}
-            returnLot={params.get("returnLot")!}
-            pickupDate={params.get("pickupDate")!}
-            returnDate={params.get("returnDate")!}
-            selectedCar={params.get("selectedCar")!}
+            pickupLotID={params.pickupLot}
+            returnLotID={params.returnLot}
+            pickupDate={params.pickupDate}
+            returnDate={params.returnDate}
+            selectedCarID={params.selectedCar}
           />
         }
         mainChild3={<MainContentProceedButton />}
