@@ -20,7 +20,7 @@ const MainContentGeneric: NextPage<MainContentGenericType> = ({
 
   return (
     <div
-      className="flex flex-row items-center justify-center pt-0 px-[100px] pb-[70px] box-border text-center text-36xl text-black font-body-large self-stretch flex-1"
+      className="flex flex-row items-center justify-center pt-[70px] px-[100px] pb-[140px] box-border text-center text-36xl text-black font-body-large self-stretch flex-1"
       style={mainContentGenericStyle}
     >
       <div className="relative tracking-[0.5px] leading-[100%] font-medium">

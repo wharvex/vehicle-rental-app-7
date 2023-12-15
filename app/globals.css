@@ -4,15 +4,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body {
-  @apply leading-[normal] m-0;
+
+/* Add base styles, as described here: https://v1.tailwindcss.com/docs/adding-base-styles */
+@layer base {
+  body {
+    @apply leading-[normal] m-0 min-h-screen;
+  }
 }
+
+/* Need this to make one-sided borders work, like on confirm-reservation page */
 *,
 ::before,
 ::after {
   border-width: 0;
 }
 
+/* For Hamburger Drawer? */
 @keyframes slide-in-right {
   0% {
     transform: translateX(200px);

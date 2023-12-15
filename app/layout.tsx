@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-
-const inter = Inter({ subsets: ["latin"] });
+import HeaderPage from "@/components/header-page";
+import FooterPage from "@/components/footer-page";
 
 export const metadata: Metadata = {
   title: "Borrow Our Cars",
@@ -18,7 +17,23 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body>
+          <HeaderPage
+            image="/image2@2x.png"
+            image1="/image3@2x.png"
+            headerPageBoxSizing="border-box"
+            headerPageBackgroundImage="url('/header--page1@3x.png')"
+            headerPageFlexShrink="0"
+            imageHeaderPageLogoCursor="pointer"
+          />
+          <div className="relative bg-white w-full h-full overflow-hidden flex flex-col items-center justify-start">
+            {children}
+          </div>
+          <FooterPage
+            footerPageBackgroundImage="url('/footer--page1@3x.png')"
+            footerPageFlexShrink="0"
+          />
+        </body>
       </html>
     </ClerkProvider>
   );

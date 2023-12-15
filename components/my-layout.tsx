@@ -44,14 +44,6 @@ const Layout: NextPage<LayoutType> = ({
 
   return (
     <div className="bg-aliceblue w-[1440px] overflow-y-auto flex flex-col items-start justify-start flex-1">
-      <HeaderPage
-        image="/image2@2x.png"
-        image1="/image3@2x.png"
-        headerPageBoxSizing="border-box"
-        headerPageBackgroundImage="url('/header--page1@3x.png')"
-        headerPageFlexShrink="0"
-        imageHeaderPageLogoCursor="pointer"
-      />
       <Main
         mainContentHeroBoxSizing="border-box"
         mainContentHeroBoxSizing1="border-box"
@@ -60,10 +52,6 @@ const Layout: NextPage<LayoutType> = ({
         mainChild1={mainChild1}
         mainChild2={mainChild2}
         mainChild3={mainChild3}
-      />
-      <FooterPage
-        footerPageBackgroundImage="url('/footer--page1@3x.png')"
-        footerPageFlexShrink="0"
       />
     </div>
   );

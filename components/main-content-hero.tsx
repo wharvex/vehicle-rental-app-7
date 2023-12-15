@@ -50,7 +50,7 @@ const MainContentHero: NextPage<MainContentHeroType> = ({
 
   return (
     <div
-      className="w-[1440px] h-[550px] overflow-hidden flex flex-row items-center justify-center py-[100px] px-2.5 box-border bg-[url('/maincontent--hero@3x.png')] bg-cover bg-no-repeat bg-[top]"
+      className="w-full h-[550px] overflow-hidden flex flex-row items-center justify-center py-[100px] px-2.5 box-border bg-[url('/maincontent--hero@3x.png')] bg-cover bg-no-repeat bg-[top]"
       style={mainContentHeroStyle}
     >
       <BodyHero

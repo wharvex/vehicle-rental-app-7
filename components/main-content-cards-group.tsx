@@ -5,7 +5,7 @@ import CardDates from "./card-dates";
 
 const MainContentCardsGroup: NextPage = () => {
   return (
-    <div className="bg-aliceblue w-[1440px] overflow-hidden flex flex-row items-center justify-center p-[50px] box-border gap-[50px]">
+    <div className="bg-aliceblue w-full overflow-hidden flex flex-row items-center justify-center p-[50px] box-border gap-[50px]">
       <CardTestimonials
         star1="/star-1@2x.png"
         cardTestimonialsFlex="1"

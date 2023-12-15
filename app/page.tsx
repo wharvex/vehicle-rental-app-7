@@ -8,26 +8,20 @@ const Page: NextPage = () => {
   const onImageHeaderPageLogoClick = () => {};
 
   return (
-    <div className="relative bg-white w-full h-[1664px] overflow-hidden flex flex-col items-center justify-start">
-      <Layout
-        layoutBoxSizing="border-box"
-        layoutBoxSizing1="border-box"
-        headerPageBoxSizing="border-box"
-        mainChild1={
-          <MainContentHero
-            mainContentHeroFlexShrink="0"
-            bodyHeroBoxSizing="border-box"
-            bodyHeroBoxSizing1="border-box"
-            bodyHeroBoxSizing2="border-box"
-            bodyHeroBoxSizing3="border-box"
-          />
-        }
-        mainChild2={<MainContentCardsGroup />}
-        mainChild3={
-          <MainContentGeneric mainContentGenericBackground="linear-gradient(180deg, #ebf5ff, #92c9f9)" />
-        }
+    <>
+      <MainContentHero
+        mainContentHeroFlexShrink="0"
+        bodyHeroBoxSizing="border-box"
+        bodyHeroBoxSizing1="border-box"
+        bodyHeroBoxSizing2="border-box"
+        bodyHeroBoxSizing3="border-box"
       />
-    </div>
+      <MainContentCardsGroup />
+      <MainContentGeneric
+        text="We Look Forward To Working With You!"
+        mainContentGenericBackground="linear-gradient(180deg, #ebf5ff, #92c9f9)"
+      />
+    </>
   );
 };
 
