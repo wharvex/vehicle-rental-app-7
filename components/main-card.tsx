@@ -1,26 +1,23 @@
-import type { NextPage } from "next";
 import { useMemo, type CSSProperties } from "react";
 import HeaderCard from "./header-card";
+import Image from "next/image";
 
-type CardTestimonialsType = {
-  star1?: string;
+type MainCardProps = {
+  imgSrc: string;
+  headerText: string;
 
   /** Style props */
   cardTestimonialsFlex?: CSSProperties["flex"];
   cardTestimonialsBoxSizing?: CSSProperties["boxSizing"];
 };
 
-const CardTestimonials: NextPage<CardTestimonialsType> = ({
-  star1,
-  cardTestimonialsFlex,
-  cardTestimonialsBoxSizing,
-}) => {
+export default function MainCard(fn: MainCardProps) {
   const cardTestimonialsStyle: CSSProperties = useMemo(() => {
     return {
-      flex: cardTestimonialsFlex,
-      boxSizing: cardTestimonialsBoxSizing,
+      flex: fn.cardTestimonialsFlex,
+      boxSizing: fn.cardTestimonialsBoxSizing,
     };
-  }, [cardTestimonialsFlex, cardTestimonialsBoxSizing]);
+  }, [fn.cardTestimonialsFlex, fn.cardTestimonialsBoxSizing]);
 
   return (
     <div
@@ -28,15 +25,15 @@ const CardTestimonials: NextPage<CardTestimonialsType> = ({
       style={cardTestimonialsStyle}
     >
       <div className="flex flex-row items-center justify-center">
-        <img
+        <Image
           className="relative w-[100px] h-[100px] object-cover"
+          width={100}
+          height={100}
           alt=""
-          src={star1}
+          src={fn.imgSrc}
         />
       </div>
       <HeaderCard text="Read Testimonials" />
     </div>
   );
-};
-
-export default CardTestimonials;
+}
