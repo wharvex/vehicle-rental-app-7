@@ -1,9 +1,26 @@
+import clsx from "clsx";
 import ContainerHeroBodyHeader from "./container-hero-body-header";
 import ContainerRadioChoiceMenu from "./container-radio-choice-menu";
 
 export default function BodyHero() {
+  const divClassStr = clsx(
+    "rounded-xl",
+    "[&_*]:shrink-0",
+    "bg-white",
+    "w-[1000px]",
+    "h-[350px]",
+    "overflow-hidden",
+    "flex",
+    "flex-row",
+    "items-center",
+    "justify-center",
+    "py-[25px]",
+    "px-[50px]",
+    "box-border",
+    "gap-[75px]"
+  );
   return (
-    <div className="rounded-xl [&_*]:shrink-0 bg-white w-[1000px] h-[350px] overflow-hidden flex flex-row items-center justify-center py-[25px] px-[50px] box-border gap-[75px]">
+    <div className={divClassStr}>
       <ContainerHeroBodyHeader />
       <ContainerRadioChoiceMenu
         containerRadioChoiceMenuBoxSizing="border-box"

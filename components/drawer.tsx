@@ -14,6 +14,8 @@ import ImageHeaderPageHamgurge from "./image-header-page-hamgurge";
 import ImageIcon from "@mui/icons-material/Image";
 import Link from "next/link";
 import { UserButton, useUser } from "@clerk/nextjs";
+import { Typography, createTheme } from "@mui/material";
+import { ThemeProvider } from "@emotion/react";
 
 type Anchor = "top" | "left" | "bottom" | "right";
 
@@ -40,6 +42,18 @@ export default function TemporaryDrawer() {
       setState({ ...state, [anchor]: open });
     };
 
+  const theme = createTheme({
+    components: {
+      MuiListItemText: {
+        styleOverrides: {
+          root: {
+            fontSize: "2rem",
+          },
+        },
+      },
+    },
+  });
+
   const list = (anchor: Anchor) => (
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
@@ -47,7 +61,7 @@ export default function TemporaryDrawer() {
       // onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List>
+      <List className="text-11xl">
         {[
           ["Browse", "/browse_choose_lots"],
           [(isLoaded && user && "Dashboard") || "Login", "/dashboard"],
@@ -66,10 +80,16 @@ export default function TemporaryDrawer() {
                       <UserButton afterSignOutUrl="/" />
                     )) || <LoginIcon />
                   ) : (
-                    <ImageIcon />
+                    <ImageIcon fontSize="large" />
                   )}
                 </ListItemIcon>
-                <ListItemText primary={item[0]} />
+                <ListItemText
+                  primary={item[0]}
+                  primaryTypographyProps={{
+                    fontSize: "28px",
+                    fontFamily: "Cabin",
+                  }}
+                />
               </ListItemButton>
             </ListItem>
           </Link>

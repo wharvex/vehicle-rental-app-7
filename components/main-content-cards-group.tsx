@@ -1,6 +1,4 @@
-import MainCard from "./main-card";
-import CardVehicles from "./card-vehicles";
-import CardDates from "./card-dates";
+import NavCard from "./nav-card";
 import clsx from "clsx";
 
 export default function MainContentCardsGroup() {
@@ -18,18 +16,9 @@ export default function MainContentCardsGroup() {
   );
   return (
     <div className={classStr}>
-      <MainCard
-        imgSrc="/star-1@2x.png"
-        headerText="Read Testimonials"
-        cardTestimonialsFlex="1"
-        cardTestimonialsBoxSizing="border-box"
-      />
-      <CardVehicles cardVehiclesFlex="1" cardVehiclesBoxSizing="border-box" />
-      <CardDates
-        calendar1="/calendar-1@2x.png"
-        cardDatesFlex="1"
-        cardDatesBoxSizing="border-box"
-      />
+      <NavCard imgSrc="/star-1@2x.png" text="Read Testimonials" />
+      <NavCard imgSrc="/carsportoutline-1@2x.png" text="Browse Vehicles" />
+      <NavCard imgSrc="/calendar-1@2x.png" text="Choose Dates" />
     </div>
   );
 }
