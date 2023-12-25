@@ -11,11 +11,9 @@ import ListItemText from "@mui/material/ListItemText";
 import LoginIcon from "@mui/icons-material/Login";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import ImageHeaderPageHamgurge from "./image-header-page-hamgurge";
-import ImageIcon from "@mui/icons-material/Image";
 import Link from "next/link";
 import { UserButton, useUser } from "@clerk/nextjs";
-import { Typography, createTheme } from "@mui/material";
-import { ThemeProvider } from "@emotion/react";
+import { DirectionsCar } from "@mui/icons-material";
 
 type Anchor = "top" | "left" | "bottom" | "right";
 
@@ -42,46 +40,31 @@ export default function TemporaryDrawer() {
       setState({ ...state, [anchor]: open });
     };
 
-  const theme = createTheme({
-    components: {
-      MuiListItemText: {
-        styleOverrides: {
-          root: {
-            fontSize: "2rem",
-          },
-        },
-      },
-    },
-  });
+  type ListItemTuple = [string, string, React.ReactElement];
+
+  const drawerContents: ListItemTuple[] = [
+    ["Browse", "/browse_choose_lots", <TravelExploreIcon key="1" />],
+    [
+      (isLoaded && user && "Dashboard") || "Login",
+      "/dashboard",
+      (isLoaded && user && <UserButton afterSignOutUrl="/" />) || <LoginIcon />,
+    ],
+    ["See Cars", "/test-db-cars", <DirectionsCar key="2" />],
+  ];
 
   const list = (anchor: Anchor) => (
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
       role="presentation"
-      // onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List className="text-11xl">
-        {[
-          ["Browse", "/browse_choose_lots"],
-          [(isLoaded && user && "Dashboard") || "Login", "/dashboard"],
-          ["See Users", "/test-db"],
-          ["See Cars", "/test-db-cars"],
-          ["My Account", "/my-account"],
-        ].map((item, index) => (
+      <List>
+        {drawerContents.map((item, index) => (
           <Link key={item[0]} href={item[1]}>
             <ListItem key={item[0]} disablePadding>
               <ListItemButton>
-                <ListItemIcon>
-                  {index === 0 ? (
-                    <TravelExploreIcon />
-                  ) : index === 1 ? (
-                    (isLoaded && user && (
-                      <UserButton afterSignOutUrl="/" />
-                    )) || <LoginIcon />
-                  ) : (
-                    <ImageIcon fontSize="large" />
-                  )}
+                <ListItemIcon key={item[0]}>
+                  {React.cloneElement(item[2], { fontSize: "large" })}
                 </ListItemIcon>
                 <ListItemText
                   primary={item[0]}
