@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import BodyHero from "./body-hero";
+import HomepageHero from "./homepage-hero";
 
 export default function MainContentHero() {
   const classStr = clsx(
@@ -22,7 +22,7 @@ export default function MainContentHero() {
 
   return (
     <div className={classStr}>
-      <BodyHero />
+      <HomepageHero />
     </div>
   );
 }
