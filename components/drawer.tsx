@@ -10,6 +10,8 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import LoginIcon from "@mui/icons-material/Login";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import GroupIcon from "@mui/icons-material/Group";
 import ImageHeaderPageHamgurge from "./image-header-page-hamgurge";
 import Link from "next/link";
 import { UserButton, useUser } from "@clerk/nextjs";
@@ -50,6 +52,8 @@ export default function TemporaryDrawer() {
       (isLoaded && user && <UserButton afterSignOutUrl="/" />) || <LoginIcon />,
     ],
     ["See Cars", "/test-db-cars", <DirectionsCar key="2" />],
+    ["Acct (Test)", "/my-account", <AccountBoxIcon key="3" />],
+    ["Users (Test)", "/test-db", <GroupIcon key="4" />],
   ];
 
   const list = (anchor: Anchor) => (
