@@ -1,11 +1,21 @@
-import type { NextPage } from "next";
+import clsx from "clsx";
 
-const MainContentDashboard: NextPage = () => {
+export default function MainContentDashboard() {
+  const classStr = clsx(
+    "bg-aliceblue",
+    "w-full",
+    "overflow-hidden",
+    "flex",
+    "flex-row",
+    "items-center",
+    "justify-center",
+    "p-[50px]",
+    "box-border",
+    "gap-[50px]"
+  );
   return (
-    <div className="bg-aliceblue w-[1440px] overflow-hidden flex flex-row items-center justify-center p-[50px] box-border gap-[50px]">
+    <div className={classStr}>
       <p>hi</p>
     </div>
   );
-};
-
-export default MainContentDashboard;
+}
