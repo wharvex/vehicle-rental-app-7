@@ -1,5 +1,3 @@
-import type { NextPage } from "next";
-
 type BreadcrumbImageContainerProps = {
   checked: boolean;
 };

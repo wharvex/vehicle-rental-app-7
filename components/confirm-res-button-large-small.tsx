@@ -1,43 +1,38 @@
-import type { NextPage } from "next";
-import { useMemo, type CSSProperties } from "react";
+import { TextProps } from "@/models/misc";
+import clsx from "clsx";
 
-type ButtonLargeSmallType = {
-  buttonText?: string;
-
-  /** Style props */
-  buttonLargeSmallCursor?: CSSProperties["cursor"];
-  buttonLargeSmallPadding?: CSSProperties["padding"];
-  buttonLargeSmallBackgroundColor?: CSSProperties["backgroundColor"];
-};
-
-const ButtonLargeSmall: NextPage<ButtonLargeSmallType> = ({
-  buttonText = "Text",
-  buttonLargeSmallCursor,
-  buttonLargeSmallPadding,
-  buttonLargeSmallBackgroundColor,
-}) => {
-  const buttonLargeSmallStyle: CSSProperties = useMemo(() => {
-    return {
-      cursor: buttonLargeSmallCursor,
-      padding: buttonLargeSmallPadding,
-      backgroundColor: buttonLargeSmallBackgroundColor,
-    };
-  }, [
-    buttonLargeSmallCursor,
-    buttonLargeSmallPadding,
-    buttonLargeSmallBackgroundColor,
-  ]);
-
+export default function ButtonLargeSmall(fn: TextProps) {
+  const classStrOuter = clsx(
+    "rounded-3xs",
+    "box-border",
+    "w-[308px]",
+    "h-[118px]",
+    "flex",
+    "flex-col",
+    "items-center",
+    "justify-center",
+    "text-center",
+    "text-21xl",
+    "text-black",
+    "font-header-footer-button-small",
+    "border-[2px]",
+    "border-solid",
+    "border-black"
+  );
+  const classStrInner = clsx(
+    "self-stretch",
+    "flex-1",
+    "relative",
+    "tracking-[0.5px]",
+    "leading-[100%]",
+    "font-medium",
+    "flex",
+    "items-center",
+    "justify-center"
+  );
   return (
-    <div
-      className="rounded-3xs box-border w-[308px] h-[118px] flex flex-col items-center justify-center text-center text-21xl text-black font-header-footer-button-small border-[2px] border-solid border-black"
-      style={buttonLargeSmallStyle}
-    >
-      <div className="self-stretch flex-1 relative tracking-[0.5px] leading-[100%] font-medium flex items-center justify-center">
-        {buttonText}
-      </div>
+    <div className={classStrOuter}>
+      <div className={classStrInner}>{fn.text}</div>
     </div>
   );
-};
-
-export default ButtonLargeSmall;
+}

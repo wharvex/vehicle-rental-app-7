@@ -1,4 +1,3 @@
-import type { NextPage } from "next";
 import BreadcrumbLabel from "./confirm-res-label-breadcrumb";
 import BreadcrumbImageContainer from "./confirm-res-image-breadcrumb-unchecked";
 

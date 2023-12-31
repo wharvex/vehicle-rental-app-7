@@ -3,6 +3,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import HeaderPage from "@/components/header-page";
 import FooterPage from "@/components/footer-page";
+import clsx from "clsx";
 
 export const metadata: Metadata = {
   title: "Borrow Our Cars",
@@ -14,6 +15,17 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const classStr = clsx(
+    "relative",
+    "bg-white",
+    "w-full",
+    "h-full",
+    "overflow-hidden",
+    "flex",
+    "flex-col",
+    "items-center",
+    "justify-start"
+  );
   return (
     <ClerkProvider>
       <html lang="en">
@@ -26,9 +38,7 @@ export default function RootLayout({
             headerPageFlexShrink="0"
             imageHeaderPageLogoCursor="pointer"
           />
-          <div className="relative bg-white w-full h-full overflow-hidden flex flex-col items-center justify-start">
-            {children}
-          </div>
+          <div className={classStr}>{children}</div>
           <FooterPage
             footerPageBackgroundImage="url('/footer--page1@3x.png')"
             footerPageFlexShrink="0"

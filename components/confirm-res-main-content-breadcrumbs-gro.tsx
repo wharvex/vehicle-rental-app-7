@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import clsx from "clsx";
 import { Breadcrumb, BreadcrumbProps } from "./confirm-res-breadcrumb";
 import ConnectorBreadcrumbsGroup from "./confirm-res-connector-breadcrumbs-group";
 
@@ -11,12 +11,24 @@ type MainContentBreadcrumbsGroupProps = [
 export default function MainContentBreadcrumbsGroup(
   fn: MainContentBreadcrumbsGroupProps
 ) {
+  const classStr = clsx(
+    "w-full",
+    "h-[137px]",
+    "flex",
+    "flex-row",
+    "items-center",
+    "justify-center",
+    "py-[85px]",
+    "px-[100px]",
+    "box-border",
+    "gap-[10px]"
+  );
   return (
-    <div className="w-full h-[137px] flex flex-row items-center justify-center py-[85px] px-[100px] box-border gap-[10px]">
+    <div className={classStr}>
       <Breadcrumb {...fn[0]} />
-      <ConnectorBreadcrumbsGroup connectorBreadcrumbsGroupHeight="88px" />
+      <ConnectorBreadcrumbsGroup />
       <Breadcrumb {...fn[1]} />
-      <ConnectorBreadcrumbsGroup connectorBreadcrumbsGroupHeight="88px" />
+      <ConnectorBreadcrumbsGroup />
       <Breadcrumb {...fn[2]} />
     </div>
   );
