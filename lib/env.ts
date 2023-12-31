@@ -11,7 +11,7 @@ import dotenv from "dotenv";
 import path from "path";
 
 // use this to make process.env work
-dotenv.config({ path: path.resolve(__dirname, "../.env.local") });
+dotenv.config();
 
 const env = cleanEnv(process.env, {
   PEXELS_KEY: str(),

@@ -6,31 +6,32 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 model Car {
-  id             String            @id @default(uuid())
+  id             String              @id @default(uuid())
   reservations   Reservation[]
-  make           Make              @relation(fields: [make_id], references: [id])
+  make           Make                @relation(fields: [make_id], references: [id])
   make_id        String
-  model          Model             @relation(fields: [model_id], references: [id])
+  model          Model               @relation(fields: [model_id], references: [id])
   model_id       String
   color          String
   details        String?
   year           Int
-  num_rentals    Int               @default(0)
-  current_lot    Lot               @relation(fields: [current_lot_id], references: [id])
+  num_rentals    Int                 @default(0)
+  current_lot    Lot                 @relation(fields: [current_lot_id], references: [id])
   current_lot_id String
-  car_type       CarType           @relation(fields: [car_type_id], references: [id])
+  car_type       CarType             @relation(fields: [car_type_id], references: [id])
   car_type_id    String
   mileage        Int
   licensePlate   String
-  user_added     Manager           @relation(fields: [user_added_id], references: [id])
+  user_added     Manager             @relation(fields: [user_added_id], references: [id])
   user_added_id  String
-  date_added     DateTime          @default(now())
-  in_use         Boolean           @default(false)
+  date_added     DateTime            @default(now())
+  in_use         Boolean             @default(false)
   image_path     String
   car_features   CarFeaturesOnCars[]
 }
@@ -110,13 +111,13 @@ model Address {
 }
 
 model Closure {
-  id     String   @id @default(uuid())
-  date   DateTime
-  lots   Lot[]    @relation("LotClosure")
+  id   String   @id @default(uuid())
+  date DateTime
+  lots Lot[]    @relation("LotClosure")
 }
 
 model CarFeature {
-  id    String            @id @default(uuid())
+  id    String              @id @default(uuid())
   name  String
   price Decimal
   cars  CarFeaturesOnCars[]
