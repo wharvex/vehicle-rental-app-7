@@ -6,12 +6,7 @@ generator client {
 }
 
 datasource db {
-  // https://github.com/prisma/prisma/issues/1487#issuecomment-841695270
-  provider  = ["sqlite", "postgres"]
-
-  // While the database will primarily use the url variable for connections (likely to be pooled),
-  // it will default to the directUrl when attempting to perform migrations.
-  // ~ https://vercel.com/docs/storage/vercel-postgres/vercel-postgres-error-codes#prepared-statement-s0-already-exists
+  provider  = "postgres"
   url       = env("DB_URL") // uses connection pooling
   directUrl = env("DB_DIRECT_URL") // uses a direct connection
 }
