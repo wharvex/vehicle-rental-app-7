@@ -39,7 +39,7 @@ model Car {
 
 model Lot {
   id                String        @id @default(uuid())
-  name              String        @unique
+  name              String
   address           Address       @relation(fields: [address_id], references: [id])
   address_id        String
   manager           Manager       @relation(fields: [manager_id], references: [id])
@@ -67,7 +67,7 @@ model Reservation {
 
 model Customer {
   id           String        @id @default(uuid())
-  email        String        @unique
+  email        String
   name         String
   reservations Reservation[]
 }
