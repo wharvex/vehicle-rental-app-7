@@ -73,7 +73,7 @@ model Customer {
 
 model Manager {
   id          String @id @default(uuid())
-  email       String @unique
+  email       String
   name        String
   manages_lot Lot[]
   added_cars  Car[]
