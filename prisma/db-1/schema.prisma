@@ -3,12 +3,13 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../../node_modules/@prisma-db-1/client"
 }
 
 datasource db {
   provider  = "postgres"
-  url       = env("DB_URL") // uses connection pooling
-  directUrl = env("DB_DIRECT_URL") // uses a direct connection
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 model Car {

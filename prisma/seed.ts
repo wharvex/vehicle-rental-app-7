@@ -1,11 +1,12 @@
-import { PrismaClient, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+import prisma from "@/lib/prisma";
 import { faker, fakerEN_US } from "@faker-js/faker";
 import __ from "lodash";
 import { ImagesResults, Photo } from "@/models/images";
 import fetchImages from "@/lib/fetchImages";
 import { UniqueEnforcer } from "enforce-unique";
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 const christmas = new Date("2023-12-26");
 const thanksgiving = new Date("2023-11-24");
@@ -712,25 +713,25 @@ async function seedWithoutFaker() {
     data: {
       email: "customer1@fake.com",
       name: "Customer One",
-    }
+    },
   });
   const customer2 = await prisma.customer.create({
     data: {
       email: "customer2@fake.com",
       name: "Customer Two",
-    }
+    },
   });
   const customer3 = await prisma.customer.create({
     data: {
       email: uniqueEnforcer.enforce("customer3@fake.com"),
       name: "Customer Three",
-    }
+    },
   });
   const customer4 = await prisma.customer.create({
     data: {
       email: uniqueEnforcer.enforce("customer4@fake.com"),
       name: "Customer Four",
-    }
+    },
   });
 
   // Creating one Reservation per manually-seeded lots
