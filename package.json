@@ -49,6 +49,6 @@
   },
   "prisma": {
     "seed": "npx tsx prisma/seed.ts",
-    "schema": "prisma/schema.prisma"
+    "schema": "prisma/db-1/schema.prisma"
   }
 }
