@@ -11,10 +11,13 @@ export async function getPairwiseCars() {
    * If models has an odd number of elements, the last array in pairwiseModels will only
    * have one element.
    * */
-  return cars.reduce<carsType[]>((result, _, index, array) => {
-    if (index % 2 === 0) result.push(array.slice(index, index + 2));
-    return result;
-  }, []);
+  return cars.reduce<carsType[]>(
+    (result: any[], _: any, index: number, array: string | any[]) => {
+      if (index % 2 === 0) result.push(array.slice(index, index + 2));
+      return result;
+    },
+    []
+  );
 }
 
 export type PairwiseCars = Prisma.PromiseReturnType<typeof getPairwiseCars>;
