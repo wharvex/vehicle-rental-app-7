@@ -4,7 +4,7 @@ import { getCars, carsType } from "@/models/car-type";
 import { Prisma } from "@prisma/client";
 
 export async function getPairwiseCars() {
-  const cars: carsType[] = await getCars();
+  const cars = await getCars();
 
   /** Adapted this reduce from: https://stackoverflow.com/a/44996257
    * It splits models into an array of two-item arrays so they can be mapped over 2-by-2.

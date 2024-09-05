@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "prisma generate --schema prisma/db-2/schema.prisma && next dev",
-    "build": "prisma generate --schema prisma/db-2/schema.prisma && prisma generate --schema prisma/db-1/schema.prisma && prisma db push && prisma db seed && next build",
+    "dev": "next dev",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate --schema prisma/db-1/schema.prisma"
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.27.1",
@@ -49,6 +49,6 @@
   },
   "prisma": {
     "seed": "npx tsx prisma/seed.ts",
-    "schema": "prisma/db-1/schema.prisma"
+    "schema": "prisma/schema.prisma"
   }
 }
